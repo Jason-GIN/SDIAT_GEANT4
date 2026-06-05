@@ -1,0 +1,12 @@
+/run/numberOfThreads 32
+/myrun/setOutputFileName alphadata_23.root
+/run/initialize
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/gun/particle ion
+/gun/ion 2 4
+/gun/energy 158.85 GeV
+/globalField/setValue -0.291050806052572 0 0 gauss
+/run/beamOn 80000

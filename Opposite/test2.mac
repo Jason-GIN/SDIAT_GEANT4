@@ -1,0 +1,316 @@
+/vis/disable
+/run/numberOfThreads 32
+
+/field/enable true
+/field/SetType globaldipole
+/field/Geolocation 1 25 -160 degree
+
+/run/initialize
+
+/myrun/setOutputFileName protondata_0.root
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/Geo/lat 25 deg
+/Geo/lon -160 deg
+
+/generator/select gps
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 37.815750505666074 GeV
+/gps/pos/type Point
+/gps/pos/centre -6384.939226242649 -1573.8131798587594 2206.0227484255056 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 66.75766234703622 GeV
+/gps/pos/type Point
+/gps/pos/centre -6750.984606128497 -715.899514867665 1422.1701539929538 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 50.871507650862895 GeV
+/gps/pos/type Point
+/gps/pos/centre -5716.889846496516 -1482.5589598608162 3637.315305007458 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 31.06809020126343 GeV
+/gps/pos/type Point
+/gps/pos/centre -5630.499012367496 -2575.7319040747225 3126.333194741131 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 40.02925667147838 GeV
+/gps/pos/type Point
+/gps/pos/centre -5669.920282274392 -2728.800755169642 2918.308353433393 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 114.46982506310917 GeV
+/gps/pos/type Point
+/gps/pos/centre -5427.044217583923 -2054.1247954662886 3799.820469380038 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 86.63425616389236 GeV
+/gps/pos/type Point
+/gps/pos/centre -5920.622265783673 -1318.481872235994 3364.329168344219 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 92.15598792686478 GeV
+/gps/pos/type Point
+/gps/pos/centre -6746.121460927022 -1465.9520548443456 672.0885520506605 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 70.91781775479353 GeV
+/gps/pos/type Point
+/gps/pos/centre -4997.24705618088 -2214.3240877897547 4270.265086409231 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 87.7567251911853 GeV
+/gps/pos/type Point
+/gps/pos/centre -6413.519150860178 -1363.3353247981552 2262.512344317107 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 169.49962080070623 GeV
+/gps/pos/type Point
+/gps/pos/centre -6184.175745393503 -1025.8936593002231 2968.9031247877306 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 92.83491217031019 GeV
+/gps/pos/type Point
+/gps/pos/centre -6570.310294967215 -75.04542652364066 2221.770471107618 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 40.5137837046143 GeV
+/gps/pos/type Point
+/gps/pos/centre -5917.852510597 -1675.5164987956225 3206.6398830496196 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 106.06971142567704 GeV
+/gps/pos/type Point
+/gps/pos/centre -6165.036122714565 -1580.8704986504088 2757.5444305761253 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 34.997016212182416 GeV
+/gps/pos/type Point
+/gps/pos/centre -6338.520646896127 -2022.625022534246 1960.3615078780456 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 38.029964846163125 GeV
+/gps/pos/type Point
+/gps/pos/centre -5424.906629166628 -2555.248555753836 3485.9670247467843 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 82.05656806640718 GeV
+/gps/pos/type Point
+/gps/pos/centre -6060.612997090281 -722.5450750710833 3295.1133407624875 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 69.2948489216351 GeV
+/gps/pos/type Point
+/gps/pos/centre -6726.8360154016655 -1380.268054911863 977.4510386535519 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 62.51928604529235 GeV
+/gps/pos/type Point
+/gps/pos/centre -6113.829427656206 -2379.854697770174 2251.2784282505513 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 365.9868994290264 GeV
+/gps/pos/type Point
+/gps/pos/centre -5970.303405426709 -1627.945076427772 3133.072819097069 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 36.7309855248335 GeV
+/gps/pos/type Point
+/gps/pos/centre -5326.179933385065 -1053.67813513795 4316.531352743603 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 103.96789920747551 GeV
+/gps/pos/type Point
+/gps/pos/centre -6167.440220412173 -2440.1628616038397 2029.5712727006257 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 38.96533451161474 GeV
+/gps/pos/type Point
+/gps/pos/centre -6000.1021839090345 -1984.6628526963507 2858.454190337368 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 56.950753090564376 GeV
+/gps/pos/type Point
+/gps/pos/centre -6311.4330872138235 -683.0458765806577 2794.6616844599994 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 72.51944253624606 GeV
+/gps/pos/type Point
+/gps/pos/centre -5709.79470739314 -1700.2539318064867 3552.2182057528375 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 42.784125675024825 GeV
+/gps/pos/type Point
+/gps/pos/centre -5573.127045239615 -1820.3879588247012 3706.388515990308 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 50.69268409849258 GeV
+/gps/pos/type Point
+/gps/pos/centre -5493.63645171748 -2993.846274118289 2994.6145390999923 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 39.268910419370854 GeV
+/gps/pos/type Point
+/gps/pos/centre -5605.808324046431 -1619.9785608312345 3749.8607588787813 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 48.21006649005744 GeV
+/gps/pos/type Point
+/gps/pos/centre -5893.402219881873 -465.8021557216087 3627.907363880252 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 82.05445825315428 GeV
+/gps/pos/type Point
+/gps/pos/centre -6033.290844054253 -1991.096860578618 2783.1291916339637 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 70.03520151878683 GeV
+/gps/pos/type Point
+/gps/pos/centre -5962.906054377065 -1650.2857156086402 3135.4715208420344 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 39.69035782037872 GeV
+/gps/pos/type Point
+/gps/pos/centre -5685.743588974121 -1633.8325904377687 3621.2959173951976 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 64.42413531348734 GeV
+/gps/pos/type Point
+/gps/pos/centre -5789.851079943316 -2786.311145854371 2612.4639490425416 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 86.62581941538144 GeV
+/gps/pos/type Point
+/gps/pos/centre -4802.387434599579 -1676.5791072036134 4715.61561620203 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 117.88506417176757 GeV
+/gps/pos/type Point
+/gps/pos/centre -5894.884154295071 -2823.0845160145786 2321.940532692353 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 121.13679197210467 GeV
+/gps/pos/type Point
+/gps/pos/centre -5027.178932367187 -2546.3849741608483 4044.041142200633 km
+/gps/direction 0. 0. -1.
+
+/gps/source/add 1.0
+/generator/ParticleSet 2112.0
+/gps/ene/type Mono
+/gps/ene/mono 100.0142655291479 GeV
+/gps/pos/type Point
+/gps/pos/centre -6154.490556263236 -2524.8171599770208 1964.2854975874202 km
+/gps/direction 0. 0. -1.
+
+/gps/source/multiplevertex true
+
+/run/beamOn 1

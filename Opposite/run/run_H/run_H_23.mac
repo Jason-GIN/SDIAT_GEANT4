@@ -1,0 +1,17 @@
+/run/numberOfThreads 32
+/myrun/setOutputFileName /home/ams/lchen/GEANT4/test-sphere/G4py/test/result/protondata_52.root
+/field/enable true
+/field/SetType globaldipole
+/field/Geolocation 1 -25 -170 degree
+/run/initialize
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/generator/select Primary
+/gun/particle ion
+/gun/ion 1 1
+/gun/energy 80.35 GeV
+/Geo/lat -25 deg
+/Geo/lon -170 deg
+/run/beamOn 10000

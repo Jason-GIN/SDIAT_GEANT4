@@ -1,0 +1,32 @@
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode) 
+/run/numberOfThreads 32
+#
+# Initialize kernel
+/field/enable true
+/field/SetType globaldipole
+/field/Geolocation 1 25 -160 degree
+
+/run/initialize
+
+/myrun/setOutputFileName protondata_0.root
+#
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+/Geo/lat 25 deg
+/Geo/lon -160 deg
+
+/generator/select Primary
+/gun/particle proton #
+#/gun/energy 5.59 GeV
+/gun/energy 9.34 GeV #
+/tracking/verbose 0 #
+
+
+#
+/run/beamOn 1000

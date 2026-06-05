@@ -1,0 +1,7 @@
+universe = vanilla
+executable = $(filename)
+output = output/$(ClusterId).$(ProcId).out
+error = output/$(ClusterId).$(ProcId).err
+request_cpus = 32
+log = log/$(ClusterId).$(ProcId).log
+queue filename matching files run_command/He/He*.sh

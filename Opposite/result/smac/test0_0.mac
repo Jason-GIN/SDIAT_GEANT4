@@ -1,0 +1,18 @@
+/vis/disable
+/run/numberOfThreads 32
+
+/field/enable true
+/field/SetType globaldipole
+
+/run/initialize
+
+/myrun/setOutputFileName ../result/seconddata0_0.root
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+/generator/select Secondary
+/generator/Readfile ../result/TraceData/test_0_0.csv
+
+/run/beamOn 1

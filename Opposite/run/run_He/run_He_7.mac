@@ -1,0 +1,15 @@
+/run/numberOfThreads 32
+/myrun/setOutputFileName alphadata_38.root
+/run/initialize
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/gun/particle ion
+/gun/ion 2 4
+/gun/energy 28.9 GeV
+/Geo/lat 31.15 deg
+/Geo/lon -100 deg
+/field/Geolocation 1 31.15 -100 degree
+/field/enable true
+/run/beamOn 80000
