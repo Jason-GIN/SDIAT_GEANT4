@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/test02.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/test02.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/test02.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/DetectorConstruction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DetectorConstruction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUserDetectorConstruction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/globals.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ios.hh \
@@ -247,7 +247,7 @@ CMakeFiles/test02.dir/test02.cc.o: \
  /usr/include/c++/11/bits/atomic_futex.h \
  /usr/include/c++/11/bits/std_thread.h /usr/include/c++/11/thread \
  /usr/include/c++/11/bits/this_thread_sleep.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyMagneticField.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4MagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Field.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ThreeVector.hh \
@@ -256,7 +256,7 @@ CMakeFiles/test02.dir/test02.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Vector/ThreeVector.icc \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SystemOfUnits.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Units/SystemOfUnits.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/FieldMessenger.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/FieldMessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UImessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIdirectory.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
@@ -270,7 +270,7 @@ CMakeFiles/test02.dir/test02.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithoutParameter.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithABool.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/ActionInitialization.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/ActionInitialization.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUserActionInitialization.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4RunManagerFactory.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4MTRunManager.hh \
@@ -733,8 +733,8 @@ CMakeFiles/test02.dir/test02.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIExecutive.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUIshell.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4AutoDelete.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyMagneticField.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/FieldMessenger.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MySession.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/FieldMessenger.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MySession.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIsession.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/Randomize.hh

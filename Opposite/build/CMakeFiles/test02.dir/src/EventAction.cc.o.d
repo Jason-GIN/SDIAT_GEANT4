@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/EventAction.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/EventAction.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/EventAction.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/EventAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/EventAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserEventAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/globals.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ios.hh \
@@ -235,7 +235,7 @@ CMakeFiles/test02.dir/src/EventAction.cc.o: \
  /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/std_mutex.h \
  /usr/include/c++/11/bits/unique_lock.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/RunAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/RunAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserRunAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Accumulable.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4AccValue.hh \
@@ -339,7 +339,7 @@ CMakeFiles/test02.dir/src/EventAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GenericFileManager.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GenericFileManager.icc \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4String.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyRun.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyRun.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Run.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Event.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/evtdefs.hh \
@@ -564,21 +564,21 @@ CMakeFiles/test02.dir/src/EventAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/rundefs.hh \
  /usr/include/c++/11/list /usr/include/c++/11/bits/stl_list.h \
  /usr/include/c++/11/bits/list.tcc \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/TrackingAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackingAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserTrackingAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Threading.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/TrackerSD.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackerSD.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VSensitiveDetector.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4CollectionNameVector.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VHit.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VReadOutGeometry.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SensitiveVolumeList.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VSDFilter.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/TrackerHit.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackerHit.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VHit.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4THitsCollection.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Allocator.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ThreeVector.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/tls.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/TrackingAction.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyRun.hh
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackingAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyRun.hh

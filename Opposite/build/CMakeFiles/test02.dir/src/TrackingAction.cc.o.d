@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/TrackingAction.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackingAction.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackingAction.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/TrackingAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackingAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserTrackingAction.hh \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_algobase.h \

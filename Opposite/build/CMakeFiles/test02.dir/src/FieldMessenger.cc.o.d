@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/FieldMessenger.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/FieldMessenger.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/FieldMessenger.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/FieldMessenger.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/FieldMessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UImessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIdirectory.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
@@ -251,7 +251,7 @@ CMakeFiles/test02.dir/src/FieldMessenger.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithABool.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/globals.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyMagneticField.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4MagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Field.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ThreeVector.hh \

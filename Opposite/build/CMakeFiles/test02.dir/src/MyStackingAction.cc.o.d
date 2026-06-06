@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/MyStackingAction.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyStackingAction.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyStackingAction.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyStackingAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyStackingAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserStackingAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ClassificationOfNewTrack.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SystemOfUnits.hh \

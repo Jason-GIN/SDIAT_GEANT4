@@ -5,6 +5,9 @@
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
 
+enum class FieldType : uint8_t { 
+    kNone = 0, kUniform = 1, kDipole = 2, kGlobalDipole = 3 
+};
 
 class MyMagneticField : public G4MagneticField
 {
@@ -21,10 +24,15 @@ class MyMagneticField : public G4MagneticField
 
     void GetFieldValue(const G4double Track[7], G4double B[3]) const;
     void EnableField(G4bool enable){fFieldEnabled = enable;};
-    void SetFieldType(G4String type){fFieldType = type;};
+    //void SetFieldType(G4String type){fFieldType = type;};
     void SetDipoleFieldParameters(G4ThreeVector geo){fGeolocation = geo;};
     void SetUniformFieldParameters(G4ThreeVector stre){fUniStrength = stre;};
-    
+    void SetFieldType(G4String type) {
+        if (type == "uniform") fFieldTypeEnum = FieldType::kUniform;
+        else if (type == "dipole") fFieldTypeEnum = FieldType::kDipole;
+        else if (type == "globaldipole") fFieldTypeEnum = FieldType::kGlobalDipole;
+        fFieldType = type;  // 保留字符串以便查询
+    }
 
 
     G4ThreeVector GetDipoleFieldParameters() const {return fGeolocation;};
@@ -40,6 +48,7 @@ class MyMagneticField : public G4MagneticField
     G4ThreeVector  fUniStrength = {0.0, 0.0, 0.0};  //{Bx, By , Bz} in Gauss;
     G4String fFieldType = "uiform";
     G4bool fFieldEnabled = false;
+    FieldType fFieldTypeEnum = FieldType::kNone;  // 替换 G4String fFieldType
 
     void DipoleField(const G4double Track[7], G4double B[3]) const;
     void GlogalDipoleField(const G4double Track[7], G4double B[3]) const;

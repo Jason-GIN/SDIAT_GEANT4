@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/PrimaryGeneratorAction.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/PrimaryGeneratorAction.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/PrimaryGeneratorAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/PrimaryGeneratorAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ParticleGun.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/globals.hh \
@@ -536,20 +536,20 @@ CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ParticleDefinition.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SystemOfUnits.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/Randomize.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/DetectorConstruction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DetectorConstruction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUserDetectorConstruction.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyMagneticField.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4MagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Field.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ThreeVector.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/FieldMessenger.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/FieldMessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UImessenger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithADoubleAndUnit.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWith3VectorAndUnit.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithoutParameter.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithABool.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/DirectionData.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/BinaryReader.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DirectionData.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/BinaryReader.hh \
  /home/jasongindrkchen/root/root_install/include/TTree.h \
  /home/jasongindrkchen/root/root_install/include/Compression.h \
  /home/jasongindrkchen/root/root_install/include/RtypesCore.h \

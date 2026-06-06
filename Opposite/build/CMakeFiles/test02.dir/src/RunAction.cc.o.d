@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/RunAction.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/RunAction.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/RunAction.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/RunAction.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/RunAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UserRunAction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Types.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GlobalConfig.hh \
@@ -336,7 +336,7 @@ CMakeFiles/test02.dir/src/RunAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GenericFileManager.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GenericFileManager.icc \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4String.hh \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyRun.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyRun.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Run.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SystemOfUnits.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Units/SystemOfUnits.h \

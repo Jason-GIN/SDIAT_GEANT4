@@ -129,7 +129,7 @@ def LoopBasic(particlelist,Enum,n):
         # starmap 用于每个参数是一个元组，会自动解包传给 main
         # 如果 main 不接受元组而需要多个参数，就用 starmap
         results = pool.starmap(tracing.main, args_list)
-
+    print("Process runing finish, Now selecting and saving data. ")
     Parlist=np.array([])
     Hitlist=np.array([])
     for result in results:
@@ -185,7 +185,7 @@ def LoopBasic(particlelist,Enum,n):
     
 def main(runmac, Enum):
     particles = GEANT4RuningFun(runmac)
-    print(particles)
+    #print(particles)
     tparticlelist=ParticleSelect(particles)
     pnum=tparticlelist.shape[0]
     print("粒子数量： ", pnum)

@@ -68,10 +68,11 @@ G4ThreeVector xyz2rtp(G4ThreeVector xyz)
 G4ThreeVector VectorGTODinZenith1(G4ThreeVector xyz1, G4double t, G4double p)
 {
     G4ThreeVector xyzn;
-
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz1[0] + std::sin(p) * std::cos(t) * xyz1[1] - std::sin(t) * xyz1[2];
-    xyzn[1] = -std::sin(p) * xyz1[0] + std::cos(p) * xyz1[1];
-    xyzn[2] = std::cos(p) * std::sin(t) * xyz1[0] + std::sin(p) * std::sin(t) * xyz1[1] + std::cos(t) * xyz1[2];
+    double cos_p = std::cos(p), sin_p = std::sin(p);
+    double cos_t = std::cos(t), sin_t = std::sin(t);
+    xyzn[0] = cos_p * cos_t * xyz1[0] + sin_p * cos_t * xyz1[1] - sin_t * xyz1[2];
+    xyzn[1] = -sin_p * xyz1[0] + cos_p * xyz1[1];
+    xyzn[2] = cos_p * sin_t * xyz1[0] + sin_p * sin_t * xyz1[1] + cos_t * xyz1[2];
 
     return xyzn;
 }
@@ -79,10 +80,11 @@ G4ThreeVector VectorGTODinZenith1(G4ThreeVector xyz1, G4double t, G4double p)
 G4ThreeVector VectorZenithinGTOD1(G4ThreeVector xyz1, G4double t, G4double p)
 {
     G4ThreeVector xyzn;
-
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz1[0] - std::sin(p) * xyz1[1] + std::cos(p) * std::sin(t) * xyz1[2];
-    xyzn[1] = std::sin(p) * std::cos(t) * xyz1[0] + std::cos(p) * xyz1[1] + std::sin(p) * std::sin(t) * xyz1[2];
-    xyzn[2] = -std::sin(t) * xyz1[0] + std::cos(t) * xyz1[2];
+    double cos_p = std::cos(p), sin_p = std::sin(p);
+    double cos_t = std::cos(t), sin_t = std::sin(t);
+    xyzn[0] = cos_p * cos_t * xyz1[0] - sin_p * xyz1[1] + cos_p * sin_t * xyz1[2];
+    xyzn[1] = sin_p * cos_t * xyz1[0] + cos_p * xyz1[1] + sin_p * sin_t * xyz1[2];
+    xyzn[2] = -sin_t * xyz1[0] + cos_t * xyz1[2];
 
     return xyzn;
 }
@@ -108,6 +110,14 @@ void MyMagneticField::GetFieldValue(const G4double Track[7], G4double B[3]) cons
 
     //}
 
+    switch (fFieldTypeEnum) {  // 编译为跳转表，O(1)
+        case FieldType::kUniform: UniformField(Track, B); break;
+        case FieldType::kDipole: DipoleField(Track, B); break;
+        case FieldType::kGlobalDipole: GlogalDipoleField(Track, B); break;
+        default: B[0]=B[1]=B[2]=0.0;
+    }
+
+    /*
     if (fFieldType == "uinform")
     {
         UniformField(Track, B);
@@ -134,7 +144,7 @@ void MyMagneticField::GetFieldValue(const G4double Track[7], G4double B[3]) cons
         // 默认零场
         B[0] = B[1] = B[2] = 0.0;
     }
-
+    */
     return;
 }
 
@@ -175,20 +185,21 @@ void MyMagneticField::DipoleField(const G4double Track[7], G4double B[3]) const
     G4double x = Track[0], y = Track[1], z = Track[2] + a;
     // G4double vx = Track[3], vy = Track[4], vz = Track[5];
 
-    G4ThreeVector xyzInGTOD, rtpInGTOD, BrtpInGTOD, BxyzInGTOD, BxyzInZenith;
+    G4ThreeVector xyzInGTOD, rtpInGTOD, BxyzInGTOD, BxyzInZenith;
     xyzInGTOD = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90 * deg - lat), lon);
     rtpInGTOD = xyz2rtp(xyzInGTOD);
+    double coeff = a * a * a / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]);
 
-    BrtpInGTOD[0] = 2 * (a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (g0 * std::cos(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::sin(rtpInGTOD[1]));
-    BrtpInGTOD[1] = -(a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (-g0 * std::sin(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::cos(rtpInGTOD[1]));
-    BrtpInGTOD[2] = -(a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (-g1 * std::sin(rtpInGTOD[2]) + h1 * std::cos(rtpInGTOD[2]));
+    double Br = 2 * coeff * (g0 * std::cos(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::sin(rtpInGTOD[1]));
+    double Bt = -coeff * (-g0 * std::sin(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::cos(rtpInGTOD[1]));
+    double Bp = -coeff * (-g1 * std::sin(rtpInGTOD[2]) + h1 * std::cos(rtpInGTOD[2]));
 
     // 对称偶极场
     // BrtpInGTOD[0] = -2*M/(rtpInGTOD[0]*rtpInGTOD[0]*rtpInGTOD[0])*np.cos(rtpInGTOD[1]);
     // BrtpInGTOD[1] = -M/(rtpInGTOD[0]*rtpInGTOD[0]*rtpInGTOD[0])*np.sin(rtpInGTOD[1]);
     // BrtpInGTOD[2] = 0;
 
-    BxyzInGTOD = VectorZenithinGTOD1(G4ThreeVector(BrtpInGTOD[1], BrtpInGTOD[2], BrtpInGTOD[0])
+    BxyzInGTOD = VectorZenithinGTOD1(G4ThreeVector(Bt, Bp, Br)
                                      // 球坐标可以看作是天顶坐标，所以球坐标的转换可以当成天顶坐标转GTOD
                                      ,
                                      rtpInGTOD[1], rtpInGTOD[2]);
@@ -232,26 +243,24 @@ void MyMagneticField::GlogalDipoleField(const G4double Track[7], G4double B[3]) 
     // G4cout << "mlat: " << lat/deg << "\t" << "mlon: " << lon/deg << G4endl;
     // G4cout<< "-------------GIN0.03---------------"<< G4endl;
 
-    G4double x = Track[0], y = Track[1], z = Track[2] + a;
+    G4double x = Track[0], y = Track[1], z = Track[2];
     // G4double vx = Track[3], vy = Track[4], vz = Track[5];
 
-    G4ThreeVector xyzInGTOD, rtpInGTOD, BrtpInGTOD, BxyzInGTOD;
-    xyzInGTOD = G4ThreeVector(x, y, z);
-    rtpInGTOD = xyz2rtp(xyzInGTOD);
+    double r = std::sqrt(x*x + y*y + z*z);
+    double cos_theta = z / r;
+    double sin_theta = std::sqrt(1.0 - cos_theta*cos_theta);
+    double phi = std::atan2(y, x);
+    double cos_phi = std::cos(phi), sin_phi = std::sin(phi);
+    double coeff = a * a * a / (r * r * r);
 
-    BrtpInGTOD[0] = 2 * (a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (g0 * std::cos(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::sin(rtpInGTOD[1]));
-    BrtpInGTOD[1] = -(a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (-g0 * std::sin(rtpInGTOD[1]) + (g1 * std::cos(rtpInGTOD[2]) + h1 * std::sin(rtpInGTOD[2])) * std::cos(rtpInGTOD[1]));
-    BrtpInGTOD[2] = -(a * a * a) / (rtpInGTOD[0] * rtpInGTOD[0] * rtpInGTOD[0]) * (-g1 * std::sin(rtpInGTOD[2]) + h1 * std::cos(rtpInGTOD[2]));
-
-
-    BxyzInGTOD = VectorZenithinGTOD1(G4ThreeVector(BrtpInGTOD[1], BrtpInGTOD[2], BrtpInGTOD[0])
-                                     // 球坐标可以看作是天顶坐标，所以球坐标的转换可以当成天顶坐标转GTOD
-                                     ,
-                                     rtpInGTOD[1], rtpInGTOD[2]);
-
-    B[0] = BxyzInGTOD[0];
-    B[1] = BxyzInGTOD[1];
-    B[2] = BxyzInGTOD[2];
+    double Br = 2 * coeff * (g0*cos_theta + (g1*cos_phi + h1*sin_phi)*sin_theta);
+    double Bt = -coeff * (-g0*sin_theta + (g1*cos_phi + h1*sin_phi)*cos_theta);
+    double Bp = -coeff * (-g1*sin_phi + h1*cos_phi);
+    
+    //直角坐标分量（展开旋转矩阵）其实就是VectorZenithinGTOD1，这样减小开销
+    B[0] = Br*sin_theta*cos_phi + Bt*cos_theta*cos_phi - Bp*sin_phi;
+    B[1] = Br*sin_theta*sin_phi + Bt*cos_theta*sin_phi + Bp*cos_phi;
+    B[2] = Br*cos_theta - Bt*sin_theta;
 
     // G4cout<< "-------------GIN0.04---------------"<< G4endl;
     // G4cout<<G4BestUnit(B[0] ,"Magnetic flux density") <<"\t"

@@ -437,52 +437,52 @@ namespace Test02
   G4ThreeVector VectorGTODinZenith(G4ThreeVector xyz2, G4ThreeVector xyz1)
   {
     G4ThreeVector xyzn, rtp;
-    G4double t, p;
     rtp = xyz2r(xyz1);
-    t = rtp[1];
-    p = rtp[2];
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz2[0] + std::sin(p) * std::cos(t) * xyz2[1] - std::sin(t) * xyz2[2];
-    xyzn[1] = -std::sin(p) * xyz2[0] + std::cos(p) * xyz2[1];
-    xyzn[2] = std::cos(p) * std::sin(t) * xyz2[0] + std::sin(p) * std::sin(t) * xyz2[1] + std::cos(t) * xyz2[2];
+    double cos_p = std::cos(rtp[2]), sin_p = std::sin(rtp[2]);
+    double cos_t = std::cos(rtp[1]), sin_t = std::sin(rtp[1]);
+    xyzn[0] = cos_p * cos_t * xyz1[0] + sin_p * cos_t * xyz1[1] - sin_t * xyz1[2];
+    xyzn[1] = -sin_p * xyz1[0] + cos_p * xyz1[1];
+    xyzn[2] = cos_p * sin_t * xyz1[0] + sin_p * sin_t * xyz1[1] + cos_t * xyz1[2];
 
     return xyzn;
   }
 
   G4ThreeVector VectorGTODinZenith1(G4ThreeVector xyz1, G4double t, G4double p)
-  {
+{
     G4ThreeVector xyzn;
-
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz1[0] + std::sin(p) * std::cos(t) * xyz1[1] - std::sin(t) * xyz1[2];
-    xyzn[1] = -std::sin(p) * xyz1[0] + std::cos(p) * xyz1[1];
-    xyzn[2] = std::cos(p) * std::sin(t) * xyz1[0] + std::sin(p) * std::sin(t) * xyz1[1] + std::cos(t) * xyz1[2];
+    double cos_p = std::cos(p), sin_p = std::sin(p);
+    double cos_t = std::cos(t), sin_t = std::sin(t);
+    xyzn[0] = cos_p * cos_t * xyz1[0] + sin_p * cos_t * xyz1[1] - sin_t * xyz1[2];
+    xyzn[1] = -sin_p * xyz1[0] + cos_p * xyz1[1];
+    xyzn[2] = cos_p * sin_t * xyz1[0] + sin_p * sin_t * xyz1[1] + cos_t * xyz1[2];
 
     return xyzn;
-  }
+}
 
   G4ThreeVector VectorZenithinGTOD(G4ThreeVector xyz2, G4ThreeVector xyz1)
   {
     G4ThreeVector xyzn, rtp;
-    G4double t, p;
     rtp = xyz2r(xyz1);
-    t = rtp[1];
-    p = rtp[2];
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz2[0] - std::sin(p) * xyz2[1] + std::cos(p) * std::sin(t) * xyz2[2];
-    xyzn[1] = std::sin(p) * std::cos(t) * xyz2[0] + std::cos(p) * xyz2[1] + std::sin(p) * std::sin(t) * xyz2[2];
-    xyzn[2] = -std::sin(t) * xyz2[0] + std::cos(t) * xyz2[2];
+    double cos_p = std::cos(rtp[2]), sin_p = std::sin(rtp[2]);
+    double cos_t = std::cos(rtp[1]), sin_t = std::sin(rtp[1]);
+    xyzn[0] = cos_p * cos_t * xyz1[0] - sin_p * xyz1[1] + cos_p * sin_t * xyz1[2];
+    xyzn[1] = sin_p * cos_t * xyz1[0] + cos_p * xyz1[1] + sin_p * sin_t * xyz1[2];
+    xyzn[2] = -sin_t * xyz1[0] + cos_t * xyz1[2];
 
     return xyzn;
   }
 
   G4ThreeVector VectorZenithinGTOD1(G4ThreeVector xyz1, G4double t, G4double p)
-  {
+{
     G4ThreeVector xyzn;
-
-    xyzn[0] = std::cos(p) * std::cos(t) * xyz1[0] - std::sin(p) * xyz1[1] + std::cos(p) * std::sin(t) * xyz1[2];
-    xyzn[1] = std::sin(p) * std::cos(t) * xyz1[0] + std::cos(p) * xyz1[1] + std::sin(p) * std::sin(t) * xyz1[2];
-    xyzn[2] = -std::sin(t) * xyz1[0] + std::cos(t) * xyz1[2];
+    double cos_p = std::cos(p), sin_p = std::sin(p);
+    double cos_t = std::cos(t), sin_t = std::sin(t);
+    xyzn[0] = cos_p * cos_t * xyz1[0] - sin_p * xyz1[1] + cos_p * sin_t * xyz1[2];
+    xyzn[1] = sin_p * cos_t * xyz1[0] + cos_p * xyz1[1] + sin_p * sin_t * xyz1[2];
+    xyzn[2] = -sin_t * xyz1[0] + cos_t * xyz1[2];
 
     return xyzn;
-  }
+}
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite
+CMAKE_SOURCE_DIR = /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build
+CMAKE_BINARY_DIR = /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test02.dir/depend.make
@@ -72,282 +72,282 @@ include CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/test02.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/test02.cc.o: ../test02.cc
 CMakeFiles/test02.dir/test02.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test02.dir/test02.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/test02.cc.o -MF CMakeFiles/test02.dir/test02.cc.o.d -o CMakeFiles/test02.dir/test02.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/test02.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test02.dir/test02.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/test02.cc.o -MF CMakeFiles/test02.dir/test02.cc.o.d -o CMakeFiles/test02.dir/test02.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/test02.cc
 
 CMakeFiles/test02.dir/test02.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/test02.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/test02.cc > CMakeFiles/test02.dir/test02.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/test02.cc > CMakeFiles/test02.dir/test02.cc.i
 
 CMakeFiles/test02.dir/test02.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/test02.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/test02.cc -o CMakeFiles/test02.dir/test02.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/test02.cc -o CMakeFiles/test02.dir/test02.cc.s
 
 CMakeFiles/test02.dir/src/ActionInitialization.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/ActionInitialization.cc.o: ../src/ActionInitialization.cc
 CMakeFiles/test02.dir/src/ActionInitialization.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/test02.dir/src/ActionInitialization.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/ActionInitialization.cc.o -MF CMakeFiles/test02.dir/src/ActionInitialization.cc.o.d -o CMakeFiles/test02.dir/src/ActionInitialization.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/ActionInitialization.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/test02.dir/src/ActionInitialization.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/ActionInitialization.cc.o -MF CMakeFiles/test02.dir/src/ActionInitialization.cc.o.d -o CMakeFiles/test02.dir/src/ActionInitialization.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/ActionInitialization.cc
 
 CMakeFiles/test02.dir/src/ActionInitialization.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/ActionInitialization.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/ActionInitialization.cc > CMakeFiles/test02.dir/src/ActionInitialization.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/ActionInitialization.cc > CMakeFiles/test02.dir/src/ActionInitialization.cc.i
 
 CMakeFiles/test02.dir/src/ActionInitialization.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/ActionInitialization.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/ActionInitialization.cc -o CMakeFiles/test02.dir/src/ActionInitialization.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/ActionInitialization.cc -o CMakeFiles/test02.dir/src/ActionInitialization.cc.s
 
 CMakeFiles/test02.dir/src/BinaryReader.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/BinaryReader.cc.o: ../src/BinaryReader.cc
 CMakeFiles/test02.dir/src/BinaryReader.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/test02.dir/src/BinaryReader.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/BinaryReader.cc.o -MF CMakeFiles/test02.dir/src/BinaryReader.cc.o.d -o CMakeFiles/test02.dir/src/BinaryReader.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/BinaryReader.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/test02.dir/src/BinaryReader.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/BinaryReader.cc.o -MF CMakeFiles/test02.dir/src/BinaryReader.cc.o.d -o CMakeFiles/test02.dir/src/BinaryReader.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/BinaryReader.cc
 
 CMakeFiles/test02.dir/src/BinaryReader.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/BinaryReader.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/BinaryReader.cc > CMakeFiles/test02.dir/src/BinaryReader.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/BinaryReader.cc > CMakeFiles/test02.dir/src/BinaryReader.cc.i
 
 CMakeFiles/test02.dir/src/BinaryReader.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/BinaryReader.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/BinaryReader.cc -o CMakeFiles/test02.dir/src/BinaryReader.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/BinaryReader.cc -o CMakeFiles/test02.dir/src/BinaryReader.cc.s
 
 CMakeFiles/test02.dir/src/DetectorConstruction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/DetectorConstruction.cc.o: ../src/DetectorConstruction.cc
 CMakeFiles/test02.dir/src/DetectorConstruction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/test02.dir/src/DetectorConstruction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/DetectorConstruction.cc.o -MF CMakeFiles/test02.dir/src/DetectorConstruction.cc.o.d -o CMakeFiles/test02.dir/src/DetectorConstruction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DetectorConstruction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/test02.dir/src/DetectorConstruction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/DetectorConstruction.cc.o -MF CMakeFiles/test02.dir/src/DetectorConstruction.cc.o.d -o CMakeFiles/test02.dir/src/DetectorConstruction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DetectorConstruction.cc
 
 CMakeFiles/test02.dir/src/DetectorConstruction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/DetectorConstruction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DetectorConstruction.cc > CMakeFiles/test02.dir/src/DetectorConstruction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DetectorConstruction.cc > CMakeFiles/test02.dir/src/DetectorConstruction.cc.i
 
 CMakeFiles/test02.dir/src/DetectorConstruction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/DetectorConstruction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DetectorConstruction.cc -o CMakeFiles/test02.dir/src/DetectorConstruction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DetectorConstruction.cc -o CMakeFiles/test02.dir/src/DetectorConstruction.cc.s
 
 CMakeFiles/test02.dir/src/DirectionData.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/DirectionData.cc.o: ../src/DirectionData.cc
 CMakeFiles/test02.dir/src/DirectionData.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/test02.dir/src/DirectionData.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/DirectionData.cc.o -MF CMakeFiles/test02.dir/src/DirectionData.cc.o.d -o CMakeFiles/test02.dir/src/DirectionData.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DirectionData.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/test02.dir/src/DirectionData.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/DirectionData.cc.o -MF CMakeFiles/test02.dir/src/DirectionData.cc.o.d -o CMakeFiles/test02.dir/src/DirectionData.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DirectionData.cc
 
 CMakeFiles/test02.dir/src/DirectionData.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/DirectionData.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DirectionData.cc > CMakeFiles/test02.dir/src/DirectionData.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DirectionData.cc > CMakeFiles/test02.dir/src/DirectionData.cc.i
 
 CMakeFiles/test02.dir/src/DirectionData.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/DirectionData.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/DirectionData.cc -o CMakeFiles/test02.dir/src/DirectionData.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/DirectionData.cc -o CMakeFiles/test02.dir/src/DirectionData.cc.s
 
 CMakeFiles/test02.dir/src/EventAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/EventAction.cc.o: ../src/EventAction.cc
 CMakeFiles/test02.dir/src/EventAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/test02.dir/src/EventAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/EventAction.cc.o -MF CMakeFiles/test02.dir/src/EventAction.cc.o.d -o CMakeFiles/test02.dir/src/EventAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/EventAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/test02.dir/src/EventAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/EventAction.cc.o -MF CMakeFiles/test02.dir/src/EventAction.cc.o.d -o CMakeFiles/test02.dir/src/EventAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/EventAction.cc
 
 CMakeFiles/test02.dir/src/EventAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/EventAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/EventAction.cc > CMakeFiles/test02.dir/src/EventAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/EventAction.cc > CMakeFiles/test02.dir/src/EventAction.cc.i
 
 CMakeFiles/test02.dir/src/EventAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/EventAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/EventAction.cc -o CMakeFiles/test02.dir/src/EventAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/EventAction.cc -o CMakeFiles/test02.dir/src/EventAction.cc.s
 
 CMakeFiles/test02.dir/src/FieldMessenger.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/FieldMessenger.cc.o: ../src/FieldMessenger.cc
 CMakeFiles/test02.dir/src/FieldMessenger.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/test02.dir/src/FieldMessenger.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/FieldMessenger.cc.o -MF CMakeFiles/test02.dir/src/FieldMessenger.cc.o.d -o CMakeFiles/test02.dir/src/FieldMessenger.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/FieldMessenger.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/test02.dir/src/FieldMessenger.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/FieldMessenger.cc.o -MF CMakeFiles/test02.dir/src/FieldMessenger.cc.o.d -o CMakeFiles/test02.dir/src/FieldMessenger.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/FieldMessenger.cc
 
 CMakeFiles/test02.dir/src/FieldMessenger.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/FieldMessenger.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/FieldMessenger.cc > CMakeFiles/test02.dir/src/FieldMessenger.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/FieldMessenger.cc > CMakeFiles/test02.dir/src/FieldMessenger.cc.i
 
 CMakeFiles/test02.dir/src/FieldMessenger.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/FieldMessenger.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/FieldMessenger.cc -o CMakeFiles/test02.dir/src/FieldMessenger.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/FieldMessenger.cc -o CMakeFiles/test02.dir/src/FieldMessenger.cc.s
 
 CMakeFiles/test02.dir/src/MyMagneticField.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/MyMagneticField.cc.o: ../src/MyMagneticField.cc
 CMakeFiles/test02.dir/src/MyMagneticField.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/test02.dir/src/MyMagneticField.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/MyMagneticField.cc.o -MF CMakeFiles/test02.dir/src/MyMagneticField.cc.o.d -o CMakeFiles/test02.dir/src/MyMagneticField.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyMagneticField.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/test02.dir/src/MyMagneticField.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/MyMagneticField.cc.o -MF CMakeFiles/test02.dir/src/MyMagneticField.cc.o.d -o CMakeFiles/test02.dir/src/MyMagneticField.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyMagneticField.cc
 
 CMakeFiles/test02.dir/src/MyMagneticField.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/MyMagneticField.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyMagneticField.cc > CMakeFiles/test02.dir/src/MyMagneticField.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyMagneticField.cc > CMakeFiles/test02.dir/src/MyMagneticField.cc.i
 
 CMakeFiles/test02.dir/src/MyMagneticField.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/MyMagneticField.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyMagneticField.cc -o CMakeFiles/test02.dir/src/MyMagneticField.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyMagneticField.cc -o CMakeFiles/test02.dir/src/MyMagneticField.cc.s
 
 CMakeFiles/test02.dir/src/MyStackingAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/MyStackingAction.cc.o: ../src/MyStackingAction.cc
 CMakeFiles/test02.dir/src/MyStackingAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/test02.dir/src/MyStackingAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/MyStackingAction.cc.o -MF CMakeFiles/test02.dir/src/MyStackingAction.cc.o.d -o CMakeFiles/test02.dir/src/MyStackingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyStackingAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/test02.dir/src/MyStackingAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/MyStackingAction.cc.o -MF CMakeFiles/test02.dir/src/MyStackingAction.cc.o.d -o CMakeFiles/test02.dir/src/MyStackingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyStackingAction.cc
 
 CMakeFiles/test02.dir/src/MyStackingAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/MyStackingAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyStackingAction.cc > CMakeFiles/test02.dir/src/MyStackingAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyStackingAction.cc > CMakeFiles/test02.dir/src/MyStackingAction.cc.i
 
 CMakeFiles/test02.dir/src/MyStackingAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/MyStackingAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyStackingAction.cc -o CMakeFiles/test02.dir/src/MyStackingAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyStackingAction.cc -o CMakeFiles/test02.dir/src/MyStackingAction.cc.s
 
 CMakeFiles/test02.dir/src/Mysection.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/Mysection.cc.o: ../src/Mysection.cc
 CMakeFiles/test02.dir/src/Mysection.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test02.dir/src/Mysection.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/Mysection.cc.o -MF CMakeFiles/test02.dir/src/Mysection.cc.o.d -o CMakeFiles/test02.dir/src/Mysection.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/Mysection.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test02.dir/src/Mysection.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/Mysection.cc.o -MF CMakeFiles/test02.dir/src/Mysection.cc.o.d -o CMakeFiles/test02.dir/src/Mysection.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/Mysection.cc
 
 CMakeFiles/test02.dir/src/Mysection.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/Mysection.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/Mysection.cc > CMakeFiles/test02.dir/src/Mysection.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/Mysection.cc > CMakeFiles/test02.dir/src/Mysection.cc.i
 
 CMakeFiles/test02.dir/src/Mysection.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/Mysection.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/Mysection.cc -o CMakeFiles/test02.dir/src/Mysection.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/Mysection.cc -o CMakeFiles/test02.dir/src/Mysection.cc.s
 
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: ../src/PrimaryGeneratorAction.cc
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o -MF CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o.d -o CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/PrimaryGeneratorAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o -MF CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o.d -o CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/PrimaryGeneratorAction.cc
 
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/PrimaryGeneratorAction.cc > CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/PrimaryGeneratorAction.cc > CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.i
 
 CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/PrimaryGeneratorAction.cc -o CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/PrimaryGeneratorAction.cc -o CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.s
 
 CMakeFiles/test02.dir/src/RunAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/RunAction.cc.o: ../src/RunAction.cc
 CMakeFiles/test02.dir/src/RunAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/test02.dir/src/RunAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/RunAction.cc.o -MF CMakeFiles/test02.dir/src/RunAction.cc.o.d -o CMakeFiles/test02.dir/src/RunAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/RunAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/test02.dir/src/RunAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/RunAction.cc.o -MF CMakeFiles/test02.dir/src/RunAction.cc.o.d -o CMakeFiles/test02.dir/src/RunAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/RunAction.cc
 
 CMakeFiles/test02.dir/src/RunAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/RunAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/RunAction.cc > CMakeFiles/test02.dir/src/RunAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/RunAction.cc > CMakeFiles/test02.dir/src/RunAction.cc.i
 
 CMakeFiles/test02.dir/src/RunAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/RunAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/RunAction.cc -o CMakeFiles/test02.dir/src/RunAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/RunAction.cc -o CMakeFiles/test02.dir/src/RunAction.cc.s
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o: ../src/SphericalSystemHitinAir.cc
 CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinAir.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinAir.cc
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinAir.cc > CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinAir.cc > CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.i
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinAir.cc -o CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinAir.cc -o CMakeFiles/test02.dir/src/SphericalSystemHitinAir.cc.s
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o: ../src/SphericalSystemHitinOrbit.cc
 CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinOrbit.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinOrbit.cc
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinOrbit.cc > CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinOrbit.cc > CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.i
 
 CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemHitinOrbit.cc -o CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemHitinOrbit.cc -o CMakeFiles/test02.dir/src/SphericalSystemHitinOrbit.cc.s
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o: ../src/SphericalSystemSDinAir.cc
 CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinAir.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinAir.cc
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinAir.cc > CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinAir.cc > CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.i
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinAir.cc -o CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinAir.cc -o CMakeFiles/test02.dir/src/SphericalSystemSDinAir.cc.s
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o: ../src/SphericalSystemSDinOrbit.cc
 CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinOrbit.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o -MF CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o.d -o CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinOrbit.cc
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinOrbit.cc > CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinOrbit.cc > CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.i
 
 CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SphericalSystemSDinOrbit.cc -o CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SphericalSystemSDinOrbit.cc -o CMakeFiles/test02.dir/src/SphericalSystemSDinOrbit.cc.s
 
 CMakeFiles/test02.dir/src/SteppingAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/SteppingAction.cc.o: ../src/SteppingAction.cc
 CMakeFiles/test02.dir/src/SteppingAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/test02.dir/src/SteppingAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SteppingAction.cc.o -MF CMakeFiles/test02.dir/src/SteppingAction.cc.o.d -o CMakeFiles/test02.dir/src/SteppingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SteppingAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/test02.dir/src/SteppingAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/SteppingAction.cc.o -MF CMakeFiles/test02.dir/src/SteppingAction.cc.o.d -o CMakeFiles/test02.dir/src/SteppingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SteppingAction.cc
 
 CMakeFiles/test02.dir/src/SteppingAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/SteppingAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SteppingAction.cc > CMakeFiles/test02.dir/src/SteppingAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SteppingAction.cc > CMakeFiles/test02.dir/src/SteppingAction.cc.i
 
 CMakeFiles/test02.dir/src/SteppingAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/SteppingAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/SteppingAction.cc -o CMakeFiles/test02.dir/src/SteppingAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/SteppingAction.cc -o CMakeFiles/test02.dir/src/SteppingAction.cc.s
 
 CMakeFiles/test02.dir/src/TrackerHit.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/TrackerHit.cc.o: ../src/TrackerHit.cc
 CMakeFiles/test02.dir/src/TrackerHit.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/test02.dir/src/TrackerHit.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackerHit.cc.o -MF CMakeFiles/test02.dir/src/TrackerHit.cc.o.d -o CMakeFiles/test02.dir/src/TrackerHit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerHit.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/test02.dir/src/TrackerHit.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackerHit.cc.o -MF CMakeFiles/test02.dir/src/TrackerHit.cc.o.d -o CMakeFiles/test02.dir/src/TrackerHit.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerHit.cc
 
 CMakeFiles/test02.dir/src/TrackerHit.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/TrackerHit.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerHit.cc > CMakeFiles/test02.dir/src/TrackerHit.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerHit.cc > CMakeFiles/test02.dir/src/TrackerHit.cc.i
 
 CMakeFiles/test02.dir/src/TrackerHit.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/TrackerHit.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerHit.cc -o CMakeFiles/test02.dir/src/TrackerHit.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerHit.cc -o CMakeFiles/test02.dir/src/TrackerHit.cc.s
 
 CMakeFiles/test02.dir/src/TrackerSD.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/TrackerSD.cc.o: ../src/TrackerSD.cc
 CMakeFiles/test02.dir/src/TrackerSD.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/test02.dir/src/TrackerSD.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackerSD.cc.o -MF CMakeFiles/test02.dir/src/TrackerSD.cc.o.d -o CMakeFiles/test02.dir/src/TrackerSD.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerSD.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/test02.dir/src/TrackerSD.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackerSD.cc.o -MF CMakeFiles/test02.dir/src/TrackerSD.cc.o.d -o CMakeFiles/test02.dir/src/TrackerSD.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerSD.cc
 
 CMakeFiles/test02.dir/src/TrackerSD.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/TrackerSD.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerSD.cc > CMakeFiles/test02.dir/src/TrackerSD.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerSD.cc > CMakeFiles/test02.dir/src/TrackerSD.cc.i
 
 CMakeFiles/test02.dir/src/TrackerSD.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/TrackerSD.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackerSD.cc -o CMakeFiles/test02.dir/src/TrackerSD.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackerSD.cc -o CMakeFiles/test02.dir/src/TrackerSD.cc.s
 
 CMakeFiles/test02.dir/src/TrackingAction.cc.o: CMakeFiles/test02.dir/flags.make
 CMakeFiles/test02.dir/src/TrackingAction.cc.o: ../src/TrackingAction.cc
 CMakeFiles/test02.dir/src/TrackingAction.cc.o: CMakeFiles/test02.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/test02.dir/src/TrackingAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackingAction.cc.o -MF CMakeFiles/test02.dir/src/TrackingAction.cc.o.d -o CMakeFiles/test02.dir/src/TrackingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackingAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/test02.dir/src/TrackingAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test02.dir/src/TrackingAction.cc.o -MF CMakeFiles/test02.dir/src/TrackingAction.cc.o.d -o CMakeFiles/test02.dir/src/TrackingAction.cc.o -c /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackingAction.cc
 
 CMakeFiles/test02.dir/src/TrackingAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test02.dir/src/TrackingAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackingAction.cc > CMakeFiles/test02.dir/src/TrackingAction.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackingAction.cc > CMakeFiles/test02.dir/src/TrackingAction.cc.i
 
 CMakeFiles/test02.dir/src/TrackingAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test02.dir/src/TrackingAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/TrackingAction.cc -o CMakeFiles/test02.dir/src/TrackingAction.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/TrackingAction.cc -o CMakeFiles/test02.dir/src/TrackingAction.cc.s
 
 # Object files for target test02
 test02_OBJECTS = \
@@ -453,7 +453,7 @@ test02: /home/jasongindrkchen/geant4/geant4-v11.3.0-install/lib/libG4global.so
 test02: /home/jasongindrkchen/geant4/geant4-v11.3.0-install/lib/libG4clhep.so
 test02: /home/jasongindrkchen/geant4/geant4-v11.3.0-install/lib/libG4ptl.so.3.0.0
 test02: CMakeFiles/test02.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable test02"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable test02"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test02.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -465,6 +465,6 @@ CMakeFiles/test02.dir/clean:
 .PHONY : CMakeFiles/test02.dir/clean
 
 CMakeFiles/test02.dir/depend:
-	cd /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/build/CMakeFiles/test02.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/build/CMakeFiles/test02.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test02.dir/depend
 

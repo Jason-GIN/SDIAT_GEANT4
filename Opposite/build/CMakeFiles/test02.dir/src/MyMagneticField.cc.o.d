@@ -1,7 +1,7 @@
 CMakeFiles/test02.dir/src/MyMagneticField.cc.o: \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/src/MyMagneticField.cc \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/src/MyMagneticField.cc \
  /usr/include/stdc-predef.h \
- /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/Opposite/include/MyMagneticField.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4MagneticField.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Types.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4GlobalConfig.hh \

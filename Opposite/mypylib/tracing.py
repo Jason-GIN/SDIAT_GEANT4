@@ -112,11 +112,11 @@ def main(Xinit, monento, otherpar,i,n,thread):
     XVinit=np.append(Xinit,velosity)
     #可以考虑在这个玩意里面用归一化的无量纲常数，这样应该可以减小误差
     sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method='RK45', events=[rLow, rHigh, rDetector], args=param)
-    print("Sol function finished! Now saving data.")
-    str1="../result/TraceData/TraceTest"+str(i)+"_"+n+"_t"+str(thread)+".csv"
-    r=np.linalg.norm(sol.y[0:3],axis=0)
-    array=np.vstack((sol.y[0:3],r))
-    pd.DataFrame(array.T).to_csv(str1, header=False,  index=False)
+    print("Sol function finished!")
+    #str1="../result/TraceData/TraceTest"+str(i)+"_"+n+"_t"+str(thread)+".csv"
+    #r=np.linalg.norm(sol.y[0:3],axis=0)
+    #array=np.vstack((sol.y[0:3],r))
+    #pd.DataFrame(array.T).to_csv(str1, header=False,  index=False)
     if len(sol.y_events[0])==0:
         return (i, np.array([]), sol.y_events[2])
     else :
