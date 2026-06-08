@@ -69,7 +69,7 @@ namespace Test02
 
         while (std::getline(ss, cell, ',') && col < 13963)
         {
-          if (cell == "1.0")
+          if (cell[0] == '1')
           {
             result.set(col);
             // G4cout << "----------------GIN-b------------------" << G4endl;

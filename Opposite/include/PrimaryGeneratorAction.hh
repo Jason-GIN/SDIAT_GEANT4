@@ -11,6 +11,7 @@
 #include "G4UIcmdWithAnInteger.hh"
 #include "G4UIcommand.hh"
 #include "G4Threading.hh"
+#include "Randomize.hh"
 
 #include <string>
 #include <bitset>
@@ -89,6 +90,53 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction, G4UImesseng
     G4UIcmdWithAString *fReadfileCmd;
     std::vector<ParticleInfo> fParticleList;
     G4String fCurrentGenerator;
+
+    struct DirectionMaskCache {
+        std::string cachedFilename;
+        std::vector<std::bitset<13963>> rows;  // 54行全量bitset
+        // 预计算每行中设为1的索引列表（用于O(1)随机选择）
+        std::vector<std::vector<int>> allowedIndices;  // 每行的允许方向索引
+        
+        bool load(const std::string& filename) {
+            if (filename == cachedFilename && !rows.empty()) return true;
+            
+            rows.clear();
+            allowedIndices.clear();
+            
+            std::ifstream file(filename);
+            if (!file.is_open()) return false;
+            
+            std::string line;
+            while (std::getline(file, line)) {
+                std::bitset<13963> row;
+                std::vector<int> indices;
+                
+                std::stringstream ss(line);
+                std::string cell;
+                int col = 0;
+                while (std::getline(ss, cell, ',') && col < 13963) {
+                    if (cell[0] == '1') {  // 比 cell == "1.0" 快得多！
+                        row.set(col);
+                        indices.push_back(col);
+                    }
+                    col++;
+                }
+                rows.push_back(row);
+                allowedIndices.push_back(std::move(indices));
+            }
+            cachedFilename = filename;
+            return true;
+        }
+        
+        // O(1) 随机选择允许方向（无拒绝采样！）
+        int getRandomAllowed(int targetRow) const {
+            const auto& indices = allowedIndices.at(targetRow);
+            int idx = static_cast<int>(G4UniformRand() * indices.size());
+            return indices[idx];
+        }
+    };
+    
+    DirectionMaskCache fDirectionCache;
     
 };
 

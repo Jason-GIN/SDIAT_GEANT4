@@ -676,13 +676,13 @@ namespace Test02
 
   G4ThreeVector PrimaryGeneratorAction::GeneratorDirectionCSV1(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow)
   {
+    /*
     std::bitset<13963> rowdata;
     int id;
-
     // G4cout << "-------------GIN0.20---------------"<< G4endl;
     // G4cout << "bf rowdata.test(505): " << rowdata.test(505) << G4endl;
     // G4cout << "-------------GIN0.20---------------"<< G4endl;
-
+    
     if (BinaryReader::readCSVSpecificRow(filename, targetrow, rowdata))
     {
 
@@ -706,18 +706,25 @@ namespace Test02
              << " in thread " << std::this_thread::get_id() << G4endl;
       return G4ThreeVector(0, 0, 0);
     };
+    */
+
+    if (!fDirectionCache.load(filename)) {
+        G4cout << "Error loading: " << filename << G4endl;
+        return G4ThreeVector(0, 0, 0);
+    }
+    int id = fDirectionCache.getRandomAllowed(targetrow);
 
     G4ThreeVector dp = DirectionData::getDirection(static_cast<size_t>(id));
 
-    G4ThreeVector xyz, xyzm, ddp, oddp;
+    G4ThreeVector  xyzm, ddp, oddp;
     // xyz is the position in zenith at (lat,lon)
     // xyzm is the position in GTOD
     // vm is the direction in GTOD
     // ddp id the direction in zenith at (lat,lon)
 
-    xyz[0] = x;
-    xyz[1] = y;
-    xyz[2] = z;
+    //xyz[0] = x;
+    //xyz[1] = y;
+    //xyz[2] = z;
     /*
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     //G4cout << "dp: " << dp << G4endl;
@@ -725,14 +732,11 @@ namespace Test02
     G4cout << "rowdata.at(id): " << rowdata.at(id) << G4endl;
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     */
-    xyzm = VectorZenithinGTOD1(xyz, (90.0 * deg - lat), lon);
+
+    xyzm = VectorZenithinGTOD1(G4ThreeVector(x,y,z), (90.0 * deg - lat), lon);
     ddp = VectorZenithinGTOD(dp, xyzm);
     // ddp = VectorGTODinZenith1(vm,(90.0*deg-lat),lon);
-    /*
-    oddp[0]=-ddp[0];
-    oddp[1]=-ddp[1];
-    oddp[2]=-ddp[2];
-    */
+    
     oddp = -ddp;
 
     return oddp;
