@@ -440,9 +440,9 @@ namespace Test02
     rtp = xyz2r(xyz1);
     double cos_p = std::cos(rtp[2]), sin_p = std::sin(rtp[2]);
     double cos_t = std::cos(rtp[1]), sin_t = std::sin(rtp[1]);
-    xyzn[0] = cos_p * cos_t * xyz1[0] + sin_p * cos_t * xyz1[1] - sin_t * xyz1[2];
-    xyzn[1] = -sin_p * xyz1[0] + cos_p * xyz1[1];
-    xyzn[2] = cos_p * sin_t * xyz1[0] + sin_p * sin_t * xyz1[1] + cos_t * xyz1[2];
+    xyzn[0] = cos_p * cos_t * xyz2[0] + sin_p * cos_t * xyz2[1] - sin_t * xyz2[2];
+    xyzn[1] = -sin_p * xyz2[0] + cos_p * xyz2[1];
+    xyzn[2] = cos_p * sin_t * xyz2[0] + sin_p * sin_t * xyz2[1] + cos_t * xyz2[2];
 
     return xyzn;
   }
@@ -465,9 +465,9 @@ namespace Test02
     rtp = xyz2r(xyz1);
     double cos_p = std::cos(rtp[2]), sin_p = std::sin(rtp[2]);
     double cos_t = std::cos(rtp[1]), sin_t = std::sin(rtp[1]);
-    xyzn[0] = cos_p * cos_t * xyz1[0] - sin_p * xyz1[1] + cos_p * sin_t * xyz1[2];
-    xyzn[1] = sin_p * cos_t * xyz1[0] + cos_p * xyz1[1] + sin_p * sin_t * xyz1[2];
-    xyzn[2] = -sin_t * xyz1[0] + cos_t * xyz1[2];
+    xyzn[0] = cos_p * cos_t * xyz2[0] - sin_p * xyz2[1] + cos_p * sin_t * xyz2[2];
+    xyzn[1] = sin_p * cos_t * xyz2[0] + cos_p * xyz2[1] + sin_p * sin_t * xyz2[2];
+    xyzn[2] = -sin_t * xyz2[0] + cos_t * xyz2[2];
 
     return xyzn;
   }
