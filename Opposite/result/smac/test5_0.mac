@@ -15,4 +15,4 @@
 /generator/select Secondary
 /generator/Readfile ../result/TraceData/test_5_0.csv
 
-/run/beamOn 0
+/run/beamOn 2

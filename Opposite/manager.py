@@ -103,7 +103,7 @@ def DataWrite(data, savefile):
             writer.writerow(row)
 
 def SaveRoot(filename,data):
-    wdata = {"PosX": data[:,0], "PosY": data[:,1], "PosX": data[:,2], 
+    wdata = {"PosX": data[:,0], "PosY": data[:,1], "PosZ": data[:,2], 
              "DirX": data[:,3], "DirY": data[:,4], "DirZ": data[:,5],
              "Energy": data[:,6], "PID": data[:,7], "Charge": data[:,8], "task_id":data[:,9]
              }
@@ -130,6 +130,25 @@ def LoopBasic(particlelist,Enum,n):
         # 如果 main 不接受元组而需要多个参数，就用 starmap
         results = pool.starmap(tracing.main, args_list)
     print("Process runing finish, Now selecting and saving data. ")
+    
+    par_list = []  # Python list of numpy arrays
+    hit_list = []
+
+    for result in results:
+        task_id, res, Hit = result
+        if len(res) > 0:
+            par_list.append(np.hstack([res[0, 0:3], 
+                                       res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
+                                       particlelist[task_id, 6:8]]))
+        if len(Hit) > 0:
+            hit_list.append(np.hstack([Hit, 
+                                       np.ones((Hit.shape[0], 4)) * 
+                                       np.hstack([particlelist[task_id, 6:9], task_id])]))
+
+    # 最后一次性构造
+    Parlist = np.vstack(par_list) if par_list else np.array([])
+    Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+    '''
     Parlist=np.array([])
     Hitlist=np.array([])
     for result in results:
@@ -162,6 +181,7 @@ def LoopBasic(particlelist,Enum,n):
                     Hitlist=hlist
                 else:
                     Hitlist=np.vstack((Hitlist,hlist))
+    '''
     strmac="../result/smac/test"+str(n)+"_"+Enum+".mac"
     strcsv="../result/TraceData/test_"+str(n)+"_"+Enum+".csv"
     strroot="../result/seconddata"+str(n)+"_"+Enum+".root"
@@ -182,6 +202,14 @@ def LoopBasic(particlelist,Enum,n):
     gplist=ParticleSelect(particlelist1)
     num=gplist.shape[0]
     return gplist, num
+    
+def run_geant4_parallel(macro_files_list): 
+    # 可以考虑并行，不管是并行经纬度扫描还是并行能量，
+    # 因为实际上次级的粒子返回基本上和allowed cone 关系不大了。
+    with mps.Pool(processes=4) as pool:  # 4个并行GEANT4实例
+        results = pool.map(GEANT4RuningFun, macro_files_list)
+        #这里的macro_files_list就是一个macro_files的列表
+    return results
     
 def main(runmac, Enum):
     particles = GEANT4RuningFun(runmac)
