@@ -392,6 +392,53 @@ CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithAnInteger.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4Threading.hh \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/Randomize.hh \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Randomize.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/DualRand.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandomEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandomEngine.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/JamesRandom.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/MixMaxRng.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/MTwistEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanecuEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanluxEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Ranlux64Engine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanluxppEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanshiEngine.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBinomial.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Random.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Random.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Utility/memory.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBinomial.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBreitWigner.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandFlat.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Utility/thread_local.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandFlat.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBreitWigner.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandChiSquare.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandChiSquare.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExponential.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExponential.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExpZiggurat.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBit.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBit.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGamma.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGamma.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGauss.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGauss.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussQ.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussQ.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussZiggurat.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGeneral.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGeneral.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandLandau.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandLandau.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoissonQ.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoisson.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoisson.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoissonQ.icc \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandStudentT.h \
+ /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandStudentT.icc \
  /usr/include/c++/11/bitset \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4LogicalVolumeStore.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VStoreNotifier.hh \
@@ -464,52 +511,6 @@ CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4NoProcess.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VProcess.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/Randomize.hh \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Randomize.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/DualRand.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandomEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandomEngine.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/JamesRandom.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/MixMaxRng.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/MTwistEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanecuEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanluxEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Ranlux64Engine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanluxppEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RanshiEngine.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBinomial.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Random.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/Random.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Utility/memory.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBinomial.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBreitWigner.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandFlat.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Utility/thread_local.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandFlat.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBreitWigner.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandChiSquare.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandChiSquare.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExponential.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExponential.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandExpZiggurat.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBit.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandBit.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGamma.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGamma.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGauss.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGauss.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussQ.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussQ.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGaussZiggurat.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGeneral.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandGeneral.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandLandau.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandLandau.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoissonQ.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoisson.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoisson.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandPoissonQ.icc \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandStudentT.h \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/CLHEP/Random/RandStudentT.icc \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4PhysicsTable.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4PhysicsTable.icc \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VParticleChange.hh \
@@ -535,7 +536,6 @@ CMakeFiles/test02.dir/src/PrimaryGeneratorAction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ParticleTable.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4ParticleDefinition.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4SystemOfUnits.hh \
- /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/Randomize.hh \
  /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DetectorConstruction.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VUserDetectorConstruction.hh \
  /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/MyMagneticField.hh \
