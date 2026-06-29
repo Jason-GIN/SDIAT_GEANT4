@@ -6,7 +6,7 @@ from scipy import integrate
 from scipy import interpolate
 #from scipy.special import ellipeinc
 #from scipy.optimize import brentq
-from mypylib import igrf14 
+from mypylib import myigrf14 
 import pandas as pd
 import time 
 import logging
@@ -48,7 +48,7 @@ def XVDinkm(t,XV,qcharge,Ekg):  #数值求解常微分方程组的导函数数�
     return [vx, vy, vz, ax, ay, az]
 '''
 def XVDinkm(t,XV,qcharge,Ekg):  #数值求解常微分方程组的导函数数组定义
-    return igrf14.rhs_particle(t,XV,qcharge,Ekg,2025)
+    return myigrf14.rhs_particle(t,XV,qcharge,Ekg,2025)
 
 def rLow(t,XV,qcharge,Ekg):     # 积分integrate.solve_ivp的内置events判别，是否撞上稠密大气
     x, y, z, vx, vy, vz = XV
