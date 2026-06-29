@@ -24,7 +24,7 @@
 
 namespace Test02
 {
-  //const int nu = 91;
+  // const int nu = 91;
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction *detCon)
@@ -46,7 +46,7 @@ namespace Test02
     fReadfileCmd->SetGuidance("Set particle by PDG code for the current source");
     fReadfileCmd->SetParameterName("filename", false);
     fReadfileCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
-    
+
     /*
     if (!G4Threading::IsWorkerThread())
     {
@@ -112,6 +112,8 @@ namespace Test02
         p.kineticEnergy = std::stod(fields[6]) * MeV;
         // 第8列 -> pdgCode
         p.pdgCode = std::stoi(fields[7]);
+        // 第9列 -> time
+        p.time = std::stoi(fields[8]) * ns;
 
         fParticleList.push_back(p);
       }
@@ -448,7 +450,7 @@ namespace Test02
   }
 
   G4ThreeVector VectorGTODinZenith1(G4ThreeVector xyz1, G4double t, G4double p)
-{
+  {
     G4ThreeVector xyzn;
     double cos_p = std::cos(p), sin_p = std::sin(p);
     double cos_t = std::cos(t), sin_t = std::sin(t);
@@ -457,7 +459,7 @@ namespace Test02
     xyzn[2] = cos_p * sin_t * xyz1[0] + sin_p * sin_t * xyz1[1] + cos_t * xyz1[2];
 
     return xyzn;
-}
+  }
 
   G4ThreeVector VectorZenithinGTOD(G4ThreeVector xyz2, G4ThreeVector xyz1)
   {
@@ -473,7 +475,7 @@ namespace Test02
   }
 
   G4ThreeVector VectorZenithinGTOD1(G4ThreeVector xyz1, G4double t, G4double p)
-{
+  {
     G4ThreeVector xyzn;
     double cos_p = std::cos(p), sin_p = std::sin(p);
     double cos_t = std::cos(t), sin_t = std::sin(t);
@@ -482,7 +484,7 @@ namespace Test02
     xyzn[2] = -sin_t * xyz1[0] + cos_t * xyz1[2];
 
     return xyzn;
-}
+  }
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -682,7 +684,7 @@ namespace Test02
     // G4cout << "-------------GIN0.20---------------"<< G4endl;
     // G4cout << "bf rowdata.test(505): " << rowdata.test(505) << G4endl;
     // G4cout << "-------------GIN0.20---------------"<< G4endl;
-    
+
     if (BinaryReader::readCSVSpecificRow(filename, targetrow, rowdata))
     {
 
@@ -708,23 +710,24 @@ namespace Test02
     };
     */
 
-    if (!fDirectionCache.load(filename)) {
-        G4cout << "Error loading: " << filename << G4endl;
-        return G4ThreeVector(0, 0, 0);
+    if (!fDirectionCache.load(filename))
+    {
+      G4cout << "Error loading: " << filename << G4endl;
+      return G4ThreeVector(0, 0, 0);
     }
     int id = fDirectionCache.getRandomAllowed(targetrow);
 
     G4ThreeVector dp = DirectionData::getDirection(static_cast<size_t>(id));
 
-    G4ThreeVector  xyzm, ddp, oddp;
+    G4ThreeVector xyzm, ddp, oddp;
     // xyz is the position in zenith at (lat,lon)
     // xyzm is the position in GTOD
     // vm is the direction in GTOD
     // ddp id the direction in zenith at (lat,lon)
 
-    //xyz[0] = x;
-    //xyz[1] = y;
-    //xyz[2] = z;
+    // xyz[0] = x;
+    // xyz[1] = y;
+    // xyz[2] = z;
     /*
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     //G4cout << "dp: " << dp << G4endl;
@@ -733,10 +736,10 @@ namespace Test02
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     */
 
-    xyzm = VectorZenithinGTOD1(G4ThreeVector(x,y,z), (90.0 * deg - lat), lon);
+    xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
     ddp = VectorZenithinGTOD(dp, xyzm);
     // ddp = VectorGTODinZenith1(vm,(90.0*deg-lat),lon);
-    
+
     oddp = -ddp;
 
     return oddp;
@@ -799,9 +802,9 @@ namespace Test02
       };
       // G4double lat = 31.15*deg;
       // G4double lon =-100.0*deg;
-      G4cout << "-------------GIN0.3---------------" << G4endl;
-      G4cout << "lat: " << lat / deg << "\t" << "lon: " << lon / deg << G4endl;
-      G4cout << "-------------GIN0.3---------------" << G4endl;
+      // G4cout << "-------------GIN0.3---------------" << G4endl;
+      // G4cout << "lat: " << lat / deg << "\t" << "lon: " << lon / deg << G4endl;
+      // G4cout << "-------------GIN0.3---------------" << G4endl;
 
       G4double R = 6371.2 * km + tod + 0.5 * km + 9.5 * cm;
       // G4double l = G4UniformRand()*300*km; // arc length
@@ -857,15 +860,15 @@ namespace Test02
         };
       };
       std::string str0 = "../ctable/all_" + std::to_string(int(std::round(lon / deg))) + "_" + std::to_string(int(std::round(lat / deg))) + ".csv";
-      G4cout << "-------------GIN---------------" << G4endl;
-      G4cout << "Ek: " << Ek << G4endl;
-      G4cout << "bf targetrow: " << targetrow << G4endl;
-      // targetrow=53;
-      // G4cout << "fulltest targetrow: " << targetrow << G4endl;
-      G4cout << "str0: " << str0 << G4endl;
-      G4cout << "-------------GIN---------------" << G4endl;
+      // G4cout << "-------------GIN---------------" << G4endl;
+      // G4cout << "Ek: " << Ek << G4endl;
+      // G4cout << "bf targetrow: " << targetrow << G4endl;
+      //  targetrow=53;
+      //  G4cout << "fulltest targetrow: " << targetrow << G4endl;
+      // G4cout << "str0: " << str0 << G4endl;
+      // G4cout << "-------------GIN---------------" << G4endl;
 
-      dpp = GeneratorDirectionCSV1(str0,pos[0],pos[1],pos[2],lat,lon,targetrow);
+      dpp = GeneratorDirectionCSV1(str0, pos[0], pos[1], pos[2], lat, lon, targetrow);
       // G4double energy= GeneratorEnergyFromSpectrum(nu);
       // G4cout << "-------------GIN1---------------"<< G4endl;
 
@@ -879,30 +882,30 @@ namespace Test02
     }
     else if (fCurrentGenerator == "Secondary")
     {
+
+      G4int evtID = anEvent->GetEventID();
+      G4cout << "evtID: " << evtID << G4endl;
+      G4cout << "fParticleList.size(): " << fParticleList.size() << G4endl;
+      if (evtID < 0 || evtID >= (G4int)fParticleList.size())
       {
-        G4int evtID = anEvent->GetEventID();
-        //G4cout << "evtID: " << evtID << G4endl;
-        //G4cout << "fParticleList.size(): " << fParticleList.size() << G4endl;
-        if (evtID < 0 || evtID >= (G4int)fParticleList.size())
-        {
-          //G4cout << "evtID: " << evtID << G4endl;
-          //G4cout << "fParticleList.size(): " << fParticleList.size() << G4endl;
-          G4Exception("MyPrimaryGenerator::GeneratePrimaries", "EvtOutOfRange",
-                      FatalException, "Event ID out of range of loaded particle list");
-          return;
-        }
-        const ParticleInfo &info = fParticleList[evtID];
-        G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
-        // G4cout << "---------------GIN----------------" << G4endl;
-        // G4cout << "fPDGcode: " << fPDGcode << G4endl;
-        // G4cout << "---------------GIN----------------" << G4endl;
-        G4ParticleDefinition *particle = particleTable->FindParticle(info.pdgCode);
-        fParticleGun->SetParticleDefinition(particle);
-        fParticleGun->SetParticlePosition(info.position);
-        fParticleGun->SetParticleMomentumDirection(info.direction);
-        fParticleGun->SetParticleEnergy(info.kineticEnergy);
-        fParticleGun->GeneratePrimaryVertex(anEvent);
+        // G4cout << "evtID: " << evtID << G4endl;
+        // G4cout << "fParticleList.size(): " << fParticleList.size() << G4endl;
+        G4Exception("MyPrimaryGenerator::GeneratePrimaries", "EvtOutOfRange",
+                    FatalException, "Event ID out of range of loaded particle list");
+        return;
       }
+      const ParticleInfo &info = fParticleList[evtID];
+      G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
+      G4cout << "---------------GIN----------------" << G4endl;
+      G4cout << "fPDGcode: " << info.pdgCode<< G4endl;
+      G4cout << "---------------GIN----------------" << G4endl;
+      G4ParticleDefinition *particle = particleTable->FindParticle(info.pdgCode);
+      fParticleGun->SetParticleDefinition(particle);
+      fParticleGun->SetParticlePosition(info.position);
+      fParticleGun->SetParticleMomentumDirection(info.direction);
+      fParticleGun->SetParticleEnergy(info.kineticEnergy);
+      fParticleGun->SetParticleTime(info.time);
+      fParticleGun->GeneratePrimaryVertex(anEvent);
     }
 
     //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

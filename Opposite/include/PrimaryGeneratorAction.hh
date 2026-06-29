@@ -36,6 +36,7 @@ struct ParticleInfo {
     G4ThreeVector direction;
     G4double      kineticEnergy;
     G4int         pdgCode;   // 粒子种类，如 PDG 编码
+    G4double      time;
 };
 
 

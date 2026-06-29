@@ -193,7 +193,7 @@ G4bool SphericalSystemSDinOrbit::ProcessHits(G4Step* aStep,
     pdata->FillNtupleDColumn(1, 7, momentum.y());
     pdata->FillNtupleDColumn(1, 8, momentum.z());
     pdata->FillNtupleDColumn(1, 9, charge);
-    pdata->FillNtupleDColumn(1, 10, timeOfArr/ns);
+    pdata->FillNtupleDColumn(1, 10, timeOfArr/s);
     pdata->FillNtupleIColumn(1, 11, PID);
     pdata->FillNtupleIColumn(1, 12, ParentId);
     pdata->FillNtupleIColumn(1, 13, pPID);

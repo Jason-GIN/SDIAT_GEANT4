@@ -19,25 +19,41 @@ def xyz2rthetaphi(x,y,z):
     #return np.vstack((r,90-np.rad2deg(theta),np.rad2deg(phi)))
 
 def rthetaphi2xyz(r,theta,phi):
-    x=r*np.sin(theta)*np.cos(phi)
-    y=r*np.sin(theta)*np.sin(phi)
-    z=r*np.cos(theta)
+    
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
+    
+    x=r*sintheta*cosphi
+    y=r*sintheta*sinphi
+    z=r*costheta
     return x,y,z
     #return np.vstack((r,90-np.rad2deg(theta),np.rad2deg(phi)))
 
 def rthetaphi2xyz1(r,theta,phi):
-    x=r*np.sin(theta)*np.cos(phi)
-    y=r*np.sin(theta)*np.sin(phi)
-    z=r*np.cos(theta)
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
+    
+    x=r*sintheta*cosphi
+    y=r*sintheta*sinphi
+    z=r*costheta
     return np.vstack((x,y,z))
     #return np.vstack((r,90-np.rad2deg(theta),np.rad2deg(phi)))
 
 def VectorGTODinZenith2(x,y,z,theta,phi):
     # 这里的theta是余纬度，phi是经度
     # 
-    xn=np.cos(phi)*np.cos(theta)*x+np.sin(phi)*np.cos(theta)*y-np.sin(theta)*z
-    yn=-np.sin(phi)*x+np.cos(phi)*y
-    zn=np.cos(phi)*np.sin(theta)*x+np.sin(phi)*np.sin(theta)*y+np.cos(theta)*z
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
+    
+    xn=cosphi*costheta*x+sinphi*costheta*y-sintheta*z
+    yn=-sinphi*x+cosphi*y
+    zn=cosphi*sintheta*x+sinphi*sintheta*y+costheta*z
     
     return np.vstack((xn,yn,zn))
 
@@ -55,37 +71,55 @@ def VectorGTODinZenith1(x,y,z,x0,y0,z0):
     # 这里的theta是余纬度，phi是经度
     # 
     r,theta,phi=xyz2rthetaphi(x0,y0,z0) 
-    xn=np.cos(phi)*np.cos(theta)*x+np.sin(phi)*np.cos(theta)*y-np.sin(theta)*z
-    yn=-np.sin(phi)*x+np.cos(phi)*y
-    zn=np.cos(phi)*np.sin(theta)*x+np.sin(phi)*np.sin(theta)*y+np.cos(theta)*z
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
     
+    xn=cosphi*costheta*x+sinphi*costheta*y-sintheta*z
+    yn=-sinphi*x+cosphi*y
+    zn=cosphi*sintheta*x+sinphi*sintheta*y+costheta*z
     return xn,yn,zn
 
 def VectorZenithinGTOD2(mx,my,mz,theta,phi):
     # 这里的theta是余纬度，phi是经度
     # 
-    mxn=np.cos(phi)*np.cos(theta)*mx-np.sin(phi)*my+np.cos(phi)*np.sin(theta)*mz
-    myn=np.sin(phi)*np.cos(theta)*mx+np.cos(phi)*my+np.sin(phi)*np.sin(theta)*mz
-    mzn=-np.sin(theta)*mx+np.cos(theta)*mz
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
+    
+    mxn=cosphi*costheta*mx-sinphi*my+cosphi*sintheta*mz
+    myn=sinphi*costheta*mx+cosphi*my+sinphi*sintheta*mz
+    mzn=-sintheta*mx+costheta*mz
     
     return np.vstack((mxn,myn,mzn))
 
 def VectorZenithinGTOD1(mx,my,mz,theta,phi):
     # 这里的theta是余纬度，phi是经度
     # 
-    mxn=np.cos(phi)*np.cos(theta)*mx-np.sin(phi)*my+np.cos(phi)*np.sin(theta)*mz
-    myn=np.sin(phi)*np.cos(theta)*mx+np.cos(phi)*my+np.sin(phi)*np.sin(theta)*mz
-    mzn=-np.sin(theta)*mx+np.cos(theta)*mz
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
+    
+    mxn=cosphi*costheta*mx-sinphi*my+cosphi*sintheta*mz
+    myn=sinphi*costheta*mx+cosphi*my+sinphi*sintheta*mz
+    mzn=-sintheta*mx+costheta*mz
     
     return mxn,myn,mzn
 
 def VectorZenithinGTOD(mx,my,mz,x0,y0,z0):
 
     r,theta,phi=xyz2rthetaphi(x0,y0,z0) 
-    mxn=np.cos(phi)*np.cos(theta)*mx-np.sin(phi)*my+np.cos(phi)*np.sin(theta)*mz
-    myn=np.sin(phi)*np.cos(theta)*mx+np.cos(phi)*my+np.sin(phi)*np.sin(theta)*mz
-    mzn=-np.sin(theta)*mx+np.cos(theta)*mz
+    sintheta=np.sin(theta)
+    sinphi=np.sin(phi)
+    costheta=np.cos(theta)
+    cosphi=np.cos(phi)
     
+    mxn=cosphi*costheta*mx-sinphi*my+cosphi*sintheta*mz
+    myn=sinphi*costheta*mx+cosphi*my+sinphi*sintheta*mz
+    mzn=-sintheta*mx+costheta*mz
     return np.vstack((mxn,myn,mzn))
 
 def drirenomal (X,Y,Z,nMx,nMy,nMz,colat,lon):

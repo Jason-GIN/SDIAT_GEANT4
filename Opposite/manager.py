@@ -75,7 +75,8 @@ def GEANT4RuningFun(macro_file,):
     particle_dtype = np.dtype([
         ('x', 'f8'), ('y', 'f8'), ('z', 'f8'),
         ('dx', 'f8'), ('dy', 'f8'), ('dz', 'f8'),
-        ('energy', 'f8'),('PID','f8'),('charge','f8'),('t','f8') ,('m','f8')
+        ('energy', 'f8'),('PID','f8'),('charge','f8'),
+        ('t','f8') ,('m','f8')
     ], align=True)
 
     # 读取所有粒子二进制数据
@@ -105,7 +106,8 @@ def DataWrite(data, savefile):
 def SaveRoot(filename,data):
     wdata = {"PosX": data[:,0], "PosY": data[:,1], "PosZ": data[:,2], 
              "DirX": data[:,3], "DirY": data[:,4], "DirZ": data[:,5],
-             "Energy": data[:,6], "PID": data[:,7], "Charge": data[:,8], "task_id":data[:,9]
+             "Energy": data[:,6], "PID": data[:,7], "Charge": data[:,8], 
+              "task_id":data[:,9], "Time": data[:,10],
              }
     with uproot.recreate(filename) as file:
         # 使用 mktree 明确指定创建 TTree
@@ -113,7 +115,7 @@ def SaveRoot(filename,data):
     #file.close()
     
 
-def LoopBasic(particlelist,Enum,n):
+def LoopBasic(particlelist,Enum,n,mypth):
     if len(particlelist)==0:
         return [], 0
     args_list = []
@@ -135,15 +137,19 @@ def LoopBasic(particlelist,Enum,n):
     hit_list = []
 
     for result in results:
-        task_id, res, Hit = result
+        task_id, res, rt, Hit, ht = result
         if len(res) > 0:
             par_list.append(np.hstack([res[0, 0:3], 
                                        res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
-                                       particlelist[task_id, 6:8]]))
+                                       particlelist[task_id, 6:8],
+                                       (particlelist[task_id, 9]+rt)]))
         if len(Hit) > 0:
+            t_hit=particlelist[task_id, 9]+ht
+            t_hit=t_hit[:, np.newaxis]
             hit_list.append(np.hstack([Hit, 
                                        np.ones((Hit.shape[0], 4)) * 
-                                       np.hstack([particlelist[task_id, 6:9], task_id])]))
+                                       np.hstack([particlelist[task_id, 6:9], task_id]),
+                                       t_hit]))
 
     # 最后一次性构造
     Parlist = np.vstack(par_list) if par_list else np.array([])
@@ -182,16 +188,21 @@ def LoopBasic(particlelist,Enum,n):
                 else:
                     Hitlist=np.vstack((Hitlist,hlist))
     '''
-    strmac="../result/smac/test"+str(n)+"_"+Enum+".mac"
-    strcsv="../result/TraceData/test_"+str(n)+"_"+Enum+".csv"
-    strroot="../result/seconddata"+str(n)+"_"+Enum+".root"
-    savehit="../result/HitChargePdata"+str(n)+"_"+Enum+".root"
+    strmac="../result"+mypth+"/smac/test"+str(n)+"_"+Enum+".mac"
+    strcsv="../result"+mypth+"/TraceData/test_"+str(n)+"_"+Enum+".csv"
+    strroot="../result"+mypth+"/seconddata"+str(n)+"_"+Enum+".root"
+    savehit="../result"+mypth+"/HitChargePdata"+str(n)+"_"+Enum+".root"
     #print(Hitlist)
     print("返回粒子数：",Parlist.size/8)
+    '''
     if Parlist.size==8:
         pd.DataFrame(Parlist).T.to_csv(strcsv, header=False,  index=False)
         Gmacfile(strmac,strroot, strcsv,1,)
     else:
+        pd.DataFrame(Parlist).to_csv(strcsv, header=False,  index=False)
+        Gmacfile(strmac,strroot, strcsv,Parlist.shape[0],)
+    '''   
+    if len(Parlist)!=0:
         pd.DataFrame(Parlist).to_csv(strcsv, header=False,  index=False)
         Gmacfile(strmac,strroot, strcsv,Parlist.shape[0],)
     if len(Hitlist)!=0:
@@ -201,6 +212,7 @@ def LoopBasic(particlelist,Enum,n):
     particlelist1=GEANT4RuningFun(strmac)
     gplist=ParticleSelect(particlelist1)
     num=gplist.shape[0]
+    print("粒子数量： ", num)
     return gplist, num
     
 def run_geant4_parallel(macro_files_list): 
@@ -211,7 +223,7 @@ def run_geant4_parallel(macro_files_list):
         #这里的macro_files_list就是一个macro_files的列表
     return results
     
-def main(runmac, Enum):
+def main(runmac, Enum, mypth):
     particles = GEANT4RuningFun(runmac)
     #print(particles)
     tparticlelist=ParticleSelect(particles)
@@ -220,7 +232,7 @@ def main(runmac, Enum):
     count=0
     #设置循环参数，防止数据保存覆盖
     while pnum>0:
-        tparticlelist,pnum=LoopBasic(tparticlelist,Enum,count)
+        tparticlelist,pnum=LoopBasic(tparticlelist,Enum,count,mypth)
         count=count+1
    
 '''
@@ -326,6 +338,13 @@ print(protonlist1)
 '''
 
 if __name__ == "__main__":
-    runmac = sys.argv[1]
-    Enum = sys.argv[2]
-    main(runmac, Enum)
+    #runmac = sys.argv[1] #使用的哪个mac文件
+    #Enum = sys.argv[2]   #给定能量bin的序号
+    runmac = "run.mac"
+    Enum = "0"
+    if len(sys.argv) < 4:
+        print("mypth is not given, will use default one.")
+        mypth=""
+    else:
+        mypth = sys.argv[3] #保存的位置
+    main(runmac, Enum, mypth)

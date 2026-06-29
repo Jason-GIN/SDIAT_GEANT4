@@ -102,20 +102,20 @@ def main(Xinit, monento, otherpar,i,n,thread):
     mkg=mMeV/cc/cc*1e6*efundamental
     qcharge=charge*efundamental
     mGeV=mkg*cc**2/efundamental/1e9
-    pGeV=np.linalg.norm(monento)/1e3 # unit in MeV
+    pGeV=np.linalg.norm(monento)/1e3 # monento unit in MeV
     EGeV=math.sqrt(pGeV*pGeV+mGeV*mGeV)
     Ekg=EGeV*1e9*efundamental/(cc**2)
     
-    rigidity = pGeV / abs(qcharge)  # GV
+    rigidity = pGeV / abs(charge)  # GV
     
     if rigidity > 50:  # 高能粒子，轨迹接近直线
         mt = 'DOP853'  # 高阶方法，大步长
         tspan = (0, 10)   # 减少积分时间
-    elif rigidity > 0.05:   # 中等能量
+    elif rigidity > 0.1:   # 中等能量
         mt = 'RK45'
         tspan = (0.0,100.0)
     else:                 # 低能粒子，回旋运动
-        mt = 'LSODA'  # 自动切换刚性问题
+        mt = 'LSODA'      # 自动切换刚性问题
         tspan = (0.0,100.0)
         
     velosity=cc*monento/1e6/EGeV           # 相对论性的速度v=beta=动量/能量，距离单位km，时间单位s
@@ -131,6 +131,6 @@ def main(Xinit, monento, otherpar,i,n,thread):
     #array=np.vstack((sol.y[0:3],r))
     #pd.DataFrame(array.T).to_csv(str1, header=False,  index=False)
     if len(sol.y_events[0])==0:
-        return (i, np.array([]), sol.y_events[2])
+        return (i, np.array([]),0, sol.y_events[2],sol.t_events[2])
     else :
-        return (i, sol.y_events[0], sol.y_events[2])
+        return (i, sol.y_events[0],sol.t_events[0], sol.y_events[2],sol.t_events[2])

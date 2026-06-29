@@ -105,7 +105,7 @@ namespace Test02
     newHit->SetPos(aStep->GetPostStepPoint()->GetPosition());
     newHit->SetMom(aStep->GetTrack()->GetMomentum());
 
-    // newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+    newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
     // newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
     // newHit->SetpTime(aStep->GetPostStepPoint()->GetProperTime());
 
@@ -182,9 +182,9 @@ namespace Test02
       auto pdata = G4AnalysisManager::Instance();
       // G4int SDnum=std::stoi(SDetectorName.substr(11,2));
       G4int SDnum = -2;
-      G4cout << "-------------GINSD1---------------" << G4endl;
-      G4cout << "SDnum" << SDnum << G4endl;
-      G4cout << "-------------GINSD1---------------" << G4endl;
+      //G4cout << "-------------GINSD1---------------" << G4endl;
+      //G4cout << "SDnum" << SDnum << G4endl;
+      //G4cout << "-------------GINSD1---------------" << G4endl;
       pdata->FillNtupleIColumn(2, 0, SDnum);
       pdata->FillNtupleIColumn(2, 1, TrackId);
       pdata->FillNtupleDColumn(2, 2, kE / MeV);
@@ -195,7 +195,7 @@ namespace Test02
       pdata->FillNtupleDColumn(2, 7, momentum.y());
       pdata->FillNtupleDColumn(2, 8, momentum.z());
       pdata->FillNtupleDColumn(2, 9, charge);
-      pdata->FillNtupleDColumn(2, 10, timeOfArr / ns);
+      pdata->FillNtupleDColumn(2, 10, timeOfArr / s);
       pdata->FillNtupleIColumn(2, 11, PID);
       pdata->FillNtupleIColumn(2, 12, ParentId);
       pdata->FillNtupleIColumn(2, 13, pPID);
@@ -216,8 +216,9 @@ namespace Test02
         p.energy = kE / MeV;
         p.PID = static_cast<double>(PID);
         p.charge = charge;
-        p.t = timeOfArr / ns;
+        p.t = timeOfArr / s;
         p.m = (aStep->GetTrack()->GetDynamicParticle()->GetMass()) ;
+        
         SetParticleData(p);
       }
     };
