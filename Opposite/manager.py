@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import uproot
 import csv
+from pathlib import Path
 
 import sys
 import os
@@ -24,8 +25,8 @@ import time
   
 def Gmacfile(filename, RootPath, datafilpath, Pnum):
     #readfile=""
-    writefile='/myrun/setOutputFileName '+RootPath+'\n'
-    readfile='/generator/Readfile '+datafilpath+'\n'
+    writefile='/myrun/setOutputFileName '+str(RootPath)+'\n'
+    readfile='/generator/Readfile '+str(datafilpath)+'\n'
     eventset='/run/beamOn '+str(Pnum)
     with open(filename, 'w') as file:
         file.write('/vis/disable\n')
@@ -96,7 +97,7 @@ def ParticleSelect(particles):
         plist=particles[indx[0]]
         plist=plist.view(np.float64).reshape(plist.shape[0], -1)
     return plist
- 
+
 def DataWrite(data, savefile):
     with open(savefile, 'w', newline='') as file:
         writer = csv.writer(file)
@@ -115,12 +116,12 @@ def SaveRoot(filename,data):
     #file.close()
     
 
-def LoopBasic(particlelist,Enum,n,mypth):
+def LoopBasic(particlelist,Egnum,n,mypth):
     if len(particlelist)==0:
         return [], 0
     args_list = []
     for i, plist in enumerate(particlelist):
-        args = (plist[0:3], plist[3:6], [plist[10], plist[8]], i,Enum,n)   # 注意 i 已用 enumerate
+        args = (plist[0:3], plist[3:6], [plist[10], plist[8]], i,Egnum,n)   # 注意 i 已用 enumerate
         args_list.append(args)
 
     # 创建一个进程池，最大并发数可以设为 len(particlelist) 或更小的值
@@ -188,10 +189,16 @@ def LoopBasic(particlelist,Enum,n,mypth):
                 else:
                     Hitlist=np.vstack((Hitlist,hlist))
     '''
-    strmac="../result"+mypth+"/smac/test"+str(n)+"_"+Enum+".mac"
-    strcsv="../result"+mypth+"/TraceData/test_"+str(n)+"_"+Enum+".csv"
-    strroot="../result"+mypth+"/seconddata"+str(n)+"_"+Enum+".root"
-    savehit="../result"+mypth+"/HitChargePdata"+str(n)+"_"+Enum+".root"
+    '''
+    strmac="../result"+mypth+"/smac/test"+str(n)+"_"+Egnum+".mac"
+    strcsv="../result"+mypth+"/TraceData/test_"+str(n)+"_"+Egnum+".csv"
+    strroot="../result"+mypth+"/seconddata"+str(n)+"_"+Egnum+".root"
+    savehit="../result"+mypth+"/HitChargePdata"+str(n)+"_"+Egnum+".root"
+    '''
+    strmac=Path("../result")/mypth.lstrip('/')/"smac"/f"test{n}_{Egnum}.mac"
+    strcsv=Path("../result")/mypth.lstrip('/')/"TraceData"/f"test_{n}_{Egnum}.csv"
+    strroot=Path("../result")/mypth.lstrip('/')/f"seconddata{n}_{Egnum}.root"
+    savehit=Path("../result")/mypth.lstrip('/')/f"HitChargePdata{n}_{Egnum}.root"
     #print(Hitlist)
     print("返回粒子数：",Parlist.size/8)
     '''
@@ -223,7 +230,7 @@ def run_geant4_parallel(macro_files_list):
         #这里的macro_files_list就是一个macro_files的列表
     return results
     
-def main(runmac, Enum, mypth):
+def main(runmac, Egnum, mypth):
     particles = GEANT4RuningFun(runmac)
     #print(particles)
     tparticlelist=ParticleSelect(particles)
@@ -232,7 +239,7 @@ def main(runmac, Enum, mypth):
     count=0
     #设置循环参数，防止数据保存覆盖
     while pnum>0:
-        tparticlelist,pnum=LoopBasic(tparticlelist,Enum,count,mypth)
+        tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
         count=count+1
    
 '''
@@ -338,13 +345,13 @@ print(protonlist1)
 '''
 
 if __name__ == "__main__":
-    #runmac = sys.argv[1] #使用的哪个mac文件
-    #Enum = sys.argv[2]   #给定能量bin的序号
-    runmac = "run.mac"
-    Enum = "0"
+    runmac = sys.argv[1] #使用的哪个mac文件
+    Egnum = sys.argv[2]   #给定能量bin的序号
+    #runmac = "run.mac"
+    #Egnum = "0"
     if len(sys.argv) < 4:
         print("mypth is not given, will use default one.")
         mypth=""
     else:
         mypth = sys.argv[3] #保存的位置
-    main(runmac, Enum, mypth)
+    main(runmac, Egnum, mypth)

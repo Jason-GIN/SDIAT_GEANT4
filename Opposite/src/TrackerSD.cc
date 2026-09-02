@@ -136,6 +136,9 @@ namespace Test02
 
     G4String Process = newHit->GetProcess();
 
+    G4double dir= position.unit().dot(momentum.unit());
+
+
     if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ && (kE >= 30. * MeV))
     {
       // newHit->Print();
@@ -145,9 +148,9 @@ namespace Test02
       auto pdata = G4AnalysisManager::Instance();
       // G4int SDnum=std::stoi(SDetectorName.substr(11,2));
       G4int SDnum = -1;
-      G4cout << "-------------GINSD2---------------" << G4endl;
-      G4cout << "SDnum" << SDnum << G4endl;
-      G4cout << "-------------GINSD2---------------" << G4endl;
+      //G4cout << "-------------GINSD2---------------" << G4endl;
+      //G4cout << "SDnum" << SDnum << G4endl;
+      //G4cout << "-------------GINSD2---------------" << G4endl;
       pdata->FillNtupleIColumn(1, 0, SDnum);
       pdata->FillNtupleIColumn(1, 1, TrackId);
       pdata->FillNtupleDColumn(1, 2, kE / MeV);
@@ -175,8 +178,9 @@ namespace Test02
 
     if (SDetectorName.substr(0, 10) == "Test02/SD1" /*&& PID == 22*/ && (kE >= 30. * MeV))
     {
+      
       // newHit->Print();
-      // G4cout << "-------------GINSD2---------------" << G4endl;
+      // G4cout << "-------------GINSD1---------------" << G4endl;
       // ParentId >= 1 &&
       G4String Detector = "SD1";
       auto pdata = G4AnalysisManager::Instance();
@@ -204,7 +208,8 @@ namespace Test02
 
       pdata->AddNtupleRow(2);
 
-      if (PID != 12 && PID != 14 && PID != 16 && PID != -12 && PID != -14 && PID != -16)
+      
+      if (dir>0 && PID != 12 && PID != 14 && PID != 16 && PID != -12 && PID != -14 && PID != -16)
       {
         ParticleData p;
         p.x = position.x() / km;
@@ -221,12 +226,18 @@ namespace Test02
         
         SetParticleData(p);
       }
-    };
 
-    if (SDetectorName == "Test02/SD1")
+
+    };
+    
+    if (SDetectorName == "Test02/SD1" && dir>0)
     {
+      //G4cout << "-------------GINSD1---------------" << G4endl;
+      //G4cout << "particle simulation stop" << G4endl;
+      //G4cout << "-------------GINSD1---------------" << G4endl;
       aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     };
+    
 
     return true;
   }

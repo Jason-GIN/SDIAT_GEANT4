@@ -236,8 +236,8 @@ void MyMagneticField::GlogalDipoleField(const G4double Track[7], G4double B[3]) 
     G4double g1 = -1450.9 * (1e-9) * tesla;
     G4double h1 = 4652.5 * (1e-9) * tesla;
     //G4double M = (a * a * a) * std::sqrt(g0 * g0 + g1 * g1 + h1 * h1);
-    G4double lat = fGeolocation[1];
-    G4double lon = fGeolocation[2];
+    //G4double lat = fGeolocation[1];
+    //G4double lon = fGeolocation[2];
 
     // G4cout<< "-------------GIN0.03---------------"<< G4endl;
     // G4cout << "mlat: " << lat/deg << "\t" << "mlon: " << lon/deg << G4endl;

@@ -96,7 +96,7 @@ def ParticleSelect(particles):
         plist=particles[indx[0]]
         plist=plist.view(np.float64).reshape(plist.shape[0], -1)
     return plist
- 
+
 def DataWrite(data, savefile):
     with open(savefile, 'w', newline='') as file:
         writer = csv.writer(file)

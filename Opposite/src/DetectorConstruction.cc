@@ -199,7 +199,7 @@ namespace Test02
 
     // G4int num = 100-layer_loop;
 
-    givenum = 400 * km;
+    givenum = 400 * km; //这个东西是用来决定是生成粒子的高度的。
 
     //
     // Atmosphere combine with SD3

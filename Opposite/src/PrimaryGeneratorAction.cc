@@ -709,7 +709,9 @@ namespace Test02
       return G4ThreeVector(0, 0, 0);
     };
     */
-
+    /*
+    这个是函数是用于global模型的，所以x,y,z, 是GTOD坐标
+    */
     if (!fDirectionCache.load(filename))
     {
       G4cout << "Error loading: " << filename << G4endl;
@@ -719,7 +721,8 @@ namespace Test02
 
     G4ThreeVector dp = DirectionData::getDirection(static_cast<size_t>(id));
 
-    G4ThreeVector xyzm, ddp, oddp;
+    //G4ThreeVector xyzm, ddp, oddp;
+    G4ThreeVector ddp, oddp;
     // xyz is the position in zenith at (lat,lon)
     // xyzm is the position in GTOD
     // vm is the direction in GTOD
@@ -736,8 +739,8 @@ namespace Test02
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     */
 
-    xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
-    ddp = VectorZenithinGTOD(dp, xyzm);
+    //xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
+    ddp = VectorZenithinGTOD(dp, G4ThreeVector(x, y, z));
     // ddp = VectorGTODinZenith1(vm,(90.0*deg-lat),lon);
 
     oddp = -ddp;
@@ -831,11 +834,11 @@ namespace Test02
       int targetrow;
       if (Pname == "proton")
       {
-        for (int i = 0; i < 43; i++)
+        for (int i = 0; i < 54; i++)
         {
           if (E1[i] == Ek)
           {
-            targetrow = num[i];
+            targetrow = i;
             break;
           }
           else
@@ -846,11 +849,11 @@ namespace Test02
       }
       else
       {
-        for (int i = 0; i < 43; i++)
+        for (int i = 0; i < 54; i++)
         {
           if (E2[i] == Ek)
           {
-            targetrow = num[i];
+            targetrow = i;
             break;
           }
           else
@@ -860,13 +863,14 @@ namespace Test02
         };
       };
       std::string str0 = "../ctable/all_" + std::to_string(int(std::round(lon / deg))) + "_" + std::to_string(int(std::round(lat / deg))) + ".csv";
-      // G4cout << "-------------GIN---------------" << G4endl;
-      // G4cout << "Ek: " << Ek << G4endl;
-      // G4cout << "bf targetrow: " << targetrow << G4endl;
-      //  targetrow=53;
-      //  G4cout << "fulltest targetrow: " << targetrow << G4endl;
-      // G4cout << "str0: " << str0 << G4endl;
-      // G4cout << "-------------GIN---------------" << G4endl;
+      
+      //G4cout << "-------------GIN---------------" << G4endl;
+      //G4cout << "Ek: " << Ek << G4endl;
+      //G4cout << "bf targetrow: " << targetrow << G4endl;
+      //targetrow=53;
+      //G4cout << "fulltest targetrow: " << targetrow << G4endl;
+      //G4cout << "str0: " << str0 << G4endl;
+      //G4cout << "-------------GIN---------------" << G4endl;
 
       dpp = GeneratorDirectionCSV1(str0, pos[0], pos[1], pos[2], lat, lon, targetrow);
       // G4double energy= GeneratorEnergyFromSpectrum(nu);
@@ -874,6 +878,10 @@ namespace Test02
 
       // fParticleGun->SetParticleMomentumDirection(-pos);
       // fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0, 0 ,1));
+      G4double dtest = pos.unit().dot(dpp.unit());
+      //G4cout << "-------------GIN---------------" << G4endl;
+      //G4cout << "dtest: " << dtest << G4endl;
+      //G4cout << "-------------GIN---------------" << G4endl;
       fParticleGun->SetParticleMomentumDirection(dpp);
       fParticleGun->SetParticlePosition(pos);
       // fParticleGun->SetParticleEnergy(energy);
