@@ -113,7 +113,7 @@ namespace Test02
         // 第8列 -> pdgCode
         p.pdgCode = std::stoi(fields[7]);
         // 第9列 -> time
-        p.time = std::stoi(fields[8]) * ns;
+        p.time = std::stoi(fields[8]) * s;
 
         fParticleList.push_back(p);
       }

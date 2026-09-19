@@ -220,8 +220,8 @@ namespace Test02
         p.dz = momentum.z();
         p.energy = kE / MeV;
         p.PID = static_cast<double>(PID);
-        p.charge = charge;
         p.t = timeOfArr / s;
+        p.charge = charge;
         p.m = (aStep->GetTrack()->GetDynamicParticle()->GetMass()) ;
         
         SetParticleData(p);
@@ -237,7 +237,7 @@ namespace Test02
       //G4cout << "-------------GINSD1---------------" << G4endl;
       aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     };
-    
+  
 
     return true;
   }

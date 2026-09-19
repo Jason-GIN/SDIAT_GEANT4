@@ -23,10 +23,10 @@
 
 /generator/select Primary
 /gun/particle proton #
-#/gun/energy 5.59 GeV
-/gun/energy 9.34 GeV #
+/gun/energy 7.244 GeV
+#/gun/energy 9.34 GeV #
 /tracking/verbose 0 #
 
 
 #
-/run/beamOn 1000
+/run/beamOn 100

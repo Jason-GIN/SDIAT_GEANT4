@@ -8,7 +8,7 @@ namespace Test02
 {
 
 struct ParticleData {
-    double x, y, z, dx, dy, dz, energy, PID, charge, t, m;
+    double x, y, z, dx, dy, dz, energy, PID, t, charge, m;
 };
 
 class MyRun : public G4Run {

@@ -76,8 +76,8 @@ def GEANT4RuningFun(macro_file,):
     particle_dtype = np.dtype([
         ('x', 'f8'), ('y', 'f8'), ('z', 'f8'),
         ('dx', 'f8'), ('dy', 'f8'), ('dz', 'f8'),
-        ('energy', 'f8'),('PID','f8'),('charge','f8'),
-        ('t','f8') ,('m','f8')
+        ('energy', 'f8'),('PID','f8'),('t','f8'),
+        ('charge','f8'),('m','f8')
     ], align=True)
 
     # 读取所有粒子二进制数据
@@ -96,6 +96,17 @@ def ParticleSelect(particles):
     else:
         plist=particles[indx[0]]
         plist=plist.view(np.float64).reshape(plist.shape[0], -1)
+    return plist
+
+def TimeSelect(particles):
+    # print("particles shape: ",np.shape(particles))
+    if len(particles)==0:
+        print("没有返回粒子")
+        return particles
+    time=particles[:,8]
+    indx=np.where(time<=100)
+    plist=particles[indx[0]]
+    print("只有",np.size(plist)/9,"个粒子没超过追踪时限，进入下一步")
     return plist
 
 def DataWrite(data, savefile):
@@ -117,11 +128,17 @@ def SaveRoot(filename,data):
     
 
 def LoopBasic(particlelist,Egnum,n,mypth):
+    # particlelist 是一个n*11的数组，n是粒子数量，11分别是：
+    # 0,1,2 是 x, y, z
+    # 3,4,5 是 vx, vy, vz
+    # 6,7,8 是 E,PID,t
+    # 9,10  是电荷和质量
     if len(particlelist)==0:
         return [], 0
     args_list = []
-    for i, plist in enumerate(particlelist):
-        args = (plist[0:3], plist[3:6], [plist[10], plist[8]], i,Egnum,n)   # 注意 i 已用 enumerate
+    for i, plist in enumerate(particlelist): 
+        # 同时获取元素序号（索引），和元素值，这个i做为单个循环中的任务ID（task_id）
+        args = (plist[0:3], plist[3:6], [plist[10], plist[9]], i,Egnum,n)   
         args_list.append(args)
 
     # 创建一个进程池，最大并发数可以设为 len(particlelist) 或更小的值
@@ -143,13 +160,15 @@ def LoopBasic(particlelist,Egnum,n,mypth):
             par_list.append(np.hstack([res[0, 0:3], 
                                        res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
                                        particlelist[task_id, 6:8],
-                                       (particlelist[task_id, 9]+rt)]))
+                                       (particlelist[task_id, 8]+rt)]))
         if len(Hit) > 0:
-            t_hit=particlelist[task_id, 9]+ht
+            t_hit=particlelist[task_id, 8]+ht
             t_hit=t_hit[:, np.newaxis]
             hit_list.append(np.hstack([Hit, 
                                        np.ones((Hit.shape[0], 4)) * 
-                                       np.hstack([particlelist[task_id, 6:9], task_id]),
+                                    #    np.hstack([particlelist[task_id, 6:9], task_id]),
+                                       np.hstack([particlelist[task_id, 6:8], 
+                                                  particlelist[task_id, 9], task_id]),
                                        t_hit]))
 
     # 最后一次性构造
@@ -200,7 +219,6 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     strroot=Path("../result")/mypth.lstrip('/')/f"seconddata{n}_{Egnum}.root"
     savehit=Path("../result")/mypth.lstrip('/')/f"HitChargePdata{n}_{Egnum}.root"
     #print(Hitlist)
-    print("返回粒子数：",Parlist.size/8)
     '''
     if Parlist.size==8:
         pd.DataFrame(Parlist).T.to_csv(strcsv, header=False,  index=False)
@@ -208,18 +226,28 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     else:
         pd.DataFrame(Parlist).to_csv(strcsv, header=False,  index=False)
         Gmacfile(strmac,strroot, strcsv,Parlist.shape[0],)
-    '''   
-    if len(Parlist)!=0:
-        pd.DataFrame(Parlist).to_csv(strcsv, header=False,  index=False)
-        Gmacfile(strmac,strroot, strcsv,Parlist.shape[0],)
+    ''' 
+    
     if len(Hitlist)!=0:
-        #print(Hitlist)
-        SaveRoot(savehit,Hitlist)
-    #DataWrite(Parlist,strcsv)
-    particlelist1=GEANT4RuningFun(strmac)
-    gplist=ParticleSelect(particlelist1)
-    num=gplist.shape[0]
-    print("粒子数量： ", num)
+            #print(Hitlist)
+            SaveRoot(savehit,Hitlist)
+    
+    rParlist=TimeSelect(Parlist)
+      
+    # print("返回粒子数：",rParlist.size/9)
+    if len(rParlist)!=0:
+        pd.DataFrame(rParlist).to_csv(strcsv, header=False,  index=False)
+        Gmacfile(strmac,strroot, strcsv,rParlist.shape[0],)
+    
+        #DataWrite(Parlist,strcsv)
+        particlelist1=GEANT4RuningFun(strmac)
+        gplist=ParticleSelect(particlelist1)
+        num=gplist.shape[0]
+        print("粒子数量： ", num)
+    else:
+        gplist=rParlist
+        num=0
+    
     return gplist, num
     
 def run_geant4_parallel(macro_files_list): 
@@ -238,9 +266,15 @@ def main(runmac, Egnum, mypth):
     print("粒子数量： ", pnum)
     count=0
     #设置循环参数，防止数据保存覆盖
-    while pnum>0:
-        tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
-        count=count+1
+    while ( pnum>0 ):
+        if pnum == 1 and count < 100 :
+            tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
+            count=count+1
+        else:
+            if count > 200:
+                break
+            tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
+            count=count+1
    
 '''
 macro_file = "./run.mac"

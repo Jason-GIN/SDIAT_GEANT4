@@ -65,7 +65,7 @@ namespace Test02
     // G4GlobalMagFieldMessenger* fMagFieldMessenger;
     //  magnetic field messenger
     G4int layer = 1000; // 设定大气层数
-    G4int SD1H = 100;  // 设定SD1所在高度
+    G4int SD1H = 130;  // 设定SD1所在高度
 
     G4GenericMessenger *f_lat_lon_Messenger = nullptr;
     G4double fLat = 0.0;
