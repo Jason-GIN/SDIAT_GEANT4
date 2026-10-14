@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmylib.a CMakeFiles/mylib.dir/src/ChainFilter.cc.o CMakeFiles/mylib.dir/src/Combine.cc.o CMakeFiles/mylib.dir/src/Filter.cc.o CMakeFiles/mylib.dir/src/Rotation.cc.o
+/usr/bin/ranlib libmylib.a

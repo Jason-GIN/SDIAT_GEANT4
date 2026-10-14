@@ -1,0 +1,4 @@
+/home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/combine/build/CMakeFiles/mylib.dir
+/home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/combine/build/CMakeFiles/dataAnalyseTest.dir
+/home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/combine/build/CMakeFiles/edit_cache.dir
+/home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/combine/build/CMakeFiles/rebuild_cache.dir
