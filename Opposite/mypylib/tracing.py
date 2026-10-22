@@ -165,7 +165,7 @@ def main(Xinit, monento, otherpar,i,n,thread):
     EGeV=math.sqrt(pGeV*pGeV+mGeV*mGeV)
     Ekg=EGeV*1e9*efundamental/(cc**2)
     
-    rigidity = pGeV / abs(charge)  # GV
+    rigidity = pGeV / abs(charge) if charge != 0 else pGeV  # GV
     
     if rigidity > 50:  # 高能粒子，轨迹接近直线
         mt = 'DOP853'  # 高阶方法，大步长

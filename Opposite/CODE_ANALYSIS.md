@@ -2,7 +2,7 @@
 
 > **作者**：GIN  
 > **版本**：基于 Geant4 11.3.0 + ROOT  
-> **日期**：2026-06-05 分析整理
+> **日期**：2026-06-05 分析整理；**2026-10-22 修订**（同步到当前代码：54 能量 bin、DirectionMaskCache 优化、SD1=130 km、时间记录、combine/ 与 Analysis/ 等）
 
 ---
 
@@ -72,11 +72,11 @@
 ```
 [Step 0] Python manager.py 启动
          ↓
-[Step 1] GEANT4 运行 → 初级粒子在大气层顶部生成
+[Step 1] GEANT4 运行 → 初级粒子在 400 km 轨道高度生成
          ↓ (使用 run.mac 配置)
 [Step 2] 粒子在大气中输运，与大气分子碰撞
          ↓
-[Step 3] 到达SD1（大气顶部探测器）的粒子被记录
+[Step 3] 到达SD1（130 km 顶部探测器）的粒子被记录
          ↓ (通过stderr管道传回Python)
 [Step 4] Python接收粒子数据 → 过滤次级粒子（质子/电子/核子）
          ↓
@@ -95,10 +95,12 @@
 |------|-----|------|
 | 地球半径 | 6371.2 km | 硬编码在多处 |
 | 大气层数 | 208 层 | 从地面到约100km，采用不规则分层 |
-| 轨道探测器高度 | 400 km | SD1位置 |
+| SD1 高度 | 130 km | 顶部截断探测器（`SD1H=130`） |
+| 初级粒子生成高度 | 400 km（`givenum`） | 卫星轨道高度 |
 | 大气纬度划分 | 36 条带（每5°） | 从90°S到90°N |
-| 磁场模型 | IGRF14 / 偶极近似 | 三种模式可选 |
+| 磁场模型 | IGRF 一阶偶极（C++）/ IGRF14 2025（Python） | 三种模式可选 |
 | 物理列表 | FTFP_BERT_HP | 高精度强子物理 |
+| 能量分 bin | 54 个 | 质子 22 MeV–90.268 GeV；He 等 22 MeV–178.684 GeV |
 | 粒子截断能 | 15 MeV（堆栈）/ 30 MeV（记录） | 低于此能量的次级粒子被杀死 |
 | Störmer锥数据 | ~13963个方向 | 预计算允许方向 |
 
@@ -137,7 +139,7 @@ Opposite/
 │
 ├── src/                        # C++ 源文件
 │   ├── DetectorConstruction.cc # 几何构建实现（~475行）
-│   ├── PrimaryGeneratorAction.cc # 粒子生成器实现（~907行，核心模块）
+│   ├── PrimaryGeneratorAction.cc # 粒子生成器实现（~922行，核心模块）
 │   ├── MyMagneticField.cc      # 磁场场值计算（~264行）
 │   ├── FieldMessenger.cc       # 宏命令处理
 │   ├── ActionInitialization.cc # 动作注册
@@ -159,7 +161,9 @@ Opposite/
 │   ├── __init__.py             # 包初始化
 │   ├── tracing.py              # ★ 地磁场中粒子径迹数值求解（核心Python模块）
 │   ├── RotationModel.py        # 坐标系转换函数库
-│   └── igrf14.cpython-310...so # IGRF14地磁场编译模块
+│   ├── myManDyna.py            # 磁力线追踪 / 磁镜像点计算
+│   ├── myigrf14.cpython-310...so # IGRF14 地磁场编译模块（2025，当前使用）
+│   └── igrf14.cpython-310...so # IGRF14（旧版，坐标转换有 bug，已弃用）
 │
 ├── run.mac                     # 标准GEANT4宏文件（初级粒子模式）
 ├── test2.mac                   # GPS多源模式宏文件（次级粒子模式）
@@ -186,6 +190,20 @@ Opposite/
 │   ├── seconddata*_*.root      # 次级粒子数据
 │   └── HitChargePdata*_*.root  # Hit电荷数据
 │
+├── combine/                    # ROOT 数据合并/筛选库（C++）
+│   ├── dataAnalyseTest.cc      # 合并多线程输出的主程序
+│   ├── include/ src/           # Combine / Filter / ChainFilter / Rotation
+│   └── CMakeLists.txt          # 生成 libmylib.a + dataAnalyseTest
+│
+├── submit.py                   # HTCondor 提交（htcondor2，模拟任务）
+├── submitcombine.py            # HTCondor 提交（HitCharge/seconddata 合并）
+├── submitcombinep.py           # HTCondor 提交（质子数据合并）
+├── run-mac-gen.cc              # 生成 54 个能量 bin 的宏文件
+├── Gsubmitfile.cc              # 生成 JobWork_*.jdf（旧版提交方式）
+├── changecount.py              # 计算每个坐标的起始能量 bin
+├── run_task.sh                 # 集群单个任务执行脚本
+├── table.txt                   # 待模拟坐标清单（经度 纬度 起始能量bin）
+│
 ├── build/                      # CMake构建输出目录
 ├── JobWork_H.jdf               # HTCondor任务描述文件（氢）
 ├── JobWork_He.jdf              # HTCondor任务描述文件（氦）
@@ -193,6 +211,8 @@ Opposite/
 ├── ReadAndTest.py              # 数据处理/测试脚本
 └── SparticleCalculate.py       # 次级粒子统计与计算脚本
 ```
+
+> 另：`Analysis/` 目录位于仓库根 `SDIAT_GEANT4/Analysis/`（与 `Opposite/` 同级），负责通量分析（见第 9.3 节）。
 
 ---
 
@@ -294,8 +314,8 @@ int main(int argc, char** argv) {
 ```
 World (Galactic真空, 1.2×Envelope)
 ├── Envelope (Galactic真空)
-│   ├── SD1 (轨道高度探测器，球壳 r≈6771km，厚10cm)
-│   │   └── 记录到达该高度的粒子，终止其追踪
+│   ├── SD1 (顶部截断探测器，130 km，球壳 r≈6501km，厚10cm)
+│   │   └── 记录向上逃逸到该高度的粒子，终止其追踪
 │   ├── SD2 (地面探测器，球壳 r≈6371km，厚10cm)
 │   │   └── 记录到达地面的粒子，终止其追踪
 │   ├── [大气分层 0..207] × [纬度带 0..35] = 7488个逻辑体
@@ -338,7 +358,7 @@ void ConstructSDandField() override;
 
 ### 5.3 PrimaryGeneratorAction — 初级粒子生成器
 
-**文件**：`include/PrimaryGeneratorAction.hh`, `src/PrimaryGeneratorAction.cc`（~907行，最核心模块之一）  
+**文件**：`include/PrimaryGeneratorAction.hh`, `src/PrimaryGeneratorAction.cc`（~922行，最核心模块之一）  
 **功能**：生成入射宇宙线粒子的位置、方向和能量
 
 #### 两种生成模式
@@ -352,21 +372,24 @@ void ConstructSDandField() override;
 
 ```
 1. 根据粒子种类和能量，确定 targetrow（对应预计算方向表中的行号）
-   - proton: 使用E1[43]数组，能量范围 250 MeV → 90.27 GeV
-   - He等:   使用E2[43]数组，能量范围 270 MeV → 178.68 GeV
+   - proton: 使用E1[54]数组，能量范围 22 MeV → 90.268 GeV
+   - He等:   使用E2[54]数组，能量范围 22 MeV → 178.684 GeV
+   - targetrow 直接等于能量在 E1/E2 数组中的下标（即 all_*.csv 的 54 行之一）
 
-2. 在地球表面均匀采样生成位置
+2. 在初级粒子生成高度（400 km，由 DetectorConstruction::givenum 决定）采样生成位置
    - 在Envelope体积的球冠区域（10°弧长）内随机采样
    - 位置转换到GTOD坐标
 
-3. 调用方向生成算法：
-   ├── Step A: 随机生成天顶坐标下的方向(θ, φ)
-   ├── Step B: 用 SelectDirection() 判断是否在Störmer允许锥内
-   │   ├── 读取 ../ctable/all_<lon>_<lat>.csv 预计算数据
-   │   └── 二分查找该φ对应的允许θ范围
-   ├── Step C: 若不在锥内，重新生成（do-while循环）
+3. 调用方向生成算法 GeneratorDirectionCSV1()：
+   ├── Step A: DirectionMaskCache 一次性把 ../ctable/all_<lon>_<lat>.csv 的
+   │           54 行 × 13963 列 bitset 加载进内存（仅首次读盘，后续命中缓存）
+   ├── Step B: getRandomAllowed(targetrow) 用预计算的"允许方向索引表"做 O(1) 随机采样
+   │           （不再是拒绝采样 do-while 循环）
+   ├── Step C: DirectionData::getDirection(id) 取出对应的方向向量
    └── Step D: 将天顶坐标方向转换回GTOD坐标
 ```
+
+> **说明**：当前主流程已改用 `GeneratorDirectionCSV1()`（bitset 缓存路径）。旧的 `SelectDirection()` / `SelectDirection2()` / `GeneratorDirection()`（cone 文件路径，每轮打开文件）仍是**遗留代码，未被调用**。
 
 #### 坐标转换链（四个关键函数）
 
@@ -390,7 +413,7 @@ G4ThreeVector VectorGTODinZenith1(xyz, colat, lon);
 // 3. 结果方向从GTOD → 目标坐标系的Zenith
 ```
 
-#### Störmer锥判断算法
+#### Störmer锥判断算法（遗留代码）
 
 ```cpp
 // SelectDirection(): 二分查找phi对应的theta阈值
@@ -401,6 +424,8 @@ G4ThreeVector VectorGTODinZenith1(xyz, colat, lon);
 // 将phi±1°内的theta值按连续性分组，用奇偶性判断
 ```
 
+> ⚠️ 上述两个函数基于 `ctable/` 中的 **cone 数据文件**（361 行），当前目录中并无这些文件，主流程也不调用它们。当前的 Störmer 判断实际由 `GeneratorDirectionCSV1()` 中的 `DirectionMaskCache`（bitset + 预计算允许索引）完成。
+
 #### 能量采样
 
 ```cpp
@@ -410,7 +435,7 @@ G4ThreeVector VectorGTODinZenith1(xyz, colat, lon);
 
 #### Secondary模式
 
-直接从CSV文件逐行读取粒子参数（位置、方向、能量、PDG码），每个event发射一个粒子。用于Python层筛选后的次级粒子再注入。
+直接从CSV文件逐行读取粒子参数（`x,y,z,dx,dy,dz,Ek,PDG,t` 共 9 列），每个 event 发射一个粒子。用于 Python 层筛选后的次级粒子再注入。对应 `SetNewValue()` 中 `/generator/Readfile` 命令的解析逻辑；注意 `t` 列按秒（`std::stoi(...) * s`）读入。
 
 ---
 
@@ -620,12 +645,12 @@ G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track) {
 **文件**：`include/TrackerSD.hh`, `src/TrackerSD.cc`（~254行）  
 **功能**：SD1和SD2的灵敏探测逻辑
 
-#### SD1（轨道高度探测器，~400km）
+#### SD1（顶部截断探测器，130 km）
 
-当带电粒子（能量 > 30MeV）穿过SD1时：
+当带电粒子（能量 > 30 MeV，且 `dir = position·momentum > 0`，即向上运动）穿过SD1时：
 1. 记录粒子信息到 `BoundaryInfo` Ntuple
 2. 排除中微子（PDG 12,14,16及其反粒子）
-3. 将粒子数据存入 `ParticleData` 结构体（通过 `SetParticleData()`）
+3. 将粒子数据存入 `ParticleData` 结构体（通过 `SetParticleData()`），其中 `t = timeOfArr / s`（**单位为秒**）
 4. **终止粒子追踪**（`fStopAndKill`）
 
 > **重要**：SD1收集的 `ParticleData` 最终通过 `MyRun` → `RunAction::EndOfRunAction()` → stderr管道传回Python。
@@ -638,16 +663,18 @@ G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track) {
 
 #### ParticleData结构体
 ```cpp
+// 定义于 include/MyRun.hh，与 manager.py 中的 particle_dtype 严格对齐
 struct ParticleData {
     double x, y, z;       // 位置 (km)
     double dx, dy, dz;    // 动量方向（未归一化）
     double energy;        // 动能 (MeV)
     double PID;           // PDG粒子编码
+    double t;             // 到达时间 (s)
     double charge;        // 电荷 (e)
-    double t;             // 到达时间 (ns)
     double m;             // 质量
 };
 ```
+> 注意：字段顺序为 `…, PID, t, charge, m`（**t 在 charge 之前**，且 t 单位为秒），修改时需与 `manager.py` 的 numpy dtype 保持一致。
 
 ---
 
@@ -756,7 +783,7 @@ private:
 
 ### 6.1 manager.py — 主控脚本
 
-**文件**：`manager.py`（~303行）  
+**文件**：`manager.py`（~392行）  
 **功能**：两层递进模拟的总调度器
 
 #### 核心工作流
@@ -773,15 +800,18 @@ main(runmac, Enum)
 │   └── 筛选 PID==11(e⁻), -11(e⁺), 2212(p), -2212(anti-p), >1e10(核子) 的粒子
 │
 ├── Step 3: 迭代循环 (while pnum > 0)
-│   └── LoopBasic(tparticlelist, Enum, count)
+│   └── LoopBasic(tparticlelist, Enum, count, mypth)
 │       │
 │       ├── 多进程并行调用 tracing.main()
 │       │   └── 对每个粒子，用地磁场模型反推轨迹
-│       │   └── 返回: (task_id, 轨迹结果, Hit数据)
+│       │   └── 返回: (task_id, 轨迹结果, rt, Hit数据, ht)
+│       │       （rt/ht 分别为撞入大气和到达探测器的时间）
 │       │
 │       ├── 收集结果：
 │       │   ├── 未到达400km的粒子 → Hitlist（记录其击中位置）
 │       │   └── 到达400km的粒子 → Parlist（记录其到达时的状态）
+│       │
+│       ├── TimeSelect(Parlist)：过滤到达时间 > 100 s 的粒子
 │       │
 │       ├── 将Parlist写为CSV → 生成GEANT4宏文件
 │       │
@@ -802,54 +832,67 @@ main(runmac, Enum)
 **`GEANT4RuningFun(macro_file)`**：
 - 启动 `./test02` 子进程
 - 从stderr读取：前4字节=粒子数量，后续=粒子数据二进制流
-- 按 `ParticleData` 结构体对齐解析为numpy数组
+- 按 `ParticleData` 结构体（11 字段，顺序 `x,y,z,dx,dy,dz,energy,PID,t,charge,m`）对齐解析为numpy数组
 
 **`ParticleSelect(particles)`**：
 过滤感兴趣的粒子类型（电子、质子、重核）
 
-**`LoopBasic(particlelist, Enum, n)`**：
-- 对粒子列表中的每个粒子，创建 `(pos, mom, [mass, charge], ...)` 参数
+**`TimeSelect(particles)`**：
+按第 8 列（时间 t，单位秒）过滤，只保留 `t <= 100 s` 的粒子（时间上限控制）
+
+**`SaveRoot(filename, data)`**：
+用 `uproot` 把 Hitlist 写成 ROOT 文件（`HitData` TTree，含 Pos/Dir/Energy/PID/Charge/task_id/Time 等分支）
+
+**`LoopBasic(particlelist, Egnum, n, mypth)`**：
+- 对粒子列表中的每个粒子，创建 `(pos, mom, [mass, charge], i, Egnum, n)` 参数
 - 使用 `multiprocessing.Pool`（最大32进程）并行调用 `tracing.main()`
-- 收集追踪结果并分类处理
+- 收集追踪结果（5 元组），构造 Parlist（到达轨道粒子）和 Hitlist（未到达粒子）
+- 用 `np.vstack(list)` 一次性构造（已避免 O(n²) 复制）
 
 ---
 
 ### 6.2 tracing.py — 地磁场径迹追踪
 
-**文件**：`mypylib/tracing.py`（~124行）  
+**文件**：`mypylib/tracing.py`（~197行）  
 **功能**：用数值积分求解带电粒子在地磁场中的运动方程
 
 #### 核心求解器
 
 ```python
 def XVDinkm(t, XV, qcharge, Ekg):
-    # 调用IGRF14磁场模型的右侧函数
+    # 调用 myigrf14（IGRF14，2025 年）磁场模型的右侧函数
     # 计算洛伦兹力的加速度:
     #   a = q*v×B / Ekg (相对论修正)
-    return igrf14.rhs_particle(t, XV, qcharge, Ekg, 2025)
+    return myigrf14.rhs_particle(t, XV, qcharge, Ekg, 2025)
 ```
+> 注：当前使用 `myigrf14` 模块（旧 `igrf14` 曾有一个坐标转换 bug，已修正为 `myigrf14`）。
 
-#### 三个事件检测器（控制积分何时停止）
+#### 事件检测器（控制积分何时停止）
 
 | 事件 | 条件 | 行为 |
 |------|------|------|
-| `rLow` | r < 100+6371 km | **终止积分**（撞入稠密大气） |
+| `rLow` | r < 90+6371 km | **终止积分**（撞入稠密大气） |
 | `rHigh` | r > 100000 km | **终止积分**（逃离地磁场） |
 | `rDetector` | r < 400+6371 km | **记录但不终止**（到达卫星轨道高度） |
+| `complex_rLow` | r < 100+6371 km 且磁镜像点在大气内 | **终止积分**（更精确的进入大气判断，默认未启用） |
 
-#### 主函数
+#### 主函数（按磁刚度自适应积分）
 
 ```python
 def main(Xinit, monento, otherpar, i, n, thread):
     # Xinit: 初始位置 [x, y, z] (km)
     # monento: 动量 [px, py, pz]
     # otherpar: [静质量(MeV), 电荷(e)]
-    
-    # 1. 相对论能量计算
-    # 2. 速度 = c * p/E
-    # 3. scipy.integrate.solve_ivp 数值积分 (RK45方法)
-    # 4. 保存轨迹到CSV
-    # 5. 返回事件结果
+
+    rigidity = pGeV / abs(charge)  # GV
+    # rigidity > 50   → DOP853, tspan=(0,10)   （高能，接近直线）
+    # rigidity > 0.1  → RK45,   tspan=(0,100)  （中等能量）
+    # else            → LSODA,  tspan=(0,100)  （低能，回旋运动）
+    # solve_ivp(..., method=mt, events=[rLow, rHigh, rDetector], args=param)
+
+    # 返回 5 元组：
+    return (i, sol.y_events[0], sol.t_events[0],   # 撞入大气的状态 + 时间
+                sol.y_events[2], sol.t_events[2])  # 到达探测器的状态 + 时间
 ```
 
 **物理意义**：从GEANT4在大气中记录的次级粒子位置反向追踪，看在磁场中回溯是否能到达卫星轨道高度（400km）。这实际上是在模拟"哪些次级粒子可以向上逃逸出大气层到达卫星轨道"。
@@ -868,7 +911,22 @@ def main(Xinit, monento, otherpar, i, n, thread):
 
 ---
 
-### 6.4 SparticleCalculate.py — 次级粒子处理
+### 6.4 myManDyna.py — 磁力线追踪与磁镜像点
+
+**文件**：`mypylib/myManDyna.py`（~90行）  
+**功能**：地磁场磁力线追踪与磁镜像点计算，用于判断粒子是否会再次进入大气（磁镜约束分析）
+
+核心函数：
+- `LineOfForce_IGRF14()`：用 IGRF14 计算给定位置的磁场矢量，作为磁力线积分的方向场
+- `make_Revent_igrf()` / `make_Bevent_igrf()`：构造"到达半径 R"和"到达磁场强度 B"的积分终止事件
+- `C_MirrorPoint(loca, B, Bm)`：从位置 `loca` 沿磁力线积分，求出磁镜像点（`solve_ivp` 沿磁力线追踪，分南北半球判断方向）
+- `BEquator_m()`：用偶极系数估算赤道磁场强度
+
+> 该模块与 `tracing.py` 中的 `complex_rLow` 事件配合，用于"粒子进入 50–100 km 高度但磁镜像点不在大气内时继续积分"的精确判断。
+
+---
+
+### 6.5 SparticleCalculate.py — 次级粒子处理
 
 **文件**：`SparticleCalculate.py`（~146行）  
 **功能**：处理和统计GEANT4输出的次级粒子
@@ -971,23 +1029,36 @@ cd build/
 
 ### 9.2 集群批量运行 (HTCondor)
 
-项目包含HTCondor集群提交系统：
+当前推荐用 Python 脚本 + `table.txt` 的方式提交（旧的 `shell-generate` + `.jdf` 方式仍在 `run_command/` 中保留）：
 
-1. **生成批量脚本**：
+1. **准备坐标清单** `table.txt`：每行 `(经度, 纬度, 起始能量bin)`，共 36 个坐标。
+2. **生成宏文件**（每个坐标 54 个能量 bin）：
    ```bash
-   cd run_command/
-   g++ shell-generate.cc -o shell-generate
-   ./shell-generate
-   # 生成 H/H_1.sh ~ H_24.sh, He/He_1.sh ~ He_24.sh
+   g++ run-mac-gen.cc -o run-mac-gen && ./run-mac-gen
    ```
-
-2. **提交任务**：
+3. **提交模拟**（htcondor2）：
    ```bash
-   condor_submit JobWork_H.jdf   # 提交氢的批量任务
-   condor_submit JobWork_He.jdf  # 提交氦的批量任务
+   python3 submit.py            # 提交 run_task.sh → manager.py
    ```
+   `run_task.sh` 负责：source conda 环境 → 设置 Geant4 数据路径 → cd build → `python3 manager.py ${INPUT_FILE} ${NUMB_EBIN} ${OUTPUT_PATH}`。
+4. **合并数据**（多线程 ROOT 输出合并）：
+   ```bash
+   python3 submitcombine.py     # 合并 HitCharge / seconddata
+   python3 submitcombinep.py    # 合并质子数据
+   ```
+   合并由 `combine/` 里的 `dataAnalyseTest` 可执行文件完成（见下文 9.3）。
 
-每个脚本设置GEANT4环境变量 → 切换到build目录 → 执行 `python3 manager.py`
+> 注意：`run_task.sh`、`run-mac-gen.cc`、`combine/dataAnalyseTest.cc` 中硬编码了 `/home/ams/lchen/...` 路径，迁移机器需修改。
+
+### 9.3 数据合并与通量分析
+
+1. **合并多线程输出**：GEANT4 每个线程输出一个 `*_t<N>.root`，`combine/`（`libmylib` + `dataAnalyseTest`）用 ROOT `TChain` 把它们合并，并按 `ParentId != 0` 过滤出次级粒子：
+   ```bash
+   cd combine/build && cmake .. && make -j
+   # dataAnalyseTest <file_index> <pathnumup> <pathnumdown>
+   ```
+   核心类：`Combine::Pcomb()`（合并 DetectionInfo + EventInfo + BoundaryInfo）、`Filter::FilterS()`（按分支值过滤）、`ChainFilter`（TTreeFormula 链式过滤）。
+2. **通量分析**：`Analysis/` 目录读取合并后的 ROOT 数据，用 SDEMMA 质谱作为入射 GCR 谱，计算 400 km 轨道上的质子/电子/γ 通量并绘图（对比 AMS-01）。主脚本见 `Analysis/Build*Flux*.py`，核心库在 `Analysis/mypylib/`（`FluxCalculation.py`、`FilterModel.py`、`dipole.py`、`ToHigherOrbit.py`、`igrf14.f` 等）。
 
 ---
 
@@ -1005,11 +1076,11 @@ cd build/
 │ 阶段1: GEANT4 Primary模式                                         │
 │ ./test02 run.mac                                                 │
 │                                                                   │
-│ [宇宙线粒子在大气顶部生成]                                        │
+│ [宇宙线粒子在 400 km 轨道高度生成]                                │
 │       ↓                                                          │
 │ [地磁场偏转 → 大气簇射 → 产生次级粒子]                            │
 │       ↓                                                          │
-│ [SD1(400km)收集逃离大气的粒子] → stderr管道输出                   │
+│ [SD1(130km)收集向上逃逸的粒子] → stderr管道输出                   │
 │       ↓                                                          │
 │ [SD2(地面)收集到达地面的粒子] → ROOT文件输出                       │
 └──────────────────────────────────────────────────────────────────┘
@@ -1069,9 +1140,9 @@ cd build/
 ```
 
 **PrimaryGeneratorAction.cc 中修改**：
-- `E1[43]`：质子的能量分bin（第825-838行）
-- `E2[43]`：其他粒子的能量分bin（第841-853行）
-- `num[43]`：对应的方向表行号
+- `E1[54]`：质子的能量分bin（第75-79行）
+- `E2[54]`：其他粒子的能量分bin（第80-84行）
+- `targetrow` 直接取能量在数组中的下标（不再有单独的 `num[]` 行号映射）
 
 若要添加新粒子种类，需要：
 1. 在 `PrimaryGeneratorAction::GeneratePrimaries()` 的参数查找逻辑中添加新分支
@@ -1109,8 +1180,10 @@ Python层（`tracing.py`）已使用IGRF14。C++层使用简化的一阶偶极�
 // ActionInitialization.cc 第33行
 stacking->SetEnergyThreshold(15.0 * MeV);  // 堆栈截断
 
-// TrackerSD.cc 第139行
-if (kE >= 30. * MeV)  // 记录截断（SD1/SD2）
+// TrackerSD.cc 第142行
+if (kE >= 5. * MeV)   // 记录截断（SD2，地面）
+// TrackerSD.cc 第179行
+if (kE >= 30. * MeV)  // 记录截断（SD1，130km）
 
 // SphericalSystemSDinAir.cc 第191行  
 if (kE >= 30. * MeV)  // 记录截断（大气层SD）
@@ -1118,7 +1191,9 @@ if (kE >= 30. * MeV)  // 记录截断（大气层SD）
 
 ### 11.6 修改探测器位置
 
-SD1（轨道探测器）高度：修改 `DetectorConstruction.hh` 中 `SD1H` 默认值（第68行，默认565km），或在宏文件中通过 `SetSD1Height` 设置。
+SD1（顶部截断探测器）高度：修改 `DetectorConstruction.hh` 中 `SD1H` 默认值（第68行，默认 **130 km**）。
+
+初级粒子生成高度：修改 `DetectorConstruction::Construct()` 中的 `givenum`（第202行，默认 `400*km`）。
 
 SD2始终在地面（Rmin - 10cm）。
 
@@ -1143,6 +1218,9 @@ stderr二进制输出格式（第112-119行）控制Python通信格式——修�
 多处硬编码了 `/home/ams/lchen/...` 路径：
 - `run_command/shell-generate.cc`（第24-41行）中的环境变量路径
 - `run_command/test.sh` 中的cd路径
+- `run_task.sh` 中的 conda/Geant4 数据路径与 cd 路径
+- `run-mac-gen.cc`（第24行）中的输出根路径
+- `combine/dataAnalyseTest.cc`（第80-81行）中的输入/输出路径
 - `BinaryReader.cc` 中 `../ctable/` 的相对路径依赖
 
 **修改时需注意**：这些路径在不同机器上需要调整。

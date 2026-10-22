@@ -100,7 +100,7 @@ namespace Test02
         std::string cell;
         std::vector<std::string> fields;
         int col = 0;
-        while (col < 8 && std::getline(ss, cell, ','))
+        while (col <= 8 && std::getline(ss, cell, ','))
         {
           fields.push_back(cell);
         }
@@ -134,6 +134,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
+      return 0.0; 
     }
     else
     {
@@ -184,6 +185,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
+      return 0.0; 
     }
     else
     {
@@ -313,6 +315,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
+      return 0.0; 
     }
     else
     {

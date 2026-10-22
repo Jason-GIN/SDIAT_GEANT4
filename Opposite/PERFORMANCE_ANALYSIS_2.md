@@ -1,9 +1,11 @@
 # SDIAT_GEANT4/Opposite — 性能瓶颈分析与优化方案（修订版）
 
-> **日期**: 2026-06-08（修订）  
+> **日期**: 2026-06-08（修订）；**2026-10-22 再次核对状态**  
 > **原版**: 2026-06-05  
 > **修订说明**: 基于当前代码实际状态重新分析，修正原版中与实际代码不符的描述（尤其是 2.1 节），更新已实施优化的状态  
 > **分级**: 🔴 严重瓶颈 | 🟡 中等瓶颈 | 🟢 轻微影响 | ✅ 已优化
+
+> 📌 **2026-10-22 状态更新**：截至当前代码，P0 核心优化已落地——`all_*.csv` bitset 内存化（`DirectionMaskCache`，见 2.1 方案 1）、`MyMagneticField` enum 分发（见 2.2）、`tracing.py` 按磁刚度自适应积分器、`manager.py` 的 `np.vstack`→list 收集均已实现。下文各节用 ✅ 标注已实现项。
 
 ---
 
@@ -70,25 +72,31 @@
 
 ## 2. C++ GEANT4 侧模块分析
 
-### 2.1 PrimaryGeneratorAction — 🔴 最严重瓶颈
+### 2.1 PrimaryGeneratorAction — ✅ 已部分优化（核心瓶颈已解决）
 
 > **⚠️ 重要修订**：原版 md 描述的 "瓶颈点1: SelectDirection()在do-while循环中每轮打开文件（Störmer锥数据361行）" 是基于旧代码路径。当前 `GeneratePrimaries()` 实际调用的是 `GeneratorDirectionCSV1()`，走的是 bitset CSV 路径，而非 cone 文件路径。`SelectDirection()`/`SelectDirection2()`/`GeneratorDirection()` 仍然存在于代码中，但在主流程中**未被调用**（属于遗留代码），且 ctable 目录中也没有对应的 cone 数据文件。
 
-#### 当前实际执行流程
+#### 实际执行流程（分析时的旧路径；现已被缓存方案取代）
 
 ```
 GeneratePrimaries()
   ├─ 构造文件名: "../ctable/all_<lon>_<lat>.csv"  (3个文件之一)
-  ├─ 线性查找: E1[43]/E2[43] → targetrow          (43元素循环)
+  ├─ 线性查找: E1[54]/E2[54] → targetrow          (54元素循环)
   └─ GeneratorDirectionCSV1(str0, pos, lat, lon, targetrow)
-       ├─ BinaryReader::readCSVSpecificRow()        ← 🔴 每事件打开文件!
+       ├─ [旧] BinaryReader::readCSVSpecificRow()   ← 🔴 每事件打开文件!
        │    ├─ std::ifstream file(filename)         打开 ~3MB CSV
        │    ├─ while(getline) 线性扫描到targetRow   平均扫描27行
        │    └─ 解析13963列 "0.0"/"1.0" → bitset     每行 ~28KB
-       ├─ do { id=rand()*7500 } while(rowdata.test(id)==0)  ← 🟡 拒绝采样
+       ├─ [旧] do { id=rand()*7500 } while(rowdata.test(id)==0)  ← 🟡 拒绝采样
        ├─ DirectionData::getDirection(id)           静态数组O(1)查找
        ├─ VectorZenithinGTOD1(xyz, colat, lon)      ← 🟡 每事件计算trig
        └─ VectorZenithinGTOD(dp, xyzm)              ← 🟡 每事件计算trig
+
+[现] GeneratePrimaries() → GeneratorDirectionCSV1()
+       ├─ DirectionMaskCache.load(filename)         ✅ 首次加载，后续命中缓存
+       ├─ DirectionMaskCache.getRandomAllowed(row)  ✅ O(1) 随机选允许方向（无拒绝采样）
+       ├─ DirectionData::getDirection(id)           静态数组O(1)查找
+       └─ VectorZenithinGTOD(dp, xyz)               🟡 仍每事件计算 trig
 ```
 
 #### 瓶颈点 1（🔴 最严重）：all_*.csv 文件每事件重复读取
@@ -196,9 +204,10 @@ ddp = VectorZenithinGTOD(dp, xyzm);  // acos(z/r) + atan2(y,x) + 6 trig
 
 ---
 
-##### 方案 1（🔴 P0 — 最高优先级）：内存化 all_*.csv bitset 数据
+##### 方案 1（🔴 P0 — 最高优先级）：内存化 all_*.csv bitset 数据　✅ 已实现
 
 这是**收益最大**的优化。核心思路：**一次加载，全 run 复用**。
+> 当前代码已在 `PrimaryGeneratorAction.hh` 中实现 `DirectionMaskCache`（含 `load()` / `getRandomAllowed()`），并在 `GeneratorDirectionCSV1()` 中启用。
 
 ```cpp
 // 新增：PrimaryGeneratorAction.hh 中添加成员
@@ -520,13 +529,14 @@ if (process == "Transportation" && dE < 1.0e+11) {  // 字符串比较每步!
 
 ---
 
-### 2.7 BinaryReader — 🔴 数据加载瓶颈
+### 2.7 BinaryReader — 🔴→✅ 数据加载瓶颈（已通过调用侧缓存解决）
 
 #### 瓶颈点 1（🔴）：readCSVSpecificRow 每事件打开+扫描文件
 
 **位置**：`src/BinaryReader.cc` 第50-86行
 
 **这是 PrimaryGeneratorAction 瓶颈的根本原因。** 优化方案见 2.1 节方案1：在调用侧（PrimaryGeneratorAction）缓存数据，而不是在 BinaryReader 侧优化。
+> ✅ 当前已在调用侧（`DirectionMaskCache`）实现缓存，主流程不再逐事件调用 `readCSVSpecificRow`；`BinaryReader::readCSVSpecificRow` 本身仍保留（作为回退/其他用途）。
 
 但如果要保留 BinaryReader 的通用性，也可以在此处添加文件级缓存：
 
@@ -573,9 +583,9 @@ bool BinaryReader::readCSVSpecificRow(const std::string &filename, int targetRow
 
 ## 3. Python 侧模块分析
 
-Python 侧的分析与原版 md 第3节基本一致，主要瓶颈仍然是：
-1. 🔴 `tracing.py` 中 `solve_ivp` 数值积分
-2. 🟡 `manager.py` 中 `np.vstack` O(n²) 复制
+Python 侧的分析与原版 md 第3节基本一致，主要瓶颈是：
+1. 🔴 `tracing.py` 中 `solve_ivp` 数值积分　✅ **已优化**：按磁刚度自适应选择 `DOP853/RK45/LSODA` 并缩短高能积分时间
+2. 🟡 `manager.py` 中 `np.vstack` O(n²) 复制　✅ **已优化**：改用 list 收集 + 最后一次性 `np.vstack`
 
 此处不再重复展开，参见原版 md 3.1-3.2 节。
 

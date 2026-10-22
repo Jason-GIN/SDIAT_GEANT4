@@ -32,7 +32,7 @@ namespace Test02
 
       G4int parentID = track->GetParentID();
       G4int trackID = track->GetTrackID();
-      if (parentID >= 0)
+      if (parentID > 0)
       {
          // 只存储父粒子信息，不存储当前粒子
          if (localMap->find(trackID) == localMap->end())

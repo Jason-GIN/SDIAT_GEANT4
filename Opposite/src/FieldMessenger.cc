@@ -120,15 +120,6 @@ void FieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
         G4ThreeVector location = fSetDipoleFieldParametersCmd->GetNew3VectorValue(newValue);
         fField->SetDipoleFieldParameters(location);
     
-    }else if (command == fSetDipoleFieldParametersCmd) {
-        if((fField->GetFieldType())!="globaldipole"){
-            G4cout << "Warning: Setting diple parameters while field is not dipole. "
-                   << "Value will be stored but not used." << G4endl;
-        };
-        
-        G4ThreeVector location = fSetDipoleFieldParametersCmd->GetNew3VectorValue(newValue);
-        fField->SetDipoleFieldParameters(location);
-    
     }else if (command == fSetUniformFieldParametersCmd) {
         if((fField->GetFieldType())!="uniform"){
             G4cout << "Warning: Setting uniform parameters while field is not uniform. "
@@ -136,7 +127,7 @@ void FieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
         };
         
         G4ThreeVector strength  = fSetUniformFieldParametersCmd->GetNew3VectorValue(newValue);
-        fField->SetDipoleFieldParameters(strength);
+        fField->SetUniformFieldParameters(strength);
         
     }
 

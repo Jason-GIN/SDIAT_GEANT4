@@ -323,7 +323,7 @@ namespace Test02
 
     // Conical section shape
 
-    if (static_cast<int>(logicSphereSDlayerinOrbit.size()) != 0)
+    if (static_cast<int>(logicSpherelayerinAir.size()) != 0)
     {
       G4cout << "Error!!! The floglicSphereSDinOrbit should be empty before setting!! " << G4endl;
       return physWorld;
@@ -440,7 +440,7 @@ namespace Test02
     // G4cout << "fLat: " << fLat/deg << "\t" << "fLon: " << fLon/deg << G4endl;
     // G4cout<< "-------------GIN0.03---------------"<< G4endl;
 
-    static MyMagneticField *threadField = nullptr;
+    MyMagneticField *threadField = nullptr;
 
     if (G4Threading::IsWorkerThread())
     {
@@ -467,7 +467,7 @@ namespace Test02
     fieldMgr->SetChordFinder(chordFinder);
     fScoringVolume->SetFieldManager(fieldMgr, localflag);
     // Register the field messenger for deleting
-    // G4AutoDelete::Register(fMagneticField);
+    G4AutoDelete::Register(fieldMgr);
   };
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

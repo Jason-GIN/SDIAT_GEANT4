@@ -32,11 +32,11 @@ SphericalSystemSDinAir::SphericalSystemSDinAir(const G4String& name,
 {
     collectionName.insert("SystemHitsinAirCollection");
     
+    /*
     for (size_t i = 0; i < radii.size() - 1; ++i) {
       fRadii.push_back(radii.at(i));
     }
-    
-    /*
+        
     // 创建所有球壳层
     for (size_t i = 0; i < radii.size() - 1; ++i) {
         G4String layerName = name + "_Layer_" + std::to_string(i);
@@ -146,7 +146,7 @@ G4bool SphericalSystemSDinAir::ProcessHits(G4Step* aStep,
   newHit->SetPos (aStep->GetPostStepPoint()->GetPosition());
   newHit->SetMom (aStep->GetTrack()->GetMomentum());
   
-  //newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+  newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
   //newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
   //newHit->SetpTime(aStep->GetPostStepPoint()->GetProperTime());
   
@@ -205,7 +205,7 @@ G4bool SphericalSystemSDinAir::ProcessHits(G4Step* aStep,
     pdata->FillNtupleDColumn(1, 7, momentum.y());
     pdata->FillNtupleDColumn(1, 8, momentum.z());
     pdata->FillNtupleDColumn(1, 9, charge);
-    pdata->FillNtupleDColumn(1, 10, timeOfArr/ns);
+    pdata->FillNtupleDColumn(1, 10, timeOfArr/s);
     pdata->FillNtupleIColumn(1, 11, PID);
     pdata->FillNtupleIColumn(1, 12, ParentId);
     pdata->FillNtupleIColumn(1, 13, pPID);

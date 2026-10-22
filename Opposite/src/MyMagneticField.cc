@@ -38,7 +38,7 @@ MyMagneticField *MyMagneticField::Clone() const
     // clonedField->fFieldCenter = fFieldCenter;
     // clonedField->fFieldRadius = fFieldRadius;
     clonedField->fFieldEnabled = fFieldEnabled;
-
+    clonedField->fFieldTypeEnum = fFieldTypeEnum;
     return clonedField;
 }
 

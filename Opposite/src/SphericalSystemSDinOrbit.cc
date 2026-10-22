@@ -31,11 +31,11 @@ SphericalSystemSDinOrbit::SphericalSystemSDinOrbit(const G4String& name,
 {
     collectionName.insert("SystemHitsinOrbitCollection");
     
+    /*
     for (size_t i = 0; i < radii.size() - 1; ++i) {
       fRadii.push_back(radii.at(i));
     }
     
-    /*
     // 创建所有球壳层
     for (size_t i = 0; i < radii.size() - 1; ++i) {
         G4String layerName = name + "_Layer_" + std::to_string(i);
@@ -133,7 +133,7 @@ G4bool SphericalSystemSDinOrbit::ProcessHits(G4Step* aStep,
   newHit->SetPos (aStep->GetPostStepPoint()->GetPosition());
   newHit->SetMom (aStep->GetTrack()->GetMomentum());
   
-  //newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+  newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
   //newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
   //newHit->SetpTime(aStep->GetPostStepPoint()->GetProperTime());
   

@@ -83,7 +83,7 @@ class SphericalHitinOrbit : public G4VHit {
     G4double      fCharge = 0.;
     G4ThreeVector fPos;
     G4ThreeVector fMom;
-    G4double      fTime;
+    G4double      fTime= 0.;
     G4double      flT;
     G4double      fpT;
     G4String      fParticalName;

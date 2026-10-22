@@ -28,7 +28,7 @@ namespace Test02
       std::string cell;
       int col = 0;
 
-      while (std::getline(ss, cell, ','))
+      while (std::getline(ss, cell, ',') && col < 13963)
       {
         if (cell == "1.0")
         {
@@ -90,9 +90,17 @@ namespace Test02
   {
     std::vector<int> result;
     TFile *file = TFile::Open(filename.c_str());
+    if (!file || file->IsZombie())
+      return result;
     TTree *allowed = (TTree *)file->Get("allowed");
+    if (!allowed)
+    {
+      file->Close();
+      return result;
+    }
     Double_t aflag;
-    allowed->SetBranchAddress(std::to_string(targetBranch).c_str(), &aflag);
+    std::string branchName = std::to_string(targetBranch);
+    allowed->SetBranchAddress(branchName.c_str(), &aflag);
     Long64_t nEntries = allowed->GetEntries();
     for (int i = 0; i < nEntries; i++)
     {
@@ -145,7 +153,7 @@ namespace Test02
         try
         {
           result.back().push_back(std::stod(cell));
-          //G4cout<< "cell: " << cell << G4endl;
+          // G4cout<< "cell: " << cell << G4endl;
         }
         catch (...)
         {
@@ -162,7 +170,6 @@ namespace Test02
     };
 
     return result;
-
   }
-  
+
 }

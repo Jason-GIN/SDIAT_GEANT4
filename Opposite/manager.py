@@ -82,8 +82,8 @@ def GEANT4RuningFun(macro_file,):
 
     # 读取所有粒子二进制数据
     raw_data = result.stderr[4:]#(count * particle_dtype.itemsize)
-    print(len(raw_data))
-    print(particle_dtype.itemsize)
+    # print(len(raw_data))
+    # print(particle_dtype.itemsize)
 
     return np.frombuffer(raw_data, dtype=particle_dtype)
   
