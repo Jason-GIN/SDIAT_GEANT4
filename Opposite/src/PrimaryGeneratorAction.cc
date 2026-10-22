@@ -107,7 +107,7 @@ namespace Test02
         // 前3列 -> position
         p.position = G4ThreeVector(std::stod(fields[0]) * km, std::stod(fields[1]) * km, std::stod(fields[2]) * km);
         // 第4-6列 -> direction
-        p.direction = G4ThreeVector(std::stod(fields[3]), std::stod(fields[4]), std::stod(fields[4]));
+        p.direction = G4ThreeVector(std::stod(fields[3]), std::stod(fields[4]), std::stod(fields[5]));
         // 第7列 -> kineticEnergy
         p.kineticEnergy = std::stod(fields[6]) * MeV;
         // 第8列 -> pdgCode

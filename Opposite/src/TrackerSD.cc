@@ -139,7 +139,7 @@ namespace Test02
     G4double dir= position.unit().dot(momentum.unit());
 
 
-    if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ && (kE >= 30. * MeV))
+    if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ && (kE >= 5. * MeV))
     {
       // newHit->Print();
       // G4cout << "-------------GINSD2---------------" << G4endl;
