@@ -182,8 +182,8 @@ python3 submit.py                                    # 提交到 HTCondor
 | 能量分 bin | 54 个 | 质子 22 MeV – 90.268 GeV；He 22 MeV – 178.684 GeV |
 | 磁场模型 | IGRF 一阶偶极（C++）/ IGRF14 2025（Python） | |
 | 物理列表 | FTFP_BERT_HP | 高精度强子物理 |
-| 堆栈截断能 | 15 MeV（次级粒子） | 低于此能量且非中微子则杀死 |
-| 记录截断能 | SD1/SD2 ≥30 MeV，SD2 ≥5 MeV | |
+| 堆栈截断能 | 5 MeV（次级粒子） | 低于此能量且非中微子则杀死 |
+| 记录截断能 | SD1/SD2 ≥5 MeV，SD2 ≥5 MeV | |
 | 线程数 | 32 | GEANT4 多线程 + Python 32 进程 |
 
 ---
