@@ -60,8 +60,9 @@ namespace Test02
 
         G4ThreeVector GeneratorDirectionRoot(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow);
 
-        G4ThreeVector GeneratorDirectionCSV(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow);
+        // G4ThreeVector GeneratorDirectionCSV(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow);
         G4ThreeVector GeneratorDirectionCSV1(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow);
+        G4ThreeVector GeneratorDirectionCSV2(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow);
 
     private:
         G4ParticleGun *fParticleGun = nullptr; // pointer a to G4 gun class
@@ -145,6 +146,16 @@ namespace Test02
         };
 
         DirectionMaskCache fDirectionCache;
+        // 预计算常量三角函数（整个run不变）
+        double fCachedCosColat = 0.0;
+        double fCachedSinColat = 0.0;
+        double fCachedCosLon = 0.0;
+        double fCachedSinLon = 0.0;
+        bool fTrigCached = false;
+
+        // 能量→行号 O(1) 映射
+        std::unordered_map<double, int> fProtonEnergyToRow{54};
+        std::unordered_map<double, int> fHeliumEnergyToRow{54};
     };
 
 }

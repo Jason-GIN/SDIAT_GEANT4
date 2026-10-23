@@ -63,6 +63,13 @@ namespace Test02
     fParticleGun->SetParticleDefinition(particle);
 
     fParticleGun->SetParticleEnergy(11.98 * GeV);
+
+    for (int i = 0; i < 54; i++)
+    {
+      fProtonEnergyToRow.emplace(E1[i], i);
+      fHeliumEnergyToRow.emplace(E2[i], i);
+
+    }
   }
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -134,7 +141,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
-      return 0.0; 
+      return 0.0;
     }
     else
     {
@@ -185,7 +192,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
-      return 0.0; 
+      return 0.0;
     }
     else
     {
@@ -315,7 +322,7 @@ namespace Test02
     if (!fp)
     {
       printf("Error on opening file density_above86.data. ");
-      return 0.0; 
+      return 0.0;
     }
     else
     {
@@ -491,6 +498,7 @@ namespace Test02
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+  /*原始版本，可能没啥用了，留着当收藏吧，就当是积累技术了
   G4ThreeVector GeneratorDirection(std::string str0, G4double x, G4double y, G4double z, G4double lat, G4double lon)
   { //  delete[] arrayname;      调用时莫忘释放内存
     //
@@ -552,6 +560,7 @@ namespace Test02
 
     return ddp;
   }
+  */
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -613,6 +622,7 @@ namespace Test02
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+  /*老版本，可能没啥用了，留着当收藏吧，就当是积累技术了
   G4ThreeVector PrimaryGeneratorAction::GeneratorDirectionCSV(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow)
   {
     std::bitset<13963> rowdata;
@@ -657,61 +667,31 @@ namespace Test02
     xyz[0] = x;
     xyz[1] = y;
     xyz[2] = z;
-    /*
-    G4cout << "-------------GIN0.22---------------"<< G4endl;
-    //G4cout << "dp: " << dp << G4endl;
-    G4cout << "id: " << id << G4endl;
-    G4cout << "rowdata.at(id): " << rowdata.at(id) << G4endl;
-    G4cout << "-------------GIN0.22---------------"<< G4endl;
-    */
+
+    // G4cout << "-------------GIN0.22---------------"<< G4endl;
+    // //G4cout << "dp: " << dp << G4endl;
+    // G4cout << "id: " << id << G4endl;
+    // G4cout << "rowdata.at(id): " << rowdata.at(id) << G4endl;
+    // G4cout << "-------------GIN0.22---------------"<< G4endl;
+
     xyzm = VectorZenithinGTOD1(xyz, (90.0 * deg - lat), lon);
     vm = VectorZenithinGTOD(dp, xyzm);
     ddp = VectorGTODinZenith1(vm, (90.0 * deg - lat), lon);
-    /*
-    oddp[0]=-ddp[0];
-    oddp[1]=-ddp[1];
-    oddp[2]=-ddp[2];
-    */
+
+    // oddp[0]=-ddp[0];
+    // oddp[1]=-ddp[1];
+    // oddp[2]=-ddp[2];
+
     oddp = -ddp;
 
     return oddp;
   }
+  */
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   G4ThreeVector PrimaryGeneratorAction::GeneratorDirectionCSV1(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow)
   {
-    /*
-    std::bitset<13963> rowdata;
-    int id;
-    // G4cout << "-------------GIN0.20---------------"<< G4endl;
-    // G4cout << "bf rowdata.test(505): " << rowdata.test(505) << G4endl;
-    // G4cout << "-------------GIN0.20---------------"<< G4endl;
-
-    if (BinaryReader::readCSVSpecificRow(filename, targetrow, rowdata))
-    {
-
-      // G4cout << "-------------GIN0.21---------------"<< G4endl;
-      // G4cout << "af rowdata.test(505): " << rowdata.test(505) << G4endl;
-      // G4cout << "-------------GIN0.21---------------"<< G4endl;
-
-      do
-      {
-
-        id = static_cast<int>(G4UniformRand() * 7500);
-        // aflag =
-      } while (rowdata.test(id) == 0);
-    }
-    else
-    {
-      G4cout << "Error!!! No this file or no this row. "
-             << "Please chack the file name and row number."
-             << "Current row number is:" << targetrow
-             << "Current file name is:" << filename
-             << " in thread " << std::this_thread::get_id() << G4endl;
-      return G4ThreeVector(0, 0, 0);
-    };
-    */
     /*
     这个是函数是用于global模型的，所以x,y,z, 是GTOD坐标
     */
@@ -724,16 +704,13 @@ namespace Test02
 
     G4ThreeVector dp = DirectionData::getDirection(static_cast<size_t>(id));
 
-    //G4ThreeVector xyzm, ddp, oddp;
+    // G4ThreeVector xyzm, ddp, oddp;
     G4ThreeVector ddp, oddp;
     // xyz is the position in zenith at (lat,lon)
     // xyzm is the position in GTOD
     // vm is the direction in GTOD
     // ddp id the direction in zenith at (lat,lon)
 
-    // xyz[0] = x;
-    // xyz[1] = y;
-    // xyz[2] = z;
     /*
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     //G4cout << "dp: " << dp << G4endl;
@@ -742,9 +719,48 @@ namespace Test02
     G4cout << "-------------GIN0.22---------------"<< G4endl;
     */
 
-    //xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
+    // xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
     ddp = VectorZenithinGTOD(dp, G4ThreeVector(x, y, z));
     // ddp = VectorGTODinZenith1(vm,(90.0*deg-lat),lon);
+
+    oddp = -ddp;
+
+    return oddp;
+  }
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  G4ThreeVector PrimaryGeneratorAction::GeneratorDirectionCSV2(std::string filename, G4double x, G4double y, G4double z, G4double lat, G4double lon, int targetrow)
+  {
+    /*
+    这个是函数是用于局部dipole模型的，所以x,y,z, 是局地天顶坐标
+    */
+    if (!fDirectionCache.load(filename))
+    {
+      G4cout << "Error loading: " << filename << G4endl;
+      return G4ThreeVector(0, 0, 0);
+    }
+    int id = fDirectionCache.getRandomAllowed(targetrow);
+
+    G4ThreeVector dp = DirectionData::getDirection(static_cast<size_t>(id));
+
+    G4ThreeVector xyzm, vm, ddp, oddp;
+    // xyz is the position in zenith at (lat,lon)
+    // xyzm is the position in GTOD
+    // vm is the direction in GTOD
+    // ddp id the direction in zenith at (lat,lon)
+
+    /*
+    G4cout << "-------------GIN0.22---------------"<< G4endl;
+    //G4cout << "dp: " << dp << G4endl;
+    G4cout << "id: " << id << G4endl;
+    G4cout << "rowdata.at(id): " << rowdata.at(id) << G4endl;
+    G4cout << "-------------GIN0.22---------------"<< G4endl;
+    */
+
+    xyzm = VectorZenithinGTOD1(G4ThreeVector(x, y, z), (90.0 * deg - lat), lon);
+    vm = VectorZenithinGTOD(dp, xyzm);
+    ddp = VectorGTODinZenith1(vm, (90.0 * deg - lat), lon);
 
     oddp = -ddp;
 
@@ -835,6 +851,8 @@ namespace Test02
       G4String Pname = fParticleGun->GetParticleDefinition()->GetParticleName();
 
       int targetrow;
+
+      /*
       if (Pname == "proton")
       {
         for (int i = 0; i < 54; i++)
@@ -865,15 +883,28 @@ namespace Test02
           };
         };
       };
+      */
+
+      if (Pname == "proton")
+      {
+        auto it = fProtonEnergyToRow.find(Ek);
+        targetrow = (it != fProtonEnergyToRow.end()) ? it->second : -1;
+      }
+      else
+      {
+        auto it = fHeliumEnergyToRow.find(Ek);
+        targetrow = (it != fHeliumEnergyToRow.end()) ? it->second : -1;
+      }
+
       std::string str0 = "../ctable/all_" + std::to_string(int(std::round(lon / deg))) + "_" + std::to_string(int(std::round(lat / deg))) + ".csv";
-      
-      //G4cout << "-------------GIN---------------" << G4endl;
-      //G4cout << "Ek: " << Ek << G4endl;
-      //G4cout << "bf targetrow: " << targetrow << G4endl;
-      //targetrow=53;
-      //G4cout << "fulltest targetrow: " << targetrow << G4endl;
-      //G4cout << "str0: " << str0 << G4endl;
-      //G4cout << "-------------GIN---------------" << G4endl;
+
+      // G4cout << "-------------GIN---------------" << G4endl;
+      // G4cout << "Ek: " << Ek << G4endl;
+      // G4cout << "bf targetrow: " << targetrow << G4endl;
+      // targetrow=53;
+      // G4cout << "fulltest targetrow: " << targetrow << G4endl;
+      // G4cout << "str0: " << str0 << G4endl;
+      // G4cout << "-------------GIN---------------" << G4endl;
 
       dpp = GeneratorDirectionCSV1(str0, pos[0], pos[1], pos[2], lat, lon, targetrow);
       // G4double energy= GeneratorEnergyFromSpectrum(nu);
@@ -882,9 +913,9 @@ namespace Test02
       // fParticleGun->SetParticleMomentumDirection(-pos);
       // fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0, 0 ,1));
       G4double dtest = pos.unit().dot(dpp.unit());
-      //G4cout << "-------------GIN---------------" << G4endl;
-      //G4cout << "dtest: " << dtest << G4endl;
-      //G4cout << "-------------GIN---------------" << G4endl;
+      // G4cout << "-------------GIN---------------" << G4endl;
+      // G4cout << "dtest: " << dtest << G4endl;
+      // G4cout << "-------------GIN---------------" << G4endl;
       fParticleGun->SetParticleMomentumDirection(dpp);
       fParticleGun->SetParticlePosition(pos);
       // fParticleGun->SetParticleEnergy(energy);
@@ -908,7 +939,7 @@ namespace Test02
       const ParticleInfo &info = fParticleList[evtID];
       G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
       G4cout << "---------------GIN----------------" << G4endl;
-      G4cout << "fPDGcode: " << info.pdgCode<< G4endl;
+      G4cout << "fPDGcode: " << info.pdgCode << G4endl;
       G4cout << "---------------GIN----------------" << G4endl;
       G4ParticleDefinition *particle = particleTable->FindParticle(info.pdgCode);
       fParticleGun->SetParticleDefinition(particle);
