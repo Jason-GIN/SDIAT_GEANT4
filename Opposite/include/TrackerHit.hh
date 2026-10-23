@@ -84,8 +84,8 @@ class TrackerHit : public G4VHit
     G4double      fCharge = 0.;
     G4ThreeVector fPos;
     G4ThreeVector fMom;
-    G4double      fTime = 0.;
-    G4double      flT;
+    G4double      fTime;
+    G4double      flT = 0.;
     G4double      fpT;
     G4String      fParticalName;
     G4String      fParentParticalName = "nan";

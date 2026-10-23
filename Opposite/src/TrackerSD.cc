@@ -105,8 +105,8 @@ namespace Test02
     newHit->SetPos(aStep->GetPostStepPoint()->GetPosition());
     newHit->SetMom(aStep->GetTrack()->GetMomentum());
 
-    newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
-    // newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
+    // newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+    newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
     // newHit->SetpTime(aStep->GetPostStepPoint()->GetProperTime());
 
     newHit->SetParticalName(aStep->GetTrack()->GetDefinition()->GetParticleName());
@@ -127,8 +127,8 @@ namespace Test02
     G4int pPID = newHit->GetpPID();
     G4ThreeVector position = newHit->GetPos(); // 位置
     G4ThreeVector momentum = newHit->GetMom(); //
-    G4double timeOfArr = newHit->GetTime();    // 到达PMT的时间ofstream myfile
-    // G4double timeOfL = newHit->GetlTime();
+    // G4double timeOfArr = newHit->GetTime();    // 到达PMT的时间ofstream myfile
+    G4double timeOfL = newHit->GetlTime();
     // G4double timeOfP = newHit->GetpTime();
 
     G4String ParticalName = newHit->GetParticalName();
@@ -141,6 +141,7 @@ namespace Test02
 
     if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ && (kE >= 5. * MeV))
     {
+      //SD2是地面
       // newHit->Print();
       // G4cout << "-------------GINSD2---------------" << G4endl;
       // ParentId >= 1 &&
@@ -161,7 +162,7 @@ namespace Test02
       pdata->FillNtupleDColumn(1, 7, momentum.y());
       pdata->FillNtupleDColumn(1, 8, momentum.z());
       pdata->FillNtupleDColumn(1, 9, charge);
-      pdata->FillNtupleDColumn(1, 10, timeOfArr / ns);
+      pdata->FillNtupleDColumn(1, 10, timeOfL / s);
       pdata->FillNtupleIColumn(1, 11, PID);
       pdata->FillNtupleIColumn(1, 12, ParentId);
       pdata->FillNtupleIColumn(1, 13, pPID);
@@ -176,9 +177,9 @@ namespace Test02
       aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     };
 
-    if (SDetectorName.substr(0, 10) == "Test02/SD1" /*&& PID == 22*/ && (kE >= 30. * MeV))
+    if (SDetectorName.substr(0, 10) == "Test02/SD1" /*&& PID == 22*/ && (kE >= 5. * MeV))
     {
-      
+      // SD1是大气上边界
       // newHit->Print();
       // G4cout << "-------------GINSD1---------------" << G4endl;
       // ParentId >= 1 &&
@@ -199,7 +200,7 @@ namespace Test02
       pdata->FillNtupleDColumn(2, 7, momentum.y());
       pdata->FillNtupleDColumn(2, 8, momentum.z());
       pdata->FillNtupleDColumn(2, 9, charge);
-      pdata->FillNtupleDColumn(2, 10, timeOfArr / s);
+      pdata->FillNtupleDColumn(2, 10, timeOfL / s);
       pdata->FillNtupleIColumn(2, 11, PID);
       pdata->FillNtupleIColumn(2, 12, ParentId);
       pdata->FillNtupleIColumn(2, 13, pPID);
@@ -220,7 +221,7 @@ namespace Test02
         p.dz = momentum.z();
         p.energy = kE / MeV;
         p.PID = static_cast<double>(PID);
-        p.t = timeOfArr / s;
+        p.t = timeOfL / s;
         p.charge = charge;
         p.m = (aStep->GetTrack()->GetDynamicParticle()->GetMass()) ;
         

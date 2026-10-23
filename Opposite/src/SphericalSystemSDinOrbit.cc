@@ -27,7 +27,7 @@ namespace Test02
 
 SphericalSystemSDinOrbit::SphericalSystemSDinOrbit(const G4String& name,
                                                const std::vector<G4double>& radii)
-    : G4VSensitiveDetector(name), fRadii(radii)
+    : G4VSensitiveDetector(name), fRadii(radii.begin(), radii.end() - 1)
 {
     collectionName.insert("SystemHitsinOrbitCollection");
     
@@ -133,8 +133,8 @@ G4bool SphericalSystemSDinOrbit::ProcessHits(G4Step* aStep,
   newHit->SetPos (aStep->GetPostStepPoint()->GetPosition());
   newHit->SetMom (aStep->GetTrack()->GetMomentum());
   
-  newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
-  //newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
+  // newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+  newHit->SetlTime(aStep->GetPostStepPoint()->GetLocalTime());
   //newHit->SetpTime(aStep->GetPostStepPoint()->GetProperTime());
   
   newHit->SetParticalName(aStep->GetTrack()->GetDefinition()->GetParticleName());
@@ -156,8 +156,8 @@ G4bool SphericalSystemSDinOrbit::ProcessHits(G4Step* aStep,
   G4int pPID = newHit->GetpPID();
   G4ThreeVector position = newHit->GetPos();//位置
   G4ThreeVector momentum = newHit->GetMom();//
-  G4double timeOfArr = newHit->GetTime();//到达PMT的时间ofstream myfile
-  //G4double timeOfL = newHit->GetlTime();
+  // G4double timeOfArr = newHit->GetTime();//到达PMT的时间ofstream myfile
+  G4double timeOfL = newHit->GetlTime();
   //G4double timeOfP = newHit->GetpTime();
   
   G4String ParticalName = newHit->GetParticalName();
@@ -193,7 +193,7 @@ G4bool SphericalSystemSDinOrbit::ProcessHits(G4Step* aStep,
     pdata->FillNtupleDColumn(1, 7, momentum.y());
     pdata->FillNtupleDColumn(1, 8, momentum.z());
     pdata->FillNtupleDColumn(1, 9, charge);
-    pdata->FillNtupleDColumn(1, 10, timeOfArr/s);
+    pdata->FillNtupleDColumn(1, 10, timeOfL/s);
     pdata->FillNtupleIColumn(1, 11, PID);
     pdata->FillNtupleIColumn(1, 12, ParentId);
     pdata->FillNtupleIColumn(1, 13, pPID);

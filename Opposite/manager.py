@@ -129,10 +129,10 @@ def SaveRoot(filename,data):
 
 def LoopBasic(particlelist,Egnum,n,mypth):
     # particlelist 是一个n*11的数组，n是粒子数量，11分别是：
-    # 0,1,2 是 x, y, z
-    # 3,4,5 是 vx, vy, vz
-    # 6,7,8 是 E,PID,t
-    # 9,10  是电荷和质量
+    # 0,1,2 是 x, y, z 单位是: km
+    # 3,4,5 是 vx, vy, vz 单位是: MeV
+    # 6,7,8 是 E,PID,t 单位是: MeV，没有，s
+    # 9,10  是电荷和质量 单位是: 没有或者e（因为是自然单位制），MeV
     if len(particlelist)==0:
         return [], 0
     args_list = []

@@ -105,7 +105,7 @@ void FieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
     }else if (command == fSetFieldTypeCmd) {
         if (!fField->IsFieldEnabled()) {
             G4cout << "Warning: Setting field strength while field is disabled. "
-                   << "Value will be stored but not used." << G4endl;
+                   << "Value will be stored but not be used." << G4endl;
 
         }
         fField->SetFieldType(newValue);
@@ -114,7 +114,7 @@ void FieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
     }else if (command == fSetDipoleFieldParametersCmd) {
         if((fField->GetFieldType())!="dipole"){
             G4cout << "Warning: Setting diple parameters while field is not dipole. "
-                   << "Value will be stored but not used." << G4endl;
+                   << "Value will be stored but may not be used." << G4endl;
         };
         
         G4ThreeVector location = fSetDipoleFieldParametersCmd->GetNew3VectorValue(newValue);
@@ -123,7 +123,7 @@ void FieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
     }else if (command == fSetUniformFieldParametersCmd) {
         if((fField->GetFieldType())!="uniform"){
             G4cout << "Warning: Setting uniform parameters while field is not uniform. "
-                   << "Value will be stored but not used." << G4endl;
+                   << "Value will be stored but not be used." << G4endl;
         };
         
         G4ThreeVector strength  = fSetUniformFieldParametersCmd->GetNew3VectorValue(newValue);

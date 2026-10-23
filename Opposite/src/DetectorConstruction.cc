@@ -319,11 +319,11 @@ namespace Test02
       };
     };
 
-    // SD4 is the detector beyond the air layers to the given altitude, and have layer at each km.(每 1km 一层)
+    // SD4 is the detector inside the air forom sea level to the given altitude, and have layer at each km.(每 1km 一层)
 
     // Conical section shape
 
-    if (static_cast<int>(logicSpherelayerinAir.size()) != 0)
+    if (static_cast<int>(logicSphereSDlayerinOrbit.size()) != 0)
     {
       G4cout << "Error!!! The floglicSphereSDinOrbit should be empty before setting!! " << G4endl;
       return physWorld;
@@ -331,9 +331,9 @@ namespace Test02
     // Conical section shape
     for (int nlat = 0; nlat < 36; nlat++)
     {
-      std::string filenmae = "../ctable/layers_lat_" + std::to_string(nlat * 5 - 90) + ".csv";
+      // std::string filenmae = "../ctable/layers_lat_" + std::to_string(nlat * 5 - 90) + ".csv";
       // G4cout << "filenmae: " << filenmae << G4endl;
-      std::vector<std::vector<double>> detables = reader.readAtmLayer(filenmae);
+      // std::vector<std::vector<double>> detables = reader.readAtmLayer(filenmae);
       for (int cpnu = 0; cpnu < 100; cpnu++)
       {
         std::string autoSD4 = "LayerSD4_" + std::to_string(cpnu)+"_nlat_" + std::to_string(nlat);
@@ -467,7 +467,7 @@ namespace Test02
     fieldMgr->SetChordFinder(chordFinder);
     fScoringVolume->SetFieldManager(fieldMgr, localflag);
     // Register the field messenger for deleting
-    G4AutoDelete::Register(fieldMgr);
+    // G4AutoDelete::Register(fieldMgr);  //这玩意不能加，因为会涉及到主线程将磁场删除了但是子线程还在等待命令的情况
   };
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
