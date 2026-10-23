@@ -83,9 +83,9 @@ SDIAT_GEANT4/
           ↓
 [2] Python 筛选 + 反推
       ParticleSelect() 选出质子/电子/核子
-      tracing.main() 用 IGRF14 磁场 + scipy.solve_ivp 反向追踪轨迹
+      tracing.main() 用 IGRF14 磁场 + scipy.solve_ivp 追踪轨迹
       → 到达 400 km 的粒子 → Parlist
-      → 未到达的粒子 → Hitlist（记录击中位置）
+      → 返回 100 km 大气的粒子（实际上为了防止粒子反复穿越边界造成的开销，代码将追踪到 90 km） → Hitlist（记录击中位置）
           ↓
 [3] GEANT4 Secondary 模式
       Parlist → CSV → 生成宏文件 → ./test02 <宏>
