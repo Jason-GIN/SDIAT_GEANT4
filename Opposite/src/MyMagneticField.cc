@@ -247,10 +247,14 @@ void MyMagneticField::GlogalDipoleField(const G4double Track[7], G4double B[3]) 
     // G4double vx = Track[3], vy = Track[4], vz = Track[5];
 
     double r = std::sqrt(x*x + y*y + z*z);
+    double rho  = std::sqrt(x*x + y*y);      // 1 次 sqrt，替换 atan2
     double cos_theta = z / r;
-    double sin_theta = std::sqrt(1.0 - cos_theta*cos_theta);
+    // double sin_theta = std::sqrt(1.0 - cos_theta*cos_theta);
+    double sin_theta = rho / r;              // 替换 sqrt(1-cos²)
     double phi = std::atan2(y, x);
-    double cos_phi = std::cos(phi), sin_phi = std::sin(phi);
+    // double cos_phi = std::cos(phi), sin_phi = std::sin(phi);
+    double cos_phi = x / rho;                // 替换 cos(atan2)
+    double sin_phi = y / rho;                // 替换 sin(atan2)
     double coeff = a * a * a / (r * r * r);
 
     double Br = 2 * coeff * (g0*cos_theta + (g1*cos_phi + h1*sin_phi)*sin_theta);

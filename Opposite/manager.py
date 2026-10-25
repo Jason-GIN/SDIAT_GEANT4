@@ -90,7 +90,7 @@ def GEANT4RuningFun(macro_file,):
 def ParticleSelect(particles): 
     # 选择需要的粒子主要是正反质子，正反电子，各种核子。
     PID=particles['PID']
-    indx=np.where((PID==11)|(PID==-11)|(PID==2212)|(PID==-2212)|(PID>1e10)|(PID<-1e10))
+    indx=np.where((PID==11)|(PID==-11)|(PID==2212)|(PID==-2212)|(PID>1e9)|(PID<-1e9))
     if len(indx[0])==0:
         plist=np.array([])
     else:

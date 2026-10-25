@@ -69,6 +69,11 @@ namespace Test02
 
         while (std::getline(ss, cell, ',') && col < 13963)
         {
+          if (cell.empty())
+          {
+            G4cout << "cell is empyt, please check your file: " << filename << G4endl;
+            return false;
+          }
           if (cell[0] == '1')
           {
             result.set(col);
@@ -126,7 +131,7 @@ namespace Test02
 
   std::vector<std::vector<double>> BinaryReader::readAtmLayer(const std::string filename)
   {
-    G4cout << "---------------GINs---------------" << G4endl;
+    // G4cout << "---------------GINs---------------" << G4endl;
     std::vector<std::vector<double>> result;
     std::ifstream file(filename);
     if (!file.is_open())

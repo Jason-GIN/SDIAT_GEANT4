@@ -46,7 +46,7 @@ class MyMagneticField : public G4MagneticField
   private:
     G4ThreeVector  fGeolocation = {0.0, 0.0, 0.0};   //{r, lat,lon};
     G4ThreeVector  fUniStrength = {0.0, 0.0, 0.0};  //{Bx, By , Bz} in Gauss;
-    G4String fFieldType = "uiform";
+    G4String fFieldType = "uniform";
     G4bool fFieldEnabled = false;
     FieldType fFieldTypeEnum = FieldType::kNone;  // 替换 G4String fFieldType
 

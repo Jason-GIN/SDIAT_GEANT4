@@ -30,7 +30,7 @@ void ActionInitialization::Build() const
   
   SetUserAction(new PrimaryGeneratorAction(const_cast<DetectorConstruction*>(detConstruction)));
   MyStackingAction* stacking = new MyStackingAction();
-  stacking->SetEnergyThreshold(15.0*MeV);
+  stacking->SetEnergyThreshold(5.0*MeV);
   SetUserAction(stacking);
   auto runAction = new RunAction;
   SetUserAction(runAction);

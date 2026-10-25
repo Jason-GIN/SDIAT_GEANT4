@@ -107,7 +107,11 @@ namespace Test02
         std::string cell;
         std::vector<std::string> fields;
         int col = 0;
-        while (col <= 8 && std::getline(ss, cell, ','))
+        // while (col <= 8 && std::getline(ss, cell, ','))
+        // {
+        //   fields.push_back(cell);
+        // }
+        while (std::getline(ss, cell, ','))
         {
           fields.push_back(cell);
         }

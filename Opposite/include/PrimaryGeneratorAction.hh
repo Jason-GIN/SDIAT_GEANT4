@@ -122,6 +122,11 @@ namespace Test02
                     int col = 0;
                     while (std::getline(ss, cell, ',') && col < 13963)
                     {
+                        if (cell.empty())
+                        {
+                            G4cout << "cell is empyt, please check your file: " << filename << G4endl;
+                            return false;
+                        }
                         if (cell[0] == '1')
                         { // 比 cell == "1.0" 快得多！
                             row.set(col);
@@ -139,6 +144,8 @@ namespace Test02
             // O(1) 随机选择允许方向（无拒绝采样！）
             int getRandomAllowed(int targetRow) const
             {
+                if (targetRow < 0 || targetRow >= (int)allowedIndices.size())
+                    return 0; // 防越界
                 const auto &indices = allowedIndices.at(targetRow);
                 int idx = static_cast<int>(G4UniformRand() * indices.size());
                 return indices[idx];
@@ -147,11 +154,11 @@ namespace Test02
 
         DirectionMaskCache fDirectionCache;
         // 预计算常量三角函数（整个run不变）
-        double fCachedCosColat = 0.0;
-        double fCachedSinColat = 0.0;
-        double fCachedCosLon = 0.0;
-        double fCachedSinLon = 0.0;
-        bool fTrigCached = false;
+        // double fCachedCosColat = 0.0;
+        // double fCachedSinColat = 0.0;
+        // double fCachedCosLon = 0.0;
+        // double fCachedSinLon = 0.0;
+        // bool fTrigCached = false;
 
         // 能量→行号 O(1) 映射
         std::unordered_map<double, int> fProtonEnergyToRow{54};

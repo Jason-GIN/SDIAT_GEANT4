@@ -6,5 +6,5 @@ CXX_DEFINES = -DG4LIB_BUILD_DLL -DG4UI_USE_QT -DG4VIS_USE_OPENGLQT -DG4VIS_USE_O
 
 CXX_INCLUDES = -I/home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include -I/home/jasongindrkchen/root/root_install/include -isystem /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets
 
-CXX_FLAGS =  -O0 -Wall -g2 -ggdb -fPIC
+CXX_FLAGS = -g -fPIC
 
