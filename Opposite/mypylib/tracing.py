@@ -157,7 +157,7 @@ def main(Xinit, monento, otherpar,i,queue):
 '''    
 
 def main(Xinit, monento, otherpar,i,n,thread):
-    mMeV, charge = otherpar
+    mMeV, charge, B = otherpar
     # mkg=mMeV/cc/cc*1e6*efundamental
     qcharge=charge*efundamental
     mGeV=mMeV/1e3
@@ -166,25 +166,31 @@ def main(Xinit, monento, otherpar,i,n,thread):
     Ekg=EGeV*1e9*efundamental/(cc**2)
     
     rigidity = pGeV / abs(charge) if charge != 0 else pGeV  # GV
-    
-    if rigidity > 50:  # 高能粒子，轨迹接近直线
-        mt = 'DOP853'  # 高阶方法，大步长
-        tspan = (0, 10)   # 减少积分时间
-    elif rigidity > 0.1:   # 中等能量
-        mt = 'RK45'
-        tspan = (0.0,100.0)
-    else:                 # 低能粒子，回旋运动
-        mt = 'LSODA'      # 自动切换刚性问题
-        tspan = (0.0,100.0)
-        
     velosity=cc*monento/1e6/EGeV           # 相对论性的速度v=beta=动量/能量，距离单位km，时间单位s
     param=(qcharge,Ekg)
     #tspan=(0.0,100.0)
     # time0=time.time()
     XVinit=np.append(Xinit,velosity)
-    #可以考虑在这个玩意里面用归一化的无量纲常数，这样应该可以减小误差
-    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector], args=param)
-    # sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[complex_rLow, rHigh, rDetector], args=param)
+    
+    if rigidity > 50:  # 高能粒子，轨迹接近直线
+        mt = 'DOP853'  # 高阶方法，大步长
+        tspan = (0, 10)   # 减少积分时间
+        maxstep=np.inf
+    elif rigidity > 20:   # 中等能量
+        mt = 'RK45'
+        tspan = (0.0,100.0)
+        maxstep=np.inf
+    elif rigidity > 10:
+        mt = 'RK45'
+        tspan = (0.0,100.0)
+        maxstep=rigidity/(2*B)
+    else:                 # 低能粒子，回旋运动
+        mt = 'LSODA'      # 自动切换刚性问题
+        tspan = (0.0,100.0)
+        maxstep=rigidity/(2*B)
+            
+    #可以考虑在这个玩意里面用归一化的无量纲常数，这样应该可以减小误差    
+    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector], args=param,max_step=maxstep)
     print("Sol function finished!")
     #str1="../result/TraceData/TraceTest"+str(i)+"_"+n+"_t"+str(thread)+".csv"
     #r=np.linalg.norm(sol.y[0:3],axis=0)
