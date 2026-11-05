@@ -14,6 +14,8 @@ lib_path = os.path.join(current_dir,"..")
 #print(lib_path)
 sys.path.insert(0, lib_path)   # insert(0) 确保优先搜索
 from mypylib import tracing
+from mypylib import myigrf14 
+from mypylib import *
 
 import multiprocessing as mps
 import time
@@ -135,10 +137,20 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     # 9,10  是电荷和质量 单位是: 没有或者e（因为是自然单位制），MeV
     if len(particlelist)==0:
         return [], 0
+    
+    r,t,p=RotationModel.xyz2rthetaphi(particlelist[:,0],particlelist[:,1],particlelist[:,2])
+    ln = len(t)
+    # 显式指定 dtype=float64 和 Fortran 顺序，避免 f2py 内部拷贝
+    colat = np.asfortranarray(np.degrees(t), dtype=np.float64)
+    lon   = np.asfortranarray(np.degrees(p), dtype=np.float64)
+    r     = np.asfortranarray(r, dtype=np.float64)
+    B  = np.empty(ln, dtype=np.float64)
+    _, _, _, B=myigrf14.igrf_wrapper_array(ln, colat, lon, r, 2025.0)
+    
     args_list = []
     for i, plist in enumerate(particlelist): 
         # 同时获取元素序号（索引），和元素值，这个i做为单个循环中的任务ID（task_id）
-        args = (plist[0:3], plist[3:6], [plist[10], plist[9]], i,Egnum,n)   
+        args = (plist[0:3], plist[3:6], [plist[10], plist[9], B[i]], i,Egnum,n)   
         args_list.append(args)
 
     # 创建一个进程池，最大并发数可以设为 len(particlelist) 或更小的值
@@ -243,7 +255,7 @@ def LoopBasic(particlelist,Egnum,n,mypth):
         particlelist1=GEANT4RuningFun(strmac)
         gplist=ParticleSelect(particlelist1)
         num=gplist.shape[0]
-        print("粒子数量： ", num)
+        print("追踪粒子数量： ", num)
     else:
         gplist=rParlist
         num=0
@@ -263,7 +275,7 @@ def main(runmac, Egnum, mypth):
     #print(particles)
     tparticlelist=ParticleSelect(particles)
     pnum=tparticlelist.shape[0]
-    print("粒子数量： ", pnum)
+    print("追踪粒子数量： ", pnum)
     count=0
     #设置循环参数，防止数据保存覆盖
     while ( pnum>0 ):
