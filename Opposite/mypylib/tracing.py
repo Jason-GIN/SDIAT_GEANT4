@@ -108,7 +108,7 @@ def complex_rLow(t,XV,qcharge,Ekg):
     # 这样当它从外部进入内部时，函数值会从正变负，触发事件。
     event_value = r-100-6371
     
-    # --- 在这里实现你的复杂判断逻辑 ---
+    # --- 在这里实现复杂判断逻辑 ---
     # 如果粒子进入了指定高度，进行额外判断
     if event_value < 0:
         # 磁场
@@ -157,7 +157,7 @@ def main(Xinit, monento, otherpar,i,queue):
 '''    
 
 def main(Xinit, monento, otherpar,i,n,thread):
-    mMeV, charge, B = otherpar
+    mMeV, charge, B = otherpar # 这个地方B的单位是nT
     # mkg=mMeV/cc/cc*1e6*efundamental
     qcharge=charge*efundamental
     mGeV=mMeV/1e3
@@ -167,6 +167,7 @@ def main(Xinit, monento, otherpar,i,n,thread):
     
     rigidity = pGeV / abs(charge) if charge != 0 else pGeV  # GV
     velosity=cc*monento/1e6/EGeV           # 相对论性的速度v=beta=动量/能量，距离单位km，时间单位s
+    v=pGeV/EGeV                         # beta
     param=(qcharge,Ekg)
     #tspan=(0.0,100.0)
     # time0=time.time()
@@ -183,15 +184,19 @@ def main(Xinit, monento, otherpar,i,n,thread):
     elif rigidity > 10:
         mt = 'RK45'
         tspan = (0.0,100.0)
-        maxstep=rigidity/(2*B)
+        maxstep=69.9*rigidity/(B*v)/20   #时间单位是s， 所以有很多单位的转换 ,69.9实际上是1e18/cc/cc*2*np.pi的近似值
+        #最大步长取回旋周期的1/(20)  ，
+        # 一开始太天真，光顾着考虑电子，电子在5 MeV的时候 v/c->1，直接就把beta当1忽略了。
+        # 但是质子，或者说质量大的粒子，在5 MeV时，beta会很小，原来的公式会导致，步长过低。
     else:                 # 低能粒子，回旋运动
         mt = 'LSODA'      # 自动切换刚性问题
         tspan = (0.0,100.0)
-        maxstep=rigidity/(2*B)
-            
+        maxstep=69.9*rigidity/(B*v)/20
+    
+    t_eval_step=np.linspace(tspan[0], tspan[1], 2000) 
     #可以考虑在这个玩意里面用归一化的无量纲常数，这样应该可以减小误差    
-    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector], args=param,max_step=maxstep)
-    print("Sol function finished!")
+    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector], args=param,max_step=maxstep,t_eval=t_eval_step)
+    print("Sol function finished!", " ", maxstep, " ",rigidity)
     #str1="../result/TraceData/TraceTest"+str(i)+"_"+n+"_t"+str(thread)+".csv"
     #r=np.linalg.norm(sol.y[0:3],axis=0)
     #array=np.vstack((sol.y[0:3],r))

@@ -144,7 +144,7 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     colat = np.asfortranarray(np.degrees(t), dtype=np.float64)
     lon   = np.asfortranarray(np.degrees(p), dtype=np.float64)
     r     = np.asfortranarray(r, dtype=np.float64)
-    B  = np.empty(ln, dtype=np.float64)
+    # B  = np.empty(ln, dtype=np.float64)
     _, _, _, B=myigrf14.igrf_wrapper_array(ln, colat, lon, r, 2025.0)
     
     args_list = []

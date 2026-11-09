@@ -27,12 +27,11 @@ G4ClassificationOfNewTrack MyStackingAction::ClassifyNewTrack(const G4Track* tra
             return fUrgent;
         } else {
             // 次级粒子低于阈值则杀死,but keep nutrino
-            if (track->GetDefinition()->GetPDGEncoding() == 12 || 
-                track->GetDefinition()->GetPDGEncoding() == 14 ||
-                track->GetDefinition()->GetPDGEncoding() == 16 ||
-                track->GetDefinition()->GetPDGEncoding() == -12 || 
-                track->GetDefinition()->GetPDGEncoding() == -14 ||
-                track->GetDefinition()->GetPDGEncoding() == -16 ){
+            G4int pdg = track->GetDefinition()->GetPDGEncoding();
+            G4int apdg = std::abs(pdg);
+            if (apdg == 12 || 
+                apdg == 14 ||
+                apdg == 16  ){
                     return fUrgent;
                 }else{
                     return fKill;

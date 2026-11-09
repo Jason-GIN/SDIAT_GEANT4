@@ -461,7 +461,7 @@ namespace Test02
     G4Mag_UsualEqRhs *equation = new G4Mag_UsualEqRhs(threadField);
     G4MagIntegratorStepper *stepper = new G4DormandPrinceRK78(equation);
     // fieldMgr->SetDetectorField(magField);
-    G4double minStep = 1 * cm;
+    G4double minStep = 1 * m;
     G4ChordFinder *chordFinder = new G4ChordFinder(threadField, minStep, stepper);
     // fieldMgr->CreateChordFinder(threadField); // 这一句是自动设置计算积分，
     fieldMgr->SetChordFinder(chordFinder);
