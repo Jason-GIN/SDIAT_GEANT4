@@ -95,13 +95,13 @@ def rDetector(t,XV,dfp,qcharge,Ekg):
 rDetector.max_events = np.inf  # type: ignore
 rDetector.direction = 0        # type: ignore
 
-def datasplit(i,result):
+def datasplit(i,result,result_t):
     # 输入的是解方程事件数组的前三项
     # 返回元组，元素分别是（击中90km的位置，击中时间，击中400km的位置，击中时间）
     if len(result[0])==0:
-            return (i, np.array([]),0, result[2],result[2])
+            return (i, np.array([]),0, result[2][0:6], result_t[2])
     else :
-        return (i, result[0],result[0], result[2],result[2])
+        return (i, result[0],result_t[0], result[2][0:6], result_t[2])
 
 def paramseting(charge,rigidity,parm):
     B,beta=parm
@@ -200,7 +200,7 @@ def main(Xinit, monento, otherpar,i,n,thread):
     sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector, sVmfp], 
                             args=param,max_step=maxstep,t_eval=t_eval_step)
     print("Sol function finished!")
-    res=datasplit(sol.y_events[0:3])
+    res=datasplit(i,sol.y_events[0:3],sol.t_events[0:3])
     if len(sol.y_events[3])==0:
         return (res,[])
     else:
