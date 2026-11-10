@@ -200,12 +200,13 @@ def main(Xinit, monento, otherpar,i,n,thread):
     sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector, sVmfp], 
                             args=param,max_step=maxstep,t_eval=t_eval_step)
     print("Sol function finished!")
-    if len(sol.y_event[3])==0:
-        return (datasplit(sol.y_event[0:3]),[])
+    res=datasplit(sol.y_events[0:3])
+    if len(sol.y_events[3])==0:
+        return (res,[])
     else:
         # 这里应该接一个生成衰变产物具体分布的代码然后进行新的一轮tracing
         # 可以根据返回数组的大小判断是返回原粒子还是衰变。
-        x,y,z,vx,vy,vz,s=sol.y_event[3]
+        x,y,z,vx,vy,vz,s=sol.y_events[3]
         loc=np.array([x,y,z])
         v=np.linalg.norm([vx,vy,vz])
         vbeta=v*1e3/cc
@@ -215,5 +216,4 @@ def main(Xinit, monento, otherpar,i,n,thread):
         newmome=pGeV*np.array([vx,vy,vz])/v
         halfplist=DecayProducts(PID,newmome)
         plist = np.hstack((np.ones((halfplist.shape[0], 4)*loc),halfplist))
-        res=datasplit(sol.y_event[0:3])
         return (res,plist)
