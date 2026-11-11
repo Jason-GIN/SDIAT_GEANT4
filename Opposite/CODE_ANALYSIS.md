@@ -32,8 +32,10 @@
 6. [Python管理层详解](#6-python管理层详解)
    - [6.1 manager.py — 主控脚本](#61-managerpy--主控脚本)
    - [6.2 tracing.py — 地磁场径迹追踪](#62-tracingpy--地磁场径迹追踪)
-   - [6.3 RotationModel.py — 坐标系转换库](#63-rotationmodelpy--坐标系转换库)
-   - [6.4 SparticleCalculate.py — 次级粒子处理](#64-sparticlecalculatepy--次级粒子处理)
+   - [6.3 tracingDecay.py — 可衰变粒子追踪与衰变产物生成](#63-tracingdecaypy--可衰变粒子追踪与衰变产物生成)
+   - [6.4 RotationModel.py — 坐标系转换库](#64-rotationmodelpy--坐标系转换库)
+   - [6.5 myManDyna.py — 磁力线追踪与磁镜像点](#65-mymandynapy--磁力线追踪与磁镜像点)
+   - [6.6 SparticleCalculate.py — 次级粒子处理](#66-sparticlecalculatepy--次级粒子处理)
 7. [宏文件系统](#7-宏文件系统)
 8. [数据文件格式](#8-数据文件格式)
 9. [运行方式](#9-运行方式)
@@ -159,7 +161,8 @@ Opposite/
 │
 ├── mypylib/                    # Python辅助库
 │   ├── __init__.py             # 包初始化
-│   ├── tracing.py              # ★ 地磁场中粒子径迹数值求解（核心Python模块）
+│   ├── tracing.py              # ★ 地磁场中稳定粒子径迹数值求解（核心Python模块）
+│   ├── tracingDecay.py         # ★ 可衰变粒子径迹追踪 + 衰变产物生成（pyFANG/particle）
 │   ├── RotationModel.py        # 坐标系转换函数库
 │   ├── myManDyna.py            # 磁力线追踪 / 磁镜像点计算
 │   ├── myigrf14.cpython-310...so # IGRF14 地磁场编译模块（2025，当前使用）
@@ -789,35 +792,35 @@ private:
 #### 核心工作流
 
 ```
-main(runmac, Enum)
+main(runmac, Egnum, mypth)
 │
 ├── Step 1: GEANT4RuningFun(runmac)
 │   └── subprocess.run("./test02", runmac, stderr=PIPE)
-│       接收stderr中的二进制粒子数据
-│       解析为numpy structured array
+│       接收stderr中的二进制粒子数据，解析为numpy structured array
 │
-├── Step 2: ParticleSelect(particles)
-│   └── 筛选 PID==11(e⁻), -11(e⁺), 2212(p), -2212(anti-p), >1e10(核子) 的粒子
+├── Step 2: ParticleSelect1(particles)
+│   └── 先剔除 γ / 中微子，再把剩余粒子分为两类：
+│       ├── iparticlelist（稳定粒子）：e⁻/e⁺、p/p̄、原子核(|PID|>1e9)
+│       └── dparticlelist（可衰变粒子）：μ/π/K/n 等其余粒子
 │
-├── Step 3: 迭代循环 (while pnum > 0)
-│   └── LoopBasic(tparticlelist, Enum, count, mypth)
-│       │
-│       ├── 多进程并行调用 tracing.main()
-│       │   └── 对每个粒子，用地磁场模型反推轨迹
-│       │   └── 返回: (task_id, 轨迹结果, rt, Hit数据, ht)
-│       │       （rt/ht 分别为撞入大气和到达探测器的时间）
-│       │
-│       ├── 收集结果：
-│       │   ├── 未到达400km的粒子 → Hitlist（记录其击中位置）
-│       │   └── 到达400km的粒子 → Parlist（记录其到达时的状态）
-│       │
-│       ├── TimeSelect(Parlist)：过滤到达时间 > 100 s 的粒子
-│       │
-│       ├── 将Parlist写为CSV → 生成GEANT4宏文件
-│       │
-│       └── 再次运行GEANT4 → 继续追踪这些粒子的后续行为
+├── Step 3: 迭代循环 LoopBasic(iparticlelist, dparticlelist, Egnum, count, mypth)
+│   │
+│   ├── Dtracing(dparticlelist)          # 可衰变粒子走 tracingDecay.main()
+│   │   └── 追踪到衰变弧长 sVmfp 时，用 pyFANG 生成衰变产物
+│   │       └── 衰变产物 splist 并入 iparticlelist，参与下一轮追踪
+│   │
+│   ├── 多进程并行调用 tracing.main()     # 稳定粒子反推轨迹
+│   │   └── 返回: (task_id, 轨迹结果, rt, Hit数据, ht)
+│   │
+│   ├── DataSetting() 收集结果：
+│   │   ├── 未到达400km的粒子 → Hitlist（记录其击中位置）
+│   │   └── 到达400km的粒子 → Parlist（记录其到达时的状态）
+│   │
+│   ├── TimeSelect(Parlist)：过滤到达时间 > 100 s 的粒子
+│   ├── 将Parlist写为CSV → 生成Secondary宏 → 再次运行GEANT4
+│   └── ParticleSelect1() 再次分类，返回新的 (稳定, 可衰变) 粒子
 │
-└── 循环直到不产生新的可到达卫星的粒子
+└── 循环直到不产生新的可到达卫星的粒子（最多 200 次迭代）
 ```
 
 #### 关键函数
@@ -834,8 +837,22 @@ main(runmac, Enum)
 - 从stderr读取：前4字节=粒子数量，后续=粒子数据二进制流
 - 按 `ParticleData` 结构体（11 字段，顺序 `x,y,z,dx,dy,dz,energy,PID,t,charge,m`）对齐解析为numpy数组
 
-**`ParticleSelect(particles)`**：
-过滤感兴趣的粒子类型（电子、质子、重核）
+**`ParticleSelect(particles)`**（旧版，已被 `ParticleSelect1` 取代）：
+过滤感兴趣的粒子类型（电子、质子、重核），不分稳定/可衰变。
+
+**`ParticleSelect1(particles)`**（本次新增）：
+- 先剔除不追踪的粒子：γ（`PID==22`）、三种中微子（`±12/±14/±16`）
+- 再把剩余粒子分为两类返回 `(plists, plistd)`：
+  - **稳定粒子** `plists`：e⁻/e⁺（`±11`）、p/p̄（`±2212`）、原子核（`|PID|>1e9`）→ 走 `tracing.main()`
+  - **可衰变粒子** `plistd`：μ、π、K、n 等其余粒子 → 走 `tracingDecay.main()`
+
+**`Dtracing(dparticlelist)`**（本次新增）：
+对可衰变粒子列表逐个调用 `tracingDecay.main()`（多进程，`MAX_CONCURRENT=32`）。每个粒子先计算其初始位置的地磁场强度 `B[i]`（nT），参数为 `(pos, mom, [mass, charge, B, PID], i)`。返回 `(Parlist, Hitlist, splist)`，其中 `splist` 是衰变产物数组。
+
+**`DataSetting(results, particlelist, dfactor)`**（本次新增）：
+统一后处理追踪结果，按 `dfactor` 区分两种返回：
+- `dfactor=0`（稳定粒子）：返回 `(Parlist, Hitlist)`
+- `dfactor=1`（衰变粒子）：额外返回 `Plist`（衰变产物），用于并入下一轮粒子列表
 
 **`TimeSelect(particles)`**：
 按第 8 列（时间 t，单位秒）过滤，只保留 `t <= 100 s` 的粒子（时间上限控制）
@@ -843,11 +860,13 @@ main(runmac, Enum)
 **`SaveRoot(filename, data)`**：
 用 `uproot` 把 Hitlist 写成 ROOT 文件（`HitData` TTree，含 Pos/Dir/Energy/PID/Charge/task_id/Time 等分支）
 
-**`LoopBasic(particlelist, Egnum, n, mypth)`**：
-- 对粒子列表中的每个粒子，创建 `(pos, mom, [mass, charge], i, Egnum, n)` 参数
+**`LoopBasic(particlelist, dparticlelist, Egnum, n, mypth)`**（签名由 `LoopBasic(particlelist, Egnum, n, mypth)` 扩展）：
+- 若有可衰变粒子：先 `Dtracing(dparticlelist)`，把衰变产物 `splist` `vstack` 进 `particlelist`
+- 对合并后的粒子列表，创建 `(pos, mom, [mass, charge, B], i, Egnum, n)` 参数
 - 使用 `multiprocessing.Pool`（最大32进程）并行调用 `tracing.main()`
-- 收集追踪结果（5 元组），构造 Parlist（到达轨道粒子）和 Hitlist（未到达粒子）
-- 用 `np.vstack(list)` 一次性构造（已避免 O(n²) 复制）
+- `DataSetting()` 收集结果，构造 Parlist（到达轨道粒子）、Hitlist（未到达粒子）
+- 合并 Dtracing 与 tracing 的结果，写 CSV → 生成 Secondary 宏 → 再跑 GEANT4 → `ParticleSelect1()` 重新分类
+- 返回 `(gplist, dplist, num)`，供 `main()` 的 while 循环继续迭代
 
 ---
 
@@ -881,25 +900,110 @@ def XVDinkm(t, XV, qcharge, Ekg):
 ```python
 def main(Xinit, monento, otherpar, i, n, thread):
     # Xinit: 初始位置 [x, y, z] (km)
-    # monento: 动量 [px, py, pz]
-    # otherpar: [静质量(MeV), 电荷(e)]
+    # monento: 动量 [px, py, pz] (MeV)
+    # otherpar: [静质量(MeV), 电荷(e), 磁场强度 B(nT)]
 
-    rigidity = pGeV / abs(charge)  # GV
-    # rigidity > 50   → DOP853, tspan=(0,10)   （高能，接近直线）
-    # rigidity > 0.1  → RK45,   tspan=(0,100)  （中等能量）
-    # else            → LSODA,  tspan=(0,100)  （低能，回旋运动）
-    # solve_ivp(..., method=mt, events=[rLow, rHigh, rDetector], args=param)
+    rigidity = pGeV / abs(charge) if charge != 0 else pGeV  # GV（磁刚度）
+    beta = pGeV / EGeV                                       # v/c
+
+    # 按磁刚度自适应选择积分器与步长上限：
+    # rigidity > 50  → DOP853, tspan=(0,10),  maxstep=inf           （高能，接近直线）
+    # rigidity > 20  → RK45,   tspan=(0,100), maxstep=inf           （中高能）
+    # rigidity > 10  → RK45,   tspan=(0,100), maxstep=69.9*R/(B·β)/20 （中低能）
+    # else           → LSODA,  tspan=(0,100), maxstep=69.9*R/(B·β)/20 （低能，回旋运动）
+    #   其中 maxstep 取回旋周期 τ_g ≈ 69.9·R[GV]/(β·B[nT]) 的 1/20
+
+    # t_eval 固定输出网格（2000 点），避免 sol.y 随积分步数增长导致内存爆炸
+    sol = solve_ivp(XVDinkm, tspan, XVinit, method=mt,
+                    events=[rLow, rHigh, rDetector], args=param,
+                    max_step=maxstep, t_eval=t_eval_step)
 
     # 返回 5 元组：
     return (i, sol.y_events[0], sol.t_events[0],   # 撞入大气的状态 + 时间
                 sol.y_events[2], sol.t_events[2])  # 到达探测器的状态 + 时间
 ```
 
+> 说明：`maxstep` 已由旧版 `rigidity/(2*B)`（GV÷nT 单位错误）修正为回旋周期公式 `69.9·R/(β·B)/20`；同时新增 `t_eval` 粗网格输出，两者分别解决"时间步长过小"和"内存爆炸"两个问题（详见 `Opposite/MEMORY_ISSUE_ANALYSIS.md`）。
+
 **物理意义**：从GEANT4在大气中记录的次级粒子位置反向追踪，看在磁场中回溯是否能到达卫星轨道高度（400km）。这实际上是在模拟"哪些次级粒子可以向上逃逸出大气层到达卫星轨道"。
 
 ---
 
-### 6.3 RotationModel.py — 坐标系转换库
+### 6.3 tracingDecay.py — 可衰变粒子径迹追踪与衰变产物生成
+
+**文件**：`mypylib/tracingDecay.py`（~222 行，2026-11-10 新增）
+**功能**：追踪**可衰变**次级粒子（μ、π、K、n 等）在地磁场中的运动，并在其衰变点用 pyFANG 生成衰变产物，供下一轮 `LoopBasic` 继续追踪。与 `tracing.py` 的区别在于：状态向量多了一个**弧长**分量 `s`，用来判断粒子是否已飞过衰变长度。
+
+#### 状态向量与右侧函数（7 维）
+
+```python
+def XVDinkm(t, XV, dfp, qcharge, Ekg):
+    # XV = [x, y, z, vx, vy, vz, s]   # 前 6 维同 tracing.py，第 7 维 s 为累计弧长
+    return myigrf14.rhs_dparticle(t, XV, qcharge, Ekg, 2025)
+```
+
+`rhs_dparticle`（`Analysis/mypylib/wrapper.f90:100`）与 `rhs_particle` 的唯一区别是：`dXV(7) = sqrt(vx²+vy²+vz²)`，即弧长对时间的导数等于速率，其余 6 维完全相同（洛伦兹力）。
+
+#### 事件检测器
+
+| 事件 | 条件 | 行为 |
+|------|------|------|
+| `sVmfp` | `s - dfp`（到达抽样衰变弧长） | **终止积分**（`terminal=True`），触发衰变 |
+| `rLow` | r < 90+6371 km | 记录撞入大气（`max_events=1`） |
+| `rHigh` | r > 100000 km | 记录逃离地磁场（`max_events=1`） |
+| `rDetector` | r < 400+6371 km | 记录到达轨道高度（`max_events=np.inf`，双向 `direction=0`） |
+
+> ⚠️ 注意：`rLow`/`rHigh` 这里用的是 `max_events=1` 而非 `terminal=True`，scipy 的 `max_events` 语义是"事件数**超过**该值才终止"，单次事件并不会停止积分（详见 BUG_REPORT 🟠-20）。`tracing.py` 中两者是 `terminal=True`。
+
+#### 衰变长度抽样
+
+```python
+def sample_decay_length(lambda_mfp):
+    u = np.random.random()          # U ~ Uniform[0,1)
+    return -lambda_mfp * np.log(u)  # 指数分布抽样
+```
+
+其中 `mfp = γ·β·c·τ`（`main()` 内计算，单位 km），`τ` 由 `particle.Particle.from_pdgid(PID).lifetime` 取得（ns → s）。
+
+#### 参数设置 `paramseting(charge, rigidity, [B, beta])`
+
+与 `tracing.py` 的分支逻辑一致，额外多一个 `charge==0`（中性粒子）分支：中性粒子不受洛伦兹力，用 `RK45` + `maxstep=inf` 直线追踪。带电粒子按磁刚度 `rigidity` 分四档选积分器/步长。
+
+#### 衰变产物生成 `DecayProducts(pid, momentum)`
+
+```python
+particle_data = PYTHIAParticleData()               # particletools：PDG 质量/衰变道/电荷
+channels = particle_data.decay_channels(pid)       # [(分支比, [末态名...]), ...]
+chosen = random.choices(names, weights, k=1)[0]    # 按分支比选一条衰变道
+gen = TFANG(seed=42)                               # pyFANG：二体/多体相空间衰变
+gen.SetDecay(np.append(momentum, mGeV), daughter_masses)
+daughters = gen.GetDecays(0)                       # [n_daughters, 4] = [px, py, pz, m]
+```
+
+#### 主函数 `main(Xinit, monento, otherpar, i)`
+
+```python
+# otherpar = [静质量(MeV), 电荷(e), B(nT), PID]
+# 返回 (res, plist)：
+#   res   = datasplit(...)  # 5 元组，同 tracing.main 的返回结构
+#   plist = 衰变产物数组（若未衰变则为 []）
+if len(sol.y_events[3]) == 0:      # sVmfp 未触发 → 粒子在到达边界/时限前未衰变
+    return (res, [])
+else:                              # 粒子衰变
+    x,y,z,vx,vy,vz,s = sol.y_events[3][0]   # 衰变点状态
+    newmome = pGeV * [vx,vy,vz] / |v|       # 衰变点动量方向（GeV）
+    halfplist = DecayProducts(int(PID), newmome)
+    plist = hstack([loc, halfplist[:,0:5], t_events[3], halfplist[:,5:]])  # 11 列
+    return (res, plist)
+```
+
+`plist` 沿用 11 列约定 `[x,y,z, px,py,pz, E, PID, t, charge, m]`，由 `manager.Dtracing → DataSetting(dfactor=1)` 收集为 `splist`，再 `vstack` 进稳定粒子列表参与下一轮追踪。
+
+> ⚠️ 注意：当前 `DecayProducts` 的第 5 列（PID）写的是 `daughter_names[0]`（字符串，且是**第一条衰变道**的名字），且动量/质量单位为 GeV 而原始粒子列表为 MeV，存在单位与类型不一致（详见 BUG_REPORT 🔴-8/🔴-9）。
+
+---
+
+### 6.4 RotationModel.py — 坐标系转换库
 
 **文件**：`mypylib/RotationModel.py`（~95行）  
 **功能**：提供与C++侧对应的坐标转换函数（Python版本）
@@ -911,7 +1015,7 @@ def main(Xinit, monento, otherpar, i, n, thread):
 
 ---
 
-### 6.4 myManDyna.py — 磁力线追踪与磁镜像点
+### 6.5 myManDyna.py — 磁力线追踪与磁镜像点
 
 **文件**：`mypylib/myManDyna.py`（~90行）  
 **功能**：地磁场磁力线追踪与磁镜像点计算，用于判断粒子是否会再次进入大气（磁镜约束分析）
@@ -926,7 +1030,7 @@ def main(Xinit, monento, otherpar, i, n, thread):
 
 ---
 
-### 6.5 SparticleCalculate.py — 次级粒子处理
+### 6.6 SparticleCalculate.py — 次级粒子处理
 
 **文件**：`SparticleCalculate.py`（~146行）  
 **功能**：处理和统计GEANT4输出的次级粒子
@@ -1258,6 +1362,14 @@ stderr二进制输出格式（第112-119行）控制Python通信格式——修�
 - 预留的SphericalSystemSDinOrbit功能（轨道层球壳SD）
 
 这些是开发迭代过程中的痕迹。
+
+### 12.8 衰变追踪新模块（tracingDecay.py）
+
+2026-11 新增 `tracingDecay.py` 并把衰变整合进 `manager.py` 后，需注意：
+
+1. **新依赖**：`tracingDecay.py` 依赖 `particle`、`particletools`、`pyFANG` 三个第三方包，运行环境需额外 `pip install particle particletools`（`pyFANG` 需按其说明编译安装）。
+2. **单位约定**：衰变产物 `plist` 当前存在 GeV/MeV 单位与字符串 PID 两类隐患（详见 BUG_REPORT 🔴-8/🔴-9），修复前衰变分支在短寿命粒子（μ/π 等）场景会出错。
+3. **事件终止**：`rLow`/`rHigh` 用 `max_events=1` 而非 `terminal=True`，撞大气/逃逸后积分不终止（BUG_REPORT 🟠-20）。
 
 ---
 
