@@ -2,7 +2,7 @@
 
 > **作者**：GIN
 > **版本**：基于 Geant4 11.3.0 + ROOT + Python 3.10
-> **日期**：2026-10-22（总览）
+> **日期**：2026-10-22（总览）→ 2026-11-11（更新：整合可衰变粒子追踪 `tracingDecay.py`）
 
 ---
 
@@ -36,7 +36,8 @@ SDIAT_GEANT4/
 │   ├── CMakeLists.txt        # 构建配置（Geant4 + ROOT）
 │   ├── manager.py            # ★ Python 主控脚本（两层模拟调度）
 │   ├── mypylib/              # Python 辅助库
-│   │   ├── tracing.py        # ★ 地磁场粒子径迹数值积分
+│   │   ├── tracing.py        # ★ 地磁场稳定粒子径迹数值积分
+│   │   ├── tracingDecay.py   # ★ 可衰变粒子追踪 + 衰变产物生成（pyFANG/particle）
 │   │   ├── RotationModel.py  # 坐标系转换函数
 │   │   ├── myManDyna.py      # 磁力线追踪 / 磁镜像点计算
 │   │   ├── myigrf14.*.so     # IGRF14 地磁场编译模块（2025 年）
@@ -56,7 +57,8 @@ SDIAT_GEANT4/
 │   ├── run.mac / test2.mac   # GEANT4 宏文件
 │   ├── Spectrum.dat / data.dat
 │   ├── CODE_ANALYSIS.md      # ★ 代码详解（逐模块）
-│   └── PERFORMANCE_ANALYSIS.md / PERFORMANCE_ANALYSIS_2.md  # 性能分析
+│   ├── PERFORMANCE_ANALYSIS.md / _2.md / _3.md  # 性能分析（_3 为最新）
+│   └── MEMORY_ISSUE_ANALYSIS.md                 # 追踪内存溢出分析与修复方案
 │
 └── Analysis/                 # ★ 通量分析 + 绘图（对比 AMS-01）
     ├── BuildProtonFluxOnE_Orbit_{D,U}.py     # 质子通量能谱（向下/向上）
@@ -82,8 +84,11 @@ SDIAT_GEANT4/
       → SD1（130 km）收集向上逃逸的粒子，通过 stderr 二进制管道传回 Python
           ↓
 [2] Python 筛选 + 反推
-      ParticleSelect() 选出质子/电子/核子
-      tracing.main() 用 IGRF14 磁场 + scipy.solve_ivp 追踪轨迹
+      ParticleSelect1() 剔除 γ/中微子后，把粒子分为两类：
+        ├── 稳定粒子（e±/p/p̄/原子核）→ tracing.main()
+        └── 可衰变粒子（μ/π/K/n 等）→ tracingDecay.main()
+              追踪到衰变弧长时用 pyFANG 生成衰变产物，产物并入下一轮
+      tracing.main() / tracingDecay.main() 用 IGRF14 磁场 + scipy.solve_ivp 追踪轨迹
       → 到达 400 km 的粒子 → Parlist
       → 返回 100 km 大气的粒子（实际上为了防止粒子反复穿越边界造成的开销，代码将追踪到 90 km） → Hitlist（记录击中位置）
           ↓
@@ -128,6 +133,7 @@ table.txt（36 个经纬度坐标 + 起始能量 bin）
 - ROOT（Ntuple 输出 + 数据合并）
 - CMake ≥ 3.16、GCC（C++17）
 - Python 3.10 + numpy / pandas / uproot / scipy / htcondor2
+- 衰变追踪额外依赖：`particle`、`particletools`（PDG 质量/衰变道表）、`pyFANG`（多体相空间衰变生成）
 
 ### 4.2 编译 GEANT4 主程序
 
@@ -191,8 +197,11 @@ python3 submit.py                                    # 提交到 HTCondor
 ## 6. 文档导航
 
 - **[Opposite/CODE_ANALYSIS.md](Opposite/CODE_ANALYSIS.md)** —— 代码详解，逐模块介绍几何、生成器、磁场、探测器、Python 管理层。
-- **[Opposite/PERFORMANCE_ANALYSIS_2.md](Opposite/PERFORMANCE_ANALYSIS_2.md)** —— 性能瓶颈分析与优化方案（**修订版，推荐阅读**）。
-- **[Opposite/PERFORMANCE_ANALYSIS.md](Opposite/PERFORMANCE_ANALYSIS.md)** —— 性能分析初版（部分描述已被 _2 修正，仅供参考）。
+- **[Opposite/PERFORMANCE_ANALYSIS_3.md](Opposite/PERFORMANCE_ANALYSIS_3.md)** —— 性能瓶颈分析与优化方案（**最新版，推荐阅读**）。
+- **[Opposite/PERFORMANCE_ANALYSIS_2.md](Opposite/PERFORMANCE_ANALYSIS_2.md)** —— 性能分析修订版（部分描述已被 _3 修正）。
+- **[Opposite/PERFORMANCE_ANALYSIS.md](Opposite/PERFORMANCE_ANALYSIS.md)** —— 性能分析初版（仅供参考）。
+- **[Opposite/MEMORY_ISSUE_ANALYSIS.md](Opposite/MEMORY_ISSUE_ANALYSIS.md)** —— 追踪内存溢出根因分析与修复方案（maxstep 单位 + t_eval）。
+- **[BUG_REPORT.md](BUG_REPORT.md)** —— 代码 Bug 审查报告（含严重程度分级与修复方案）。
 
 ---
 
