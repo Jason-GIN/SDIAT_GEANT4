@@ -93,12 +93,41 @@ def ParticleSelect(particles):
     # 选择需要的粒子主要是正反质子，正反电子，各种核子。
     PID=particles['PID']
     indx=np.where((PID==11)|(PID==-11)|(PID==2212)|(PID==-2212)|(PID>1e9)|(PID<-1e9))
+    # mask_stable = (PID == 11) | (PID == -11) | (PID == 2212) | (PID == -2212)
     if len(indx[0])==0:
-        plist=np.array([])
+        plists=np.array([])
     else:
-        plist=particles[indx[0]]
-        plist=plist.view(np.float64).reshape(plist.shape[0], -1)
-    return plist
+        plists=particles[indx[0]]
+        plists=plists.view(np.float64).reshape(plists.shape[0], -1)
+    return plists
+
+def ParticleSelect1(particles): 
+    # 分离粒子，分为可衰变的(plistd)和稳定的(plists)
+    if len(particles)==0:
+        return np.array([]), np.array([])
+    PID=particles['PID']
+    skip = ((PID ==  22) |                         # γ
+            (PID ==  12) | (PID == -12) |          # ν_e
+            (PID ==  14) | (PID == -14) |          # ν_μ
+            (PID ==  16) | (PID == -16))           # ν_τ
+    particles=particles[~skip]
+    PID=particles['PID']
+    # indx=np.where((PID==11)|(PID==-11)|(PID==2212)|(PID==-2212)|(PID>1e9)|(PID<-1e9))
+    mask_stable = (PID == 11) | (PID == -11) | (PID == 2212) | (PID == -2212)|(PID>1e9)|(PID<-1e9)
+    if not mask_stable.any():
+        plists=np.array([])
+        plistd=particles[~mask_stable]
+        plistd=plistd.view(np.float64).reshape(plistd.shape[0], -1)
+    elif mask_stable.all():
+        plists=particles[mask_stable]
+        plists=plists.view(np.float64).reshape(plists.shape[0], -1)
+        plistd=np.array([])
+    else:
+        plists=particles[mask_stable]
+        plists=plists.view(np.float64).reshape(plists.shape[0], -1)
+        plistd=particles[~mask_stable]
+        plistd=plistd.view(np.float64).reshape(plistd.shape[0], -1)
+    return plists, plistd
 
 def TimeSelect(particles):
     # print("particles shape: ",np.shape(particles))
@@ -128,8 +157,95 @@ def SaveRoot(filename,data):
         file.mktree("HitData", wdata)   # 第二个参数传入数据字典
     #file.close()
     
+def DataSetting(results,particlelist,dfactor=0):
+    par_list = []  # Python list of numpy arrays
+    hit_list = []
+    plist = []
+    if dfactor==0:
+        for result in results:
+            task_id, res, rt, Hit, ht = result
+            if len(res) > 0:
+                par_list.append(np.hstack([res[0, 0:3], 
+                                        res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
+                                        particlelist[task_id, 6:8],
+                                        (particlelist[task_id, 8]+rt)]))
+            if len(Hit) > 0:
+                t_hit=particlelist[task_id, 8]+ht
+                t_hit=t_hit[:, np.newaxis]
+                hit_list.append(np.hstack([Hit, 
+                                        np.ones((Hit.shape[0], 4)) * 
+                                        #    np.hstack([particlelist[task_id, 6:9], task_id]),
+                                        np.hstack([particlelist[task_id, 6:8], 
+                                                  particlelist[task_id, 9], task_id]),
+                                        t_hit]))
+    
+        # 最后一次性构造
+        Parlist = np.vstack(par_list) if par_list else np.array([])
+        Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+        return Parlist, Hitlist
+    else:
+        for result in results:
+            result0, splist = result
+            task_id, res, rt, Hit, ht = result0
+            if len(res) > 0:
+                par_list.append(np.hstack([res[0, 0:3], 
+                                        res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
+                                        particlelist[task_id, 6:8],
+                                                (particlelist[task_id, 8]+rt)]))
+            if len(Hit) > 0:
+                t_hit=particlelist[task_id, 8]+ht
+                t_hit=t_hit[:, np.newaxis]
+                hit_list.append(np.hstack([Hit, 
+                                        np.ones((Hit.shape[0], 4)) * 
+                                        #    np.hstack([particlelist[task_id, 6:9], task_id]),
+                                        np.hstack([particlelist[task_id, 6:8], 
+                                                  particlelist[task_id, 9], task_id]),
+                                        t_hit]))
+            if len(splist) > 0:
+                plist.append(splist)
+                
+        # 最后一次性构造
+        Parlist = np.vstack(par_list) if par_list else np.array([])
+        Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+        Plist = np.vstack(plist) if plist else np.array([])
+        return Parlist, Hitlist, Plist
 
-def LoopBasic(particlelist,Egnum,n,mypth):
+def Dtracing(dparticlelist):
+    # particlelist 是一个n*11的数组，n是粒子数量，11分别是：
+    # 0,1,2 是 x, y, z 单位是: km
+    # 3,4,5 是 vx, vy, vz 单位是: MeV
+    # 6,7,8 是 E,PID,t 单位是: MeV，没有，s
+    # 9,10  是电荷和质量 单位是: 没有或者e（因为是自然单位制），MeV   
+    if len(dparticlelist)==0:
+            return [], [],[]    
+    r,t,p=RotationModel.xyz2rthetaphi(dparticlelist[:,0],dparticlelist[:,1],dparticlelist[:,2])
+    ln = len(t)
+    # 显式指定 dtype=float64 和 Fortran 顺序，避免 f2py 内部拷贝
+    colat = np.asfortranarray(np.degrees(t), dtype=np.float64)
+    lon   = np.asfortranarray(np.degrees(p), dtype=np.float64)
+    r     = np.asfortranarray(r, dtype=np.float64)
+    # B  = np.empty(ln, dtype=np.float64)
+    _, _, _, B=myigrf14.igrf_wrapper_array(ln, colat, lon, r, 2025.0)
+        
+    args_list = []
+    for i, plist in enumerate(dparticlelist): 
+        # 同时获取元素序号（索引），和元素值，这个i做为单个循环中的任务ID（task_id）
+        args = (plist[0:3], plist[3:6], [plist[10], plist[9], B[i], plist[7]], i)   
+        args_list.append(args)
+    
+    # 创建一个进程池，最大并发数可以设为 len(particlelist) 或更小的值
+    # 如果你仍然需要限制数据库连接数（之前 sleep(5) 的作用），可以设置并发数较小，
+    # 比如同时只运行 4 个进程，而不是全部。
+    MAX_CONCURRENT = 32   # 根据你的数据库连接限制调整
+    with mps.Pool(processes=MAX_CONCURRENT) as pool:
+        # starmap 用于每个参数是一个元组，会自动解包传给 main
+        # 如果 main 不接受元组而需要多个参数，就用 starmap
+        results = pool.starmap(tracingDecay.main, args_list)
+    print("Process runing finish, Now selecting and saving data. ")
+    Parlist,Hitlist,splist = DataSetting(results,dparticlelist,1)
+    return Parlist,Hitlist,splist
+
+def LoopBasic(particlelist,dparticlelist,Egnum,n,mypth):
     # particlelist 是一个n*11的数组，n是粒子数量，11分别是：
     # 0,1,2 是 x, y, z 单位是: km
     # 3,4,5 是 vx, vy, vz 单位是: MeV
@@ -137,6 +253,15 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     # 9,10  是电荷和质量 单位是: 没有或者e（因为是自然单位制），MeV
     if len(particlelist)==0:
         return [], 0
+    
+    if len(dparticlelist)!=0:
+        Parlist0,Hitlist0,splist=Dtracing(dparticlelist)
+        if len(splist)!=0: 
+            particlelist=np.vstack((particlelist,splist))
+    else:
+        Parlist0=[]
+        Hitlist0=[]
+
     
     r,t,p=RotationModel.xyz2rthetaphi(particlelist[:,0],particlelist[:,1],particlelist[:,2])
     ln = len(t)
@@ -162,7 +287,8 @@ def LoopBasic(particlelist,Egnum,n,mypth):
         # 如果 main 不接受元组而需要多个参数，就用 starmap
         results = pool.starmap(tracing.main, args_list)
     print("Process runing finish, Now selecting and saving data. ")
-    
+    Parlist,Hitlist = DataSetting(results,particlelist)
+    '''
     par_list = []  # Python list of numpy arrays
     hit_list = []
 
@@ -186,6 +312,7 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     # 最后一次性构造
     Parlist = np.vstack(par_list) if par_list else np.array([])
     Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+    '''
     '''
     Parlist=np.array([])
     Hitlist=np.array([])
@@ -226,6 +353,16 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     strroot="../result"+mypth+"/seconddata"+str(n)+"_"+Egnum+".root"
     savehit="../result"+mypth+"/HitChargePdata"+str(n)+"_"+Egnum+".root"
     '''
+    if len(Parlist0)!=0 and len(Parlist)!=0:
+        Parlist=np.vstack((Parlist,Parlist0))
+    elif len(Parlist)==0:
+        Parlist=Parlist0
+    
+    if len(Hitlist0)!=0 and len(Hitlist)!=0:
+        Hitlist=np.vstack((Hitlist,Hitlist0))
+    elif len(Hitlist)==0:
+        Hitlist=Hitlist0
+        
     strmac=Path("../result")/mypth.lstrip('/')/"smac"/f"test{n}_{Egnum}.mac"
     strcsv=Path("../result")/mypth.lstrip('/')/"TraceData"/f"test_{n}_{Egnum}.csv"
     strroot=Path("../result")/mypth.lstrip('/')/f"seconddata{n}_{Egnum}.root"
@@ -253,14 +390,15 @@ def LoopBasic(particlelist,Egnum,n,mypth):
     
         #DataWrite(Parlist,strcsv)
         particlelist1=GEANT4RuningFun(strmac)
-        gplist=ParticleSelect(particlelist1)
-        num=gplist.shape[0]
+        gplist, dplist=ParticleSelect1(particlelist1)
+        num=gplist.shape[0]+dplist.shape[0]
         print("追踪粒子数量： ", num)
     else:
         gplist=rParlist
+        dplist=rParlist
         num=0
     
-    return gplist, num
+    return gplist, dplist, num
     
 def run_geant4_parallel(macro_files_list): 
     # 可以考虑并行，不管是并行经纬度扫描还是并行能量，
@@ -269,23 +407,24 @@ def run_geant4_parallel(macro_files_list):
         results = pool.map(GEANT4RuningFun, macro_files_list)
         #这里的macro_files_list就是一个macro_files的列表
     return results
-    
+
+        
 def main(runmac, Egnum, mypth):
     particles = GEANT4RuningFun(runmac)
-    #print(particles)
-    tparticlelist=ParticleSelect(particles)
-    pnum=tparticlelist.shape[0]
+    print(particles.shape[0])
+    iparticlelist,dparticlelist=ParticleSelect1(particles)
+    pnum=iparticlelist.shape[0]+dparticlelist.shape[0]
     print("追踪粒子数量： ", pnum)
     count=0
     #设置循环参数，防止数据保存覆盖
     while ( pnum>0 ):
         if pnum == 1 and count < 100 :
-            tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
+            iparticlelist,dparticlelist,pnum=LoopBasic(iparticlelist,dparticlelist,Egnum,count,mypth)
             count=count+1
         else:
             if count > 200:
                 break
-            tparticlelist,pnum=LoopBasic(tparticlelist,Egnum,count,mypth)
+            iparticlelist,dparticlelist,pnum=LoopBasic(iparticlelist,dparticlelist,Egnum,count,mypth)
             count=count+1
    
 '''

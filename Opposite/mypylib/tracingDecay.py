@@ -99,9 +99,9 @@ def datasplit(i,result,result_t):
     # 输入的是解方程事件数组的前三项
     # 返回元组，元素分别是（击中90km的位置，击中时间，击中400km的位置，击中时间）
     if len(result[0])==0:
-            return (i, np.array([]),0, result[2][0:6], result_t[2])
+        return (i, np.array([]),0, result[2][:,0:6], result_t[2])
     else :
-        return (i, result[0],result_t[0], result[2][0:6], result_t[2])
+        return (i, result[0][0:6],result_t[0], result[2][:,0:6], result_t[2])
 
 def paramseting(charge,rigidity,parm):
     B,beta=parm
@@ -167,11 +167,11 @@ def DecayProducts(pid,momentum):
     energy = np.sqrt(px**2 + py**2 + pz**2 + mass**2)
     Ek=energy-mass
     charges=np.array([particle_data.charge(name) for name in chosen_daughters])
-    daughters_array= np.column_stack([px, py, pz, Ek, daughter_names, charges, mass])
+    daughters_array= np.column_stack([px, py, pz, Ek, daughter_names[0], charges, mass])
     
     return daughters_array 
   
-def main(Xinit, monento, otherpar,i,n,thread):
+def main(Xinit, monento, otherpar,i):
     mMeV, charge, B, PID = otherpar # 这个地方B的单位是nT
     # mkg=mMeV/cc/cc*1e6*efundamental
     qcharge=charge*efundamental
@@ -199,21 +199,23 @@ def main(Xinit, monento, otherpar,i,n,thread):
     t_eval_step=np.linspace(tspan[0], tspan[1], 2000) 
     sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector, sVmfp], 
                             args=param,max_step=maxstep,t_eval=t_eval_step)
-    print("Sol function finished!")
+    print("D Sol function finished!")
     res=datasplit(i,sol.y_events[0:3],sol.t_events[0:3])
     if len(sol.y_events[3])==0:
         return (res,[])
     else:
         # 这里应该接一个生成衰变产物具体分布的代码然后进行新的一轮tracing
         # 可以根据返回数组的大小判断是返回原粒子还是衰变。
-        x,y,z,vx,vy,vz,s=sol.y_events[3]
+        x,y,z,vx,vy,vz,s=sol.y_events[3][0]
         loc=np.array([x,y,z])
         v=np.linalg.norm([vx,vy,vz])
         vbeta=v*1e3/cc
-        if vbeta!=beta:
-            print("Error!!! Energy is not conserved!!")
+        if abs(vbeta-beta)>1e-6:
+            print("Error!!! Energy is not conserved!!","vbeta: ",vbeta, "beta: ",beta)
             return 0
         newmome=pGeV*np.array([vx,vy,vz])/v
-        halfplist=DecayProducts(PID,newmome)
-        plist = np.hstack((np.ones((halfplist.shape[0], 4)*loc),halfplist))
+        halfplist=DecayProducts(int(PID),newmome)
+        plist = np.hstack((np.ones((halfplist.shape[0], 3))*loc, halfplist[:,0:5], 
+                           np.ones((halfplist.shape[0], 1))*sol.t_events[3],
+                           halfplist[:,5:]))
         return (res,plist)
