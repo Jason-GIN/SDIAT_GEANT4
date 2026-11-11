@@ -69,7 +69,8 @@ def rLow(t,XV,dfp,qcharge,Ekg):     # 积分integrate.solve_ivp的内置events�
     r,theta,phi=myxyz2polar(np.asarray([x,y,z]))    # 可以再定义一个函数只计算r以加速
     return r-90-6371
 
-rLow.max_events = 1             # 若撞上稠密大气则积分可以终止
+rLow.terminal = True           # 若已逃离地磁场则积分可以终止
+# rLow.max_events = 1             # 若撞上稠密大气则积分可以终止
 
 def sVmfp(t,XV,dfp,qcharge,Ekg):     # 积分integrate.solve_ivp的内置events判别，是否撞上稠密大气
     x, y, z, vx, vy, vz, s = XV
@@ -83,8 +84,8 @@ def rHigh(t,XV,dfp,qcharge,Ekg):    # 积分integrate.solve_ivp的内置events�
     r,theta,phi=myxyz2polar(np.asarray([x,y,z]))    # 可以再定义一个函数只计算r以加速
     return r-1e5
 
-# rHigh.terminal = True           # 若已逃离地磁场则积分可以终止
-rHigh.max_events = 1              # 这个是更新的写法   # type: ignore
+rHigh.terminal = True           # 若已逃离地磁场则积分可以终止
+# rHigh.max_events = 1              # 这个是更新的写法   # type: ignore
 
 def rDetector(t,XV,dfp,qcharge,Ekg):
     x, y, z, vx, vy, vz, s = XV
@@ -101,7 +102,7 @@ def datasplit(i,result,result_t):
     if len(result[0])==0:
         return (i, np.array([]),0, result[2][:,0:6], result_t[2])
     else :
-        return (i, result[0][0:6],result_t[0], result[2][:,0:6], result_t[2])
+        return (i, result[0][:,0:6],result_t[0], result[2][:,0:6], result_t[2])
 
 def paramseting(charge,rigidity,parm):
     B,beta=parm
@@ -162,8 +163,8 @@ def DecayProducts(pid,momentum):
 
     # 获取生成的事例
     # weight = gen.GetWeight(0)
-    daughters_4mom = np.array(gen.GetDecays(0))   # 形状: [n_daughters, 4]，[px, py, pz, m]
-    px, py, pz, mass = daughters_4mom.T           # 拆列
+    daughters_4mom = np.array(gen.GetDecays(0))   # 形状: [n_daughters, 4]，[px, py, pz, m] in GeV
+    px, py, pz, mass = (daughters_4mom.T)*1e3          # 拆列, to MeV
     energy = np.sqrt(px**2 + py**2 + pz**2 + mass**2)
     Ek=energy-mass
     charges=np.array([particle_data.charge(name) for name in chosen_daughters])

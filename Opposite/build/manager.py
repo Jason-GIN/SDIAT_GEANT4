@@ -111,6 +111,8 @@ def ParticleSelect1(particles):
             (PID ==  14) | (PID == -14) |          # ν_μ
             (PID ==  16) | (PID == -16))           # ν_τ
     particles=particles[~skip]
+    if len(particles)==0:
+            return np.array([]), np.array([])
     PID=particles['PID']
     # indx=np.where((PID==11)|(PID==-11)|(PID==2212)|(PID==-2212)|(PID>1e9)|(PID<-1e9))
     mask_stable = (PID == 11) | (PID == -11) | (PID == 2212) | (PID == -2212)|(PID>1e9)|(PID<-1e9)
