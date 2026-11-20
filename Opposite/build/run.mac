@@ -9,24 +9,28 @@
 /field/SetType globaldipole
 /field/Geolocation 1 25 -160 degree
 
+/Geo/lat 25.0 deg
+/Geo/lon -160 deg
+/Geo/SphereDetector off
+
 /run/initialize
 
 /myrun/setOutputFileName protondata_0.root
+
+
 #
 /control/verbose 0
 /run/verbose 0
 /event/verbose 0
 /tracking/verbose 0
 
-/Geo/lat 25 deg
-/Geo/lon -160 deg
 
 /generator/select Primary
-/gun/particle proton #
+/gun/particle ion
+/gun/ion 1 1
 /gun/energy 7.244 GeV
-#/gun/energy 9.34 GeV #
 /tracking/verbose 0 #
 
 
 #
-/run/beamOn 1000
+/run/beamOn 100

@@ -10,7 +10,7 @@ namespace Test02
 {
 
 MyStackingAction::MyStackingAction() 
-    : fEnergyThreshold(5.0*MeV) {
+    : fEnergyThreshold(15.0*MeV) {
 }
 
 MyStackingAction::~MyStackingAction() {

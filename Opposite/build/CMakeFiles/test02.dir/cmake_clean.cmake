@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/test02.dir/src/BinaryReader.cc.o.d"
   "CMakeFiles/test02.dir/src/DetectorConstruction.cc.o"
   "CMakeFiles/test02.dir/src/DetectorConstruction.cc.o.d"
+  "CMakeFiles/test02.dir/src/DetectorMessenger.cc.o"
+  "CMakeFiles/test02.dir/src/DetectorMessenger.cc.o.d"
   "CMakeFiles/test02.dir/src/DirectionData.cc.o"
   "CMakeFiles/test02.dir/src/DirectionData.cc.o.d"
   "CMakeFiles/test02.dir/src/EventAction.cc.o"

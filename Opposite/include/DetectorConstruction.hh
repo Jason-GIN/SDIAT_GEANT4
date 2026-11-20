@@ -8,6 +8,7 @@
 // #include "MyDipoleField.hh"
 #include "MyMagneticField.hh"
 #include "FieldMessenger.hh"
+#include "DetectorMessenger.hh"
 
 class G4VPhysicalVolume;
 class G4LogicalVolume;
@@ -35,8 +36,12 @@ namespace Test02
     void SetSD1Height(G4int H) { SD1H = H; };
 
     G4int GetSD1Height() const { return SD1H; };
+
+    void SetfLat(G4double lat) { fLat = lat; };
+    void SetfLon(G4double lon) { fLon = lon; };
     G4double GetfLat() const { return fLat; };
     G4double GetfLon() const { return fLon; };
+    void SetDet(G4String SDet) { fSDet = SDet; };
 
     G4LogicalVolume *GetScoringVolume() const { return fScoringVolume; };
 
@@ -67,9 +72,12 @@ namespace Test02
     G4int layer = 1000; // 设定大气层数
     G4int SD1H = 130;  // 设定SD1所在高度
 
-    G4GenericMessenger *f_lat_lon_Messenger = nullptr;
+    // G4UIdirectory *f_lat_lon_Messenger = nullptr;
+    DetectorMessenger* fMessenger = nullptr;
     G4double fLat = 0.0;
     G4double fLon = 0.0;
+    // G4UIcmdWithAString *fSetCmdDet;
+    G4String fSDet = "on";
 
     MyMagneticField *fMagneticField = nullptr;
     FieldMessenger *fFieldMessenger = nullptr;

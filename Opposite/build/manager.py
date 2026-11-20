@@ -5,6 +5,7 @@ import pandas as pd
 import uproot
 import csv
 from pathlib import Path
+import apexpy
 
 import sys
 import os
@@ -37,6 +38,7 @@ def Gmacfile(filename, RootPath, datafilpath, Pnum):
         file.write('/field/enable true\n')
         file.write('/field/SetType globaldipole\n')
         #file.write('/field/Geolocation 1 25 -160 degree\n')
+        file.write('/Geo/SphereDetector off\n')
         file.write('\n')
         file.write('/run/initialize\n')
         file.write('\n')
@@ -67,11 +69,15 @@ def GEANT4RuningFun(macro_file,):
         text=False                # 保持 stderr 为 bytes
     )
     print("GEANT4 运行结束，开始整理数据...")
-    if len(result.stderr) < 4:
+    if len(result.stderr) < 12:
         raise RuntimeError("Geant4 未输出有效数据")
-
-    raw_count = result.stderr[:4]  # 读取 4 字节整数（粒子数）
-    count = int.from_bytes(raw_count, byteorder='little', signed=False)
+    MAGIC = b"\x54\x52\x41\x50\x5F\x4E\x49\x47"  # 与 C++ 一致
+    idx = result.stderr.find(MAGIC)
+    if idx == -1:
+        raise RuntimeError("未找到粒子数据 magic 标记")
+    count = int.from_bytes(result.stderr[idx+8:idx+12], 'little',
+    signed=False)
+    
     print(f"接收到 {count} 个粒子")
 
     # 定义粒子结构对应的 numpy dtype（与 C++ 端严格对齐）
@@ -83,7 +89,8 @@ def GEANT4RuningFun(macro_file,):
     ], align=True)
 
     # 读取所有粒子二进制数据
-    raw_data = result.stderr[4:]#(count * particle_dtype.itemsize)
+    # raw_data = result.stderr[4:]#(count * particle_dtype.itemsize)
+    raw_data = result.stderr[idx+12:idx+12+count*88]
     # print(len(raw_data))
     # print(particle_dtype.itemsize)
 
@@ -152,7 +159,9 @@ def SaveRoot(filename,data):
     wdata = {"PosX": data[:,0], "PosY": data[:,1], "PosZ": data[:,2], 
              "DirX": data[:,3], "DirY": data[:,4], "DirZ": data[:,5],
              "Energy": data[:,6], "PID": data[:,7], "Charge": data[:,8], 
-              "task_id":data[:,9], "Time": data[:,10],
+             "task_id":data[:,9], "Time": data[:,10],"Height": data[:,11], 
+             "Bx": data[:,12], "By": data[:,13], "Bz":data[:,14], "MLat": data[:,15],
+              "MLon": data[:,16]
              }
     with uproot.recreate(filename) as file:
         # 使用 mktree 明确指定创建 TTree
@@ -174,21 +183,39 @@ def DataSetting(results,particlelist,dfactor=0):
             if len(Hit) > 0:
                 t_hit=particlelist[task_id, 8]+ht
                 t_hit=t_hit[:, np.newaxis]
-                hit_list.append(np.hstack([Hit, 
+                hit_list.append(np.hstack([Hit[:,0:6], 
                                         np.ones((Hit.shape[0], 4)) * 
                                         #    np.hstack([particlelist[task_id, 6:9], task_id]),
                                         np.hstack([particlelist[task_id, 6:8], 
                                                   particlelist[task_id, 9], task_id]),
-                                        t_hit]))
+                                        t_hit,Hit[:,6:7]]))
     
         # 最后一次性构造
         Parlist = np.vstack(par_list) if par_list else np.array([])
         Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+        if len(Hitlist)>0:
+            r,t,p=RotationModel.xyz2rthetaphi(Hitlist[:,0],Hitlist[:,1],Hitlist[:,2])
+            colat = np.asfortranarray(np.degrees(t), dtype=np.float64)
+            lon   = np.asfortranarray(np.degrees(p), dtype=np.float64)
+            r     = np.asfortranarray(r, dtype=np.float64)
+            ln = len(t)
+            # B  = np.empty(ln, dtype=np.float64)
+            Bx, By, Bz, _ =myigrf14.igrf_wrapper_array(ln, colat, lon, r, 2025.0)
+            apex = apexpy.Apex(date=2025.0)
+            qlat, qlon = apex.convert(90-colat, lon, 'geo', 'qd')
+            # print(np.shape(Bx),np.shape(Bx.reshape(-1, 1)))
+            # print(np.shape(qlat),np.shape(qlat.reshape(-1, 1)))
+            Hitlist = np.hstack((Hitlist, Bx.reshape(-1, 1), By.reshape(-1, 1), 
+                                 Bz.reshape(-1, 1), qlat.reshape(-1, 1), qlon.reshape(-1, 1)))
+        
         return Parlist, Hitlist
     else:
         for result in results:
             result0, splist = result
             task_id, res, rt, Hit, ht = result0
+            # print(np.shape(Hit))
+            # print(Hit)
+            # print(ht)
             if len(res) > 0:
                 par_list.append(np.hstack([res[0, 0:3], 
                                         res[0, 3:6] / np.linalg.norm(res[0, 3:6]),
@@ -197,19 +224,36 @@ def DataSetting(results,particlelist,dfactor=0):
             if len(Hit) > 0:
                 t_hit=particlelist[task_id, 8]+ht
                 t_hit=t_hit[:, np.newaxis]
-                hit_list.append(np.hstack([Hit, 
+                # print(t_hit)
+                hit_list.append(np.hstack([Hit[:,0:6], 
                                         np.ones((Hit.shape[0], 4)) * 
                                         #    np.hstack([particlelist[task_id, 6:9], task_id]),
                                         np.hstack([particlelist[task_id, 6:8], 
                                                   particlelist[task_id, 9], task_id]),
-                                        t_hit]))
+                                        t_hit,Hit[:,6:7]]))
             if len(splist) > 0:
                 plist.append(splist)
                 
         # 最后一次性构造
         Parlist = np.vstack(par_list) if par_list else np.array([])
         Hitlist = np.vstack(hit_list) if hit_list else np.array([])
+        # print(np.shape(Hitlist))
         Plist = np.vstack(plist) if plist else np.array([])
+        if len(Hitlist)>0:
+            r,t,p=RotationModel.xyz2rthetaphi(Hitlist[:,0],Hitlist[:,1],Hitlist[:,2])
+            colat = np.asfortranarray(np.degrees(t), dtype=np.float64)
+            lon   = np.asfortranarray(np.degrees(p), dtype=np.float64)
+            r     = np.asfortranarray(r, dtype=np.float64)
+            ln = len(t)
+            # B  = np.empty(ln, dtype=np.float64)
+            Bx, By, Bz, _ =myigrf14.igrf_wrapper_array(ln, colat, lon, r, 2025.0)
+            apex = apexpy.Apex(date=2025.0)
+            qlat, qlon = apex.convert(90-colat, lon, 'geo', 'qd')
+            # print(np.shape(Bx),np.shape(Bx.reshape(-1, 1)))
+            # print(np.shape(qlat),np.shape(qlat.reshape(-1, 1)))
+            Hitlist = np.hstack((Hitlist, Bx.reshape(-1, 1), By.reshape(-1, 1), 
+                                Bz.reshape(-1, 1), qlat.reshape(-1, 1), qlon.reshape(-1, 1)))
+        
         return Parlist, Hitlist, Plist
 
 def Dtracing(dparticlelist):

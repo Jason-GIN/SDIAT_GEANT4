@@ -94,6 +94,17 @@ def rDetector(t,XV,qcharge,Ekg):
 rDetector.terminal = False
 rDetector.direction = 0
 
+def make_complex_rDetector(target_alt):
+    """工厂函数：返回一个针对特定海拔的事件函数"""
+    def event(t,XV,qcharge,Ekg):
+        x, y, z, vx, vy, vz = XV
+        r,theta,phi=myxyz2polar(np.asarray([x,y,z]))
+        return r - (target_alt + 6371)
+    event.terminal = False
+    # direction = 0 表示正负穿越都记录；若只想记录上升或下降段，可改为 1 或 -1
+    event.direction = 0
+    return event
+
 def complex_rLow(t,XV,qcharge,Ekg): 
     # 积分integrate.solve_ivp的内置events判别，是否撞上稠密大气
     # 但是加入更加复杂的判断。因为很多时候在50km到100km这段距离粒子不会和大气反应，便重新返回太空
@@ -192,16 +203,30 @@ def main(Xinit, monento, otherpar,i,n,thread):
         mt = 'LSODA'      # 自动切换刚性问题
         tspan = (0.0,100.0)
         maxstep=69.9*rigidity/(B*v)/20
-    
+        
+    target_altitudes = [380, 400, 565, 600, 700]    
+    Det_events_list = [make_complex_rDetector(alt) for alt in target_altitudes]
     t_eval_step=np.linspace(tspan[0], tspan[1], 2000) 
     #可以考虑在这个玩意里面用归一化的无量纲常数，这样应该可以减小误差    
-    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector], args=param,max_step=maxstep,t_eval=t_eval_step)
+    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh,*Det_events_list], 
+                            args=param,max_step=maxstep,t_eval=t_eval_step)
     print("Sol function finished!", " ", maxstep, " ",rigidity)
     #str1="../result/TraceData/TraceTest"+str(i)+"_"+n+"_t"+str(thread)+".csv"
     #r=np.linalg.norm(sol.y[0:3],axis=0)
     #array=np.vstack((sol.y[0:3],r))
     #pd.DataFrame(array.T).to_csv(str1, header=False,  index=False)
+    n1 = len(Det_events_list)
+    parts = sol.y_events[2:2 + n1]
+    tparts = sol.t_events[2:2 + n1]
+    tnon_empty = [p for p in tparts if p.size > 0]
+    rows = []
+    for alt, part in zip(target_altitudes, parts):
+        if part.size > 0:
+            labels = np.full((part.shape[0], 1), alt, dtype=float)
+            rows.append(np.hstack([part, labels]))
+    Dlist=np.vstack(rows) if rows else np.empty((0, sol.y.shape[0] + 1))
+    tDlist= np.concatenate(tnon_empty) if tnon_empty else np.empty((0,))
     if len(sol.y_events[0])==0:
-        return (i, np.array([]),0, sol.y_events[2],sol.t_events[2])
+        return (i, np.array([]),0, Dlist,tDlist)
     else :
-        return (i, sol.y_events[0],sol.t_events[0], sol.y_events[2],sol.t_events[2])
+        return (i, sol.y_events[0],sol.t_events[0], Dlist,tDlist)

@@ -33,13 +33,15 @@ namespace Test02
       G4int parentID = track->GetParentID();
       G4int trackID = track->GetTrackID();
 
-      // 只存储父粒子信息，不存储当前粒子
-      if (localMap->find(trackID) == localMap->end())
-      {
-         const G4ParticleDefinition *def = track->GetDefinition();
-         (*localMap)[trackID] = {
-             def->GetParticleName(),
-             def->GetPDGEncoding()};
-      }
+      // if (parentID >=0){
+         // 只存储父粒子信息，不存储当前粒子
+         if (localMap->find(trackID) == localMap->end())
+         {
+            const G4ParticleDefinition *def = track->GetDefinition();
+            (*localMap)[trackID] = {
+               def->GetParticleName(),
+               def->GetPDGEncoding()};
+         }
+      // }
    }
 }

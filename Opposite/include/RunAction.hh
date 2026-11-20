@@ -41,8 +41,8 @@ class RunAction : public G4UserRunAction
     G4Accumulable<G4double> fEdep = 0.;
     G4Accumulable<G4double> fEdep2 = 0.;
     G4String fOutputFileName; // 保存文件名的成员变量
-    G4String fOutBoundaryFileName; // 保存文件名的成员变量
     G4GenericMessenger* fMessenger; // 用于处理宏命令
+
 };
 
 }

@@ -129,3 +129,22 @@ def drirenomal (X,Y,Z,nMx,nMy,nMz,colat,lon):
     #x2,y2,z2 = VectorGTODinZenith(x1,y1,z1,x1,y1,z1)
     rr1,tt1,pp1=xyz2rthetaphi(mx2,my2,mz2)
     return rr1,tt1,pp1
+
+def Geo2Mgeo1(geoloca, theta0, phi0):
+    #！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    #输入：
+    #       geoloca 地理位置坐标：半径r（km）、余纬度theta（rad）、经度phi（rad)
+    #       time 时间：以年为单位，默认2024
+    #       theta0, phi0是磁轴偏角
+    
+    #返回：
+    #       球坐标系的地磁坐标：半径r（km）、余纬度thetad（rad）、经度phid（rad）
+    
+    r, theta, phi=geoloca
+    #print('theta0: ',np.degrees(theta0), 'phi0: ', np.degrees(phi0))
+    thetad=np.arccos(np.cos(theta)*np.cos(theta0)
+                     +np.sin(theta)*np.sin(theta0)*np.cos(phi-phi0))
+    phid=np.arctan2(np.sin(theta)*np.sin(phi-phi0), 
+                    (np.cos(theta0)*np.sin(theta)*np.cos(phi-phi0)-np.sin(theta0)*np.cos(theta)))
+        
+    return np.vstack((r,thetad,phid))

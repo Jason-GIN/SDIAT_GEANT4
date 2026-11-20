@@ -139,7 +139,7 @@ namespace Test02
     G4double dir= position.unit().dot(momentum.unit());
 
 
-    if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ && (kE >= 5. * MeV))
+    if (SDetectorName.substr(0, 10) == "Test02/SD2" /*&& PID == 22*/ /*&& (kE >= 5. * MeV)*/)
     {
       //SD2是地面
       // newHit->Print();
@@ -170,10 +170,10 @@ namespace Test02
       pdata->FillNtupleSColumn(1, 15, Process);
 
       pdata->AddNtupleRow(1);
-    };
+    /*};
 
     if (SDetectorName == "Test02/SD2")
-    {
+    {*/
       aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     };
 
@@ -233,9 +233,10 @@ namespace Test02
     
     if (SDetectorName == "Test02/SD1" && dir>0)
     {
-      //G4cout << "-------------GINSD1---------------" << G4endl;
-      //G4cout << "particle simulation stop" << G4endl;
-      //G4cout << "-------------GINSD1---------------" << G4endl;
+      // G4cout << "-------------GINSD1---------------" << G4endl;
+      // G4cout << "particle simulation stop" << G4endl;
+      // G4cout << "PID: " << PID << G4endl;
+      // G4cout << "-------------GINSD1---------------" << G4endl;
       aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     };
   

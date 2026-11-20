@@ -96,13 +96,36 @@ def rDetector(t,XV,dfp,qcharge,Ekg):
 rDetector.max_events = np.inf  # type: ignore
 rDetector.direction = 0        # type: ignore
 
-def datasplit(i,result,result_t):
+def make_complex_rDetector(target_alt):
+    """工厂函数：返回一个针对特定海拔的事件函数"""
+    def event(t,XV,dfp,qcharge,Ekg):
+        x, y, z, vx, vy, vz, s = XV
+        r,theta,phi=myxyz2polar(np.asarray([x,y,z]))
+        return r - (target_alt + 6371)
+    event.terminal = False
+    # direction = 0 表示正负穿越都记录；若只想记录上升或下降段，可改为 1 或 -1
+    event.direction = 0
+    return event
+
+def datasplit(i,result,result_t,n1,target_altitudes,sp):
     # 输入的是解方程事件数组的前三项
-    # 返回元组，元素分别是（击中90km的位置，击中时间，击中400km的位置，击中时间）
+    # 返回元组，元素分别是（击中90km的位置，击中时间，击中km的位置，击中时间）
+    parts = result[2:2 + n1]
+    # print(parts)
+    tparts = result_t[2:2 + n1]
+    tnon_empty = [p for p in tparts if p.size > 0]
+    rows = []
+    for alt, part in zip(target_altitudes, parts):
+        if part.size > 0:
+            labels = np.full((part.shape[0], 1), alt, dtype=float)
+            rows.append(np.hstack([part[:,0:6], labels]))
+    Dlist=np.vstack(rows) if rows else np.empty((0, sp + 1))
+    # print(np.shape(Dlist))
+    tDlist=np.concatenate(tnon_empty) if tnon_empty else np.empty((0,))
     if len(result[0])==0:
-        return (i, np.array([]),0, result[2][:,0:6], result_t[2])
+        return (i, np.array([]),0, Dlist, tDlist)
     else :
-        return (i, result[0][:,0:6],result_t[0], result[2][:,0:6], result_t[2])
+        return (i, result[0][:,0:6],result_t[0],Dlist, tDlist)
 
 def paramseting(charge,rigidity,parm):
     B,beta=parm
@@ -198,16 +221,19 @@ def main(Xinit, monento, otherpar,i):
     mt,tspan,maxstep=paramseting(charge,rigidity,[B,beta])
         
     t_eval_step=np.linspace(tspan[0], tspan[1], 2000) 
-    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, rDetector, sVmfp], 
+    target_altitudes = [380, 400, 565, 600, 700]    
+    Det_events_list = [make_complex_rDetector(alt) for alt in target_altitudes]
+    sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, *Det_events_list, sVmfp], 
                             args=param,max_step=maxstep,t_eval=t_eval_step)
     print("D Sol function finished!")
-    res=datasplit(i,sol.y_events[0:3],sol.t_events[0:3])
-    if len(sol.y_events[3])==0:
+    n1 = len(Det_events_list)
+    res=datasplit(i,sol.y_events[0:2+n1],sol.t_events[0:2+n1],n1,target_altitudes,sol.y.shape[0])
+    if len(sol.y_events[2+n1])==0:
         return (res,[])
     else:
         # 这里应该接一个生成衰变产物具体分布的代码然后进行新的一轮tracing
         # 可以根据返回数组的大小判断是返回原粒子还是衰变。
-        x,y,z,vx,vy,vz,s=sol.y_events[3][0]
+        x,y,z,vx,vy,vz,s=sol.y_events[2+n1][0]
         loc=np.array([x,y,z])
         v=np.linalg.norm([vx,vy,vz])
         vbeta=v*1e3/cc

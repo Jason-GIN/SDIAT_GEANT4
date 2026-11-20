@@ -43,7 +43,7 @@
 
 #include "G4AutoDelete.hh"
 #include "G4GenericMessenger.hh"
-
+#include "DetectorMessenger.hh"
 #include "BinaryReader.hh"
 
 namespace Test02
@@ -54,7 +54,8 @@ namespace Test02
   DetectorConstruction::DetectorConstruction(MyMagneticField *masterField)
       : G4VUserDetectorConstruction()
   {
-    DefineCommands();
+    // DefineCommands();
+    fMessenger = new DetectorMessenger(this); 
     fMagneticField = masterField;
   }
 
@@ -62,22 +63,29 @@ namespace Test02
 
   DetectorConstruction::~DetectorConstruction()
   {
-    delete f_lat_lon_Messenger;
+    // delete f_lat_lon_Messenger;
+    delete fMessenger;
     delete fFieldMessenger;
   }
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-  void DetectorConstruction::DefineCommands()
-  {
-    f_lat_lon_Messenger = new G4GenericMessenger(this, "/Geo/", "Field Control");
+  // void DetectorConstruction::DefineCommands()
+  // {
 
-    // 定义命令：设置Lat
-    f_lat_lon_Messenger->DeclarePropertyWithUnit("lat", "degree", fLat, "Set latitude");
+  //   // fDir = new G4UIdirectory("/generator/");
+  //   // fDir->SetGuidance("Select primary generator");
+    
+  //   f_lat_lon_Messenger = new G4UIdirectory("/Geo/");
+  //   f_lat_lon_Messenger->SetGuidance("Geometry Control");
+  //   // 定义命令：设置大气中的探测器
+  //   fSetCmdDet = new G4UIcmdWithAString("/Geo/SphereDetector", this);
+  //   fSetCmdDet->SetGuidance("on means will save, off means no");
+  //   fSetCmdDet->SetParameterName("type", false);
+  //   fSetCmdDet->SetCandidates("on off");
+  //   fSetCmdDet->AvailableForStates(G4State_PreInit, G4State_Idle);
 
-    // 定义命令：设置Lon
-    f_lat_lon_Messenger->DeclarePropertyWithUnit("lon", "degree", fLon, "Set longitude");
-  };
+  // };
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -148,7 +156,7 @@ namespace Test02
     G4double SD1Rmin;
 
     SD1Rmin = Rmin + SD1H * km + 10.0 * cm;
-    G4double SD1Rmax = SD1Rmin + 10 * cm;
+    G4double SD1Rmax = SD1Rmin + 0.1 * cm;
 
     // Conical section shape
 
@@ -199,7 +207,7 @@ namespace Test02
 
     // G4int num = 100-layer_loop;
 
-    givenum = 400 * km; //这个东西是用来决定是生成粒子的高度的。
+    givenum = 400 * km; // 这个东西是用来决定是生成粒子的高度的。
 
     //
     // Atmosphere combine with SD3
@@ -322,56 +330,65 @@ namespace Test02
     // SD4 is the detector inside the air forom sea level to the given altitude, and have layer at each km.(每 1km 一层)
 
     // Conical section shape
+    
+    G4cout<<"----------------GIN------------"<<G4endl;
+    G4cout<<"fSDet: "<< fSDet <<G4endl;
+    G4cout<<"fLon: "<< fLon <<G4endl;
+    G4cout<<"fLat: "<< fLat <<G4endl;
+    G4cout<<"----------------GIN------------"<<G4endl;
 
-    if (static_cast<int>(logicSphereSDlayerinOrbit.size()) != 0)
+    if (fSDet == "on")
     {
-      G4cout << "Error!!! The floglicSphereSDinOrbit should be empty before setting!! " << G4endl;
-      return physWorld;
-    };
-    // Conical section shape
-    for (int nlat = 0; nlat < 36; nlat++)
-    {
-      // std::string filenmae = "../ctable/layers_lat_" + std::to_string(nlat * 5 - 90) + ".csv";
-      // G4cout << "filenmae: " << filenmae << G4endl;
-      // std::vector<std::vector<double>> detables = reader.readAtmLayer(filenmae);
-      for (int cpnu = 0; cpnu < 100; cpnu++)
+
+      if (static_cast<int>(logicSphereSDlayerinOrbit.size()) != 0)
       {
-        std::string autoSD4 = "LayerSD4_" + std::to_string(cpnu)+"_nlat_" + std::to_string(nlat);
-
-        G4double SD4Rmin, SD4Rmax;
-        G4double SD4stheta = nlat * 5 * degree;
-        SD4Rmin = Rmin + cpnu * km;
-        SD4Rmax = SD4Rmin + 1 * cm;
-
-        fLayRmininAir.push_back(SD4Rmin);
-
-        G4Sphere *layerSolid = new G4Sphere(autoSD4, // its name
-                                            SD4Rmin,
-                                            SD4Rmax,
-                                            sphi, dphi,
-                                            SD4stheta, SD3dtheta); // its size
-
-        G4LogicalVolume *layerLVSD4 = new G4LogicalVolume(layerSolid, // its solid
-                                                       world_mat,  // its material
-                                                       autoSD4);   // its name
-
-        logicSphereSDlayerinAir.push_back(layerLVSD4);
-        
-        G4double n;
-        
-        n= nlat*layer+SDLayer[cpnu];
-        
-        new G4PVPlacement(nullptr,        // no rotation
-                          posSD,          // at position
-                          layerLVSD4,        // its logical volume
-                          autoSD4,        // its name
-                          logicSpherelayerinAir[n],       // its mother  volume
-                          false,          // no boolean operation
-                          cpnu,           // copy number
-                          checkOverlaps); // overlaps checking
+        G4cout << "Error!!! The floglicSphereSDinOrbit should be empty before setting!! " << G4endl;
+        return physWorld;
       };
-    };
+      // Conical section shape
+      for (int nlat = 0; nlat < 36; nlat++)
+      {
+        // std::string filenmae = "../ctable/layers_lat_" + std::to_string(nlat * 5 - 90) + ".csv";
+        // G4cout << "filenmae: " << filenmae << G4endl;
+        // std::vector<std::vector<double>> detables = reader.readAtmLayer(filenmae);
+        for (int cpnu = 0; cpnu < 100; cpnu++)
+        {
+          std::string autoSD4 = "LayerSD4_" + std::to_string(cpnu) + "_nlat_" + std::to_string(nlat);
 
+          G4double SD4Rmin, SD4Rmax;
+          G4double SD4stheta = nlat * 5 * degree;
+          SD4Rmin = Rmin + cpnu * km;
+          SD4Rmax = SD4Rmin + 1 * cm;
+
+          fLayRmininAir.push_back(SD4Rmin);
+
+          G4Sphere *layerSolid = new G4Sphere(autoSD4, // its name
+                                              SD4Rmin,
+                                              SD4Rmax,
+                                              sphi, dphi,
+                                              SD4stheta, SD3dtheta); // its size
+
+          G4LogicalVolume *layerLVSD4 = new G4LogicalVolume(layerSolid, // its solid
+                                                            world_mat,  // its material
+                                                            autoSD4);   // its name
+
+          logicSphereSDlayerinAir.push_back(layerLVSD4);
+
+          G4double n;
+
+          n = nlat * layer + SDLayer[cpnu];
+
+          new G4PVPlacement(nullptr,                  // no rotation
+                            posSD,                    // at position
+                            layerLVSD4,               // its logical volume
+                            autoSD4,                  // its name
+                            logicSpherelayerinAir[n], // its mother  volume
+                            false,                    // no boolean operation
+                            cpnu,                     // copy number
+                            checkOverlaps);           // overlaps checking
+        };
+      };
+    }
     // Set ShapeA as scoring volume
     fScoringVolume = logicEnv;
 
@@ -406,14 +423,17 @@ namespace Test02
     SetSensitiveDetector(logicSD2, aTrackerSD2);
     // G4cout<<"GIN 5"<<G4endl;
 
-    auto SphereSDinAir = new SphericalSystemSDinAir("SphericalDetectorinAir", fLayRmininAir);
-    G4SDManager *sdManagerinAir = G4SDManager::GetSDMpointer();
-    sdManagerinAir->AddNewDetector(SphereSDinAir);
-
-    for (size_t j = 0; j < logicSphereSDlayerinAir.size(); ++j)
+    if (fSDet == "on")
     {
-      logicSphereSDlayerinAir.at(j)->SetSensitiveDetector(SphereSDinAir);
-    };
+      auto SphereSDinAir = new SphericalSystemSDinAir("SphericalDetectorinAir", fLayRmininAir);
+      G4SDManager *sdManagerinAir = G4SDManager::GetSDMpointer();
+      sdManagerinAir->AddNewDetector(SphereSDinAir);
+
+      for (size_t j = 0; j < logicSphereSDlayerinAir.size(); ++j)
+      {
+        logicSphereSDlayerinAir.at(j)->SetSensitiveDetector(SphereSDinAir);
+      };
+    }
     /*
     auto SphereSDinOrbit = new SphericalSystemSDinOrbit("SphericalDetectorinOrbit", fLayRmininOrbit);
     G4SDManager *sdManagerinOrbit = G4SDManager::GetSDMpointer();
@@ -461,7 +481,7 @@ namespace Test02
     G4Mag_UsualEqRhs *equation = new G4Mag_UsualEqRhs(threadField);
     G4MagIntegratorStepper *stepper = new G4DormandPrinceRK78(equation);
     // fieldMgr->SetDetectorField(magField);
-    G4double minStep = 1 * m;
+    G4double minStep = 1 * cm;
     G4ChordFinder *chordFinder = new G4ChordFinder(threadField, minStep, stepper);
     // fieldMgr->CreateChordFinder(threadField); // 这一句是自动设置计算积分，
     fieldMgr->SetChordFinder(chordFinder);

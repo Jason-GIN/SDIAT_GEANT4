@@ -9,6 +9,7 @@
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+#include "G4Ions.hh"
 
 #include "DetectorConstruction.hh"
 
@@ -64,11 +65,11 @@ namespace Test02
 
     fParticleGun->SetParticleEnergy(11.98 * GeV);
 
-    for (int i = 0; i < 54; i++)
+    for (int i = 0; i < 6; ++i)
     {
-      fProtonEnergyToRow.emplace(E1[i], i);
-      fHeliumEnergyToRow.emplace(E2[i], i);
-
+      fParticleEnergyToRow[i].reserve(54);
+      for (int j = 0; j < 54; ++j)
+        fParticleEnergyToRow[i].emplace(E[i][j], j);
     }
   }
 
@@ -852,7 +853,36 @@ namespace Test02
       G4ThreeVector dpp, pos;
       pos = VectorZenithinGTOD1(G4ThreeVector(x0, y0, z1), 90. * deg - lat, lon);
       G4double Ek = fParticleGun->GetParticleEnergy();
-      G4String Pname = fParticleGun->GetParticleDefinition()->GetParticleName();
+      auto *ion = dynamic_cast<G4Ions *>(fParticleGun->GetParticleDefinition());
+      G4int A, row;
+      if (ion)
+      {
+        // G4int Z = ion->GetAtomicNumber(); // 对于铁，Z = 26
+        A = ion->GetAtomicMass(); // 对于铁-56，A = 56
+      }
+      switch (A)
+      {
+      case 1:
+        row = 0;
+        break;
+      case 4:
+        row = 1;
+        break;
+      case 12:
+        row = 2;
+        break;
+      case 16:
+        row = 3;
+        break;
+      case 28:
+        row = 4;
+        break;
+      case 56:
+        row = 5;
+        break;
+      default:
+        break;
+      }
 
       int targetrow;
 
@@ -889,23 +919,15 @@ namespace Test02
       };
       */
 
-      if (Pname == "proton")
-      {
-        auto it = fProtonEnergyToRow.find(Ek);
-        targetrow = (it != fProtonEnergyToRow.end()) ? it->second : -1;
-      }
-      else
-      {
-        auto it = fHeliumEnergyToRow.find(Ek);
-        targetrow = (it != fHeliumEnergyToRow.end()) ? it->second : -1;
-      }
+      auto it = fParticleEnergyToRow[row].find(Ek/GeV);
+      targetrow = (it != fParticleEnergyToRow[row].end()) ? it->second : -1;
 
       std::string str0 = "../ctable/all_" + std::to_string(int(std::round(lon / deg))) + "_" + std::to_string(int(std::round(lat / deg))) + ".csv";
 
       // G4cout << "-------------GIN---------------" << G4endl;
       // G4cout << "Ek: " << Ek << G4endl;
       // G4cout << "bf targetrow: " << targetrow << G4endl;
-      // targetrow=53;
+      // targetrow = 53;
       // G4cout << "fulltest targetrow: " << targetrow << G4endl;
       // G4cout << "str0: " << str0 << G4endl;
       // G4cout << "-------------GIN---------------" << G4endl;
@@ -916,7 +938,7 @@ namespace Test02
 
       // fParticleGun->SetParticleMomentumDirection(-pos);
       // fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0, 0 ,1));
-      G4double dtest = pos.unit().dot(dpp.unit());
+      // G4double dtest = pos.unit().dot(dpp.unit());
       // G4cout << "-------------GIN---------------" << G4endl;
       // G4cout << "dtest: " << dtest << G4endl;
       // G4cout << "-------------GIN---------------" << G4endl;
@@ -942,9 +964,9 @@ namespace Test02
       }
       const ParticleInfo &info = fParticleList[evtID];
       G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
-      G4cout << "---------------GIN----------------" << G4endl;
-      G4cout << "fPDGcode: " << info.pdgCode << G4endl;
-      G4cout << "---------------GIN----------------" << G4endl;
+      // G4cout << "---------------GIN----------------" << G4endl;
+      // G4cout << "fPDGcode: " << info.pdgCode << G4endl;
+      // G4cout << "---------------GIN----------------" << G4endl;
       G4ParticleDefinition *particle = particleTable->FindParticle(info.pdgCode);
       fParticleGun->SetParticleDefinition(particle);
       fParticleGun->SetParticlePosition(info.position);

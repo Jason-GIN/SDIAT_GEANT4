@@ -14,6 +14,7 @@
 
 #include "MyMagneticField.hh"
 #include "FieldMessenger.hh"
+#include "DetectorMessenger.hh"
 #include "MySession.hh"
 
 #include "Randomize.hh"

@@ -268,6 +268,7 @@ CMakeFiles/test02.dir/src/DetectorConstruction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithoutParameter.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcmdWithABool.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UIcommand.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DetectorMessenger.hh \
  /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/TrackerSD.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4VSensitiveDetector.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4CollectionNameVector.hh \
@@ -525,6 +526,7 @@ CMakeFiles/test02.dir/src/DetectorConstruction.cc.o: \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4AnyMethod.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4AnyType.hh \
  /home/jasongindrkchen/geant4/geant4-v11.3.0-install/include/Geant4/G4UImessenger.hh \
+ /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/DetectorMessenger.hh \
  /home/jasongindrkchen/geant4/test-of-air-neutrion/test_for_SPgeneration/test-debug/test-sphere/G4py/save2git/Opposite/include/BinaryReader.hh \
  /home/jasongindrkchen/root/root_install/include/TTree.h \
  /home/jasongindrkchen/root/root_install/include/Compression.h \

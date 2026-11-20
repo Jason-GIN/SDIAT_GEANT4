@@ -23,6 +23,7 @@ namespace Test02
     auto &setFileNameCmd1 = fMessenger->DeclareProperty("setOutputFileName", fOutputFileName, "Set the output file name for this run.");
     setFileNameCmd1.SetParameterName("filename", true);
     setFileNameCmd1.SetDefaultValue("default_output.root");
+  
   }
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -51,27 +52,29 @@ namespace Test02
     pdata->CreateNtupleDColumn("PrimaryEnergy"); // 列2
     pdata->FinishNtuple(0);                      // 明确指定Ntuple ID
 
-    // 探测信息Ntuple - 只记录到达指定位置的粒子
-    pdata->CreateNtuple("DetectionInfo", "Particles Reaching Target");
-    pdata->CreateNtupleIColumn("SDnum");    // 列0
-    pdata->CreateNtupleIColumn("TrackID");  // 列1
-    pdata->CreateNtupleDColumn("Energy");   // 列2
-    pdata->CreateNtupleDColumn("PosX");     // 列3
-    pdata->CreateNtupleDColumn("PosY");     // 列4
-    pdata->CreateNtupleDColumn("PosZ");     // 列5
-    pdata->CreateNtupleDColumn("DirX");     // 列6
-    pdata->CreateNtupleDColumn("DirY");     // 列7
-    pdata->CreateNtupleDColumn("DirZ");     // 列8
-    pdata->CreateNtupleDColumn("Charge");   // 列9
-    pdata->CreateNtupleDColumn("Time");     // 列10
-    pdata->CreateNtupleIColumn("PID");      // 列11
-    pdata->CreateNtupleIColumn("ParentId"); // 列12
-    pdata->CreateNtupleIColumn("pPID");     // 列13
-    pdata->CreateNtupleSColumn("Detector"); // 列14
-    pdata->CreateNtupleSColumn("Process");  // 列15
 
-    pdata->FinishNtuple(1); // 明确指定Ntuple ID
-    // G4int runID = run->GetRunID();
+      // 探测信息Ntuple - 只记录到达指定位置的粒子
+      pdata->CreateNtuple("DetectionInfo", "Particles Reaching Target");
+      pdata->CreateNtupleIColumn("SDnum");    // 列0
+      pdata->CreateNtupleIColumn("TrackID");  // 列1
+      pdata->CreateNtupleDColumn("Energy");   // 列2
+      pdata->CreateNtupleDColumn("PosX");     // 列3
+      pdata->CreateNtupleDColumn("PosY");     // 列4
+      pdata->CreateNtupleDColumn("PosZ");     // 列5
+      pdata->CreateNtupleDColumn("DirX");     // 列6
+      pdata->CreateNtupleDColumn("DirY");     // 列7
+      pdata->CreateNtupleDColumn("DirZ");     // 列8
+      pdata->CreateNtupleDColumn("Charge");   // 列9
+      pdata->CreateNtupleDColumn("Time");     // 列10
+      pdata->CreateNtupleIColumn("PID");      // 列11
+      pdata->CreateNtupleIColumn("ParentId"); // 列12
+      pdata->CreateNtupleIColumn("pPID");     // 列13
+      pdata->CreateNtupleSColumn("Detector"); // 列14
+      pdata->CreateNtupleSColumn("Process");  // 列15
+
+      pdata->FinishNtuple(1); // 明确指定Ntuple ID
+      // G4int runID = run->GetRunID()
+
 
     // 探测信息Ntuple - 只记录到达指定位置的粒子
     pdata->CreateNtuple("BoundaryInfo", "Particles Reaching Target");
@@ -111,9 +114,12 @@ namespace Test02
 
       // 主线程安全输出二进制数据到 stdout
       uint32_t count = particles.size();
-      std::cerr.write(reinterpret_cast<const char *>(&count), sizeof(count));
+      
       if (count)
       {
+        const uint64_t MAGIC = 0x47494E5F50415254ULL; // 任意唯一值
+        std::cerr.write(reinterpret_cast<const char *>(&MAGIC), sizeof(MAGIC));
+        std::cerr.write(reinterpret_cast<const char *>(&count), sizeof(count));
         std::cerr.write(reinterpret_cast<const char *>(particles.data()),
                         count * sizeof(ParticleData));
       }

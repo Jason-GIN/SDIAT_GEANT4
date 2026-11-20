@@ -1,0 +1,18 @@
+/run/numberOfThreads 32
+/myrun/setOutputFileName /home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/result/120_-35/He_data_52.root
+/field/enable true
+/field/SetType globaldipole
+/field/Geolocation 1 -35 120 degree
+/Geo/lat -35 deg
+/Geo/lon 120 deg
+/Geo/SphereDetector off
+/run/initialize
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/generator/select Primary
+/gun/particle ion
+/gun/ion 2 4
+/gun/energy 158.853 GeV
+/run/beamOn 80000

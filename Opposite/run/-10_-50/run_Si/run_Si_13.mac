@@ -1,0 +1,18 @@
+/run/numberOfThreads 32
+/myrun/setOutputFileName /home/ams/lchen/GEANT4/test-sphere/G4py/belt0405/result/-10_-50/Si_data_32.root
+/field/enable true
+/field/SetType globaldipole
+/field/Geolocation 1 -50 -10 degree
+/Geo/lat -50 deg
+/Geo/lon -10 deg
+/Geo/SphereDetector off
+/run/initialize
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/generator/select Primary
+/gun/particle ion
+/gun/ion 14 28
+/gun/energy 90.599 GeV
+/run/beamOn 80000
