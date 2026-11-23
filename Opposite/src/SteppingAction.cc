@@ -25,6 +25,17 @@ SteppingAction::SteppingAction()
 
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
+  
+  G4Track* track = step->GetTrack();
+
+  // 动能一旦低于 15 MeV 立即停止（次级粒子，含中微子）
+  G4int apdg = std::abs(track->GetDefinition()->GetPDGEncoding());
+  bool isNeutrino = (apdg == 12 || apdg == 14 || apdg == 16);
+  if (track->GetParentID() > 0 && !isNeutrino && track->GetKineticEnergy() < 15.0*MeV) {
+    track->SetTrackStatus(fStopAndKill);
+    return;
+  }
+  
   if (!fScoringVolume) {
     const auto detConstruction = static_cast<const DetectorConstruction*>(
       G4RunManager::GetRunManager()->GetUserDetectorConstruction());

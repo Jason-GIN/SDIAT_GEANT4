@@ -114,12 +114,11 @@ namespace Test02
 
       // 主线程安全输出二进制数据到 stdout
       uint32_t count = particles.size();
-      
+      const uint64_t MAGIC = 0x47494E5F50415254ULL; // 任意唯一值
+      std::cerr.write(reinterpret_cast<const char *>(&MAGIC), sizeof(MAGIC));
+      std::cerr.write(reinterpret_cast<const char *>(&count), sizeof(count));
       if (count)
       {
-        const uint64_t MAGIC = 0x47494E5F50415254ULL; // 任意唯一值
-        std::cerr.write(reinterpret_cast<const char *>(&MAGIC), sizeof(MAGIC));
-        std::cerr.write(reinterpret_cast<const char *>(&count), sizeof(count));
         std::cerr.write(reinterpret_cast<const char *>(particles.data()),
                         count * sizeof(ParticleData));
       }
