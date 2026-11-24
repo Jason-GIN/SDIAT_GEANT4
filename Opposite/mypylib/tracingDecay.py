@@ -224,11 +224,11 @@ def main(Xinit, monento, otherpar,i):
     target_altitudes = [380, 400, 565, 600, 700]    
     Det_events_list = [make_complex_rDetector(alt) for alt in target_altitudes]
     sol=integrate.solve_ivp(XVDinkm, tspan, XVinit, method=mt, events=[rLow, rHigh, *Det_events_list, sVmfp], 
-                            args=param,max_step=maxstep,t_eval=t_eval_step)
+                            args=param,max_step=maxstep,t_eval=t_eval_step,rtol=1e-6, atol=1e-8)
     print("D Sol function finished!")
     n1 = len(Det_events_list)
     res=datasplit(i,sol.y_events[0:2+n1],sol.t_events[0:2+n1],n1,target_altitudes,sol.y.shape[0])
-    if len(sol.y_events[2+n1])==0:
+    if len(sol.y_events[2+n1])==0:  #看看是否发生衰变
         return (res,[])
     else:
         # 这里应该接一个生成衰变产物具体分布的代码然后进行新的一轮tracing
@@ -237,12 +237,14 @@ def main(Xinit, monento, otherpar,i):
         loc=np.array([x,y,z])
         v=np.linalg.norm([vx,vy,vz])
         vbeta=v*1e3/cc
-        if abs(vbeta-beta)>1e-6:
-            print("Error!!! Energy is not conserved!!","vbeta: ",vbeta, "beta: ",beta)
+        vgamma=1/np.sqrt(1-vbeta**2)
+        if abs(vgamma-gamma)/gamma >1e-2: # 检测能量是否守恒
+            print("Error!!! Energy is not conserved!!","vbeta: ",vbeta, "beta: ",beta, "PID: " ,PID)
             return 0
         newmome=pGeV*np.array([vx,vy,vz])/v
         halfplist=DecayProducts(int(PID),newmome)
+        #堆叠,行的内容是 x,y,z,px,py,pz,Ek,t,PID,charges, mass
         plist = np.hstack((np.ones((halfplist.shape[0], 3))*loc, halfplist[:,0:5], 
-                           np.ones((halfplist.shape[0], 1))*sol.t_events[3],
+                           np.ones((halfplist.shape[0], 1))*sol.t_events[2+n1],
                            halfplist[:,5:]))
         return (res,plist)

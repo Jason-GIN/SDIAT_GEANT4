@@ -212,6 +212,9 @@ def DataSetting(results,particlelist,dfactor=0):
     else:
         for result in results:
             result0, splist = result
+            if result ==0 :
+                print("Error!!! Energy is not conserved in 1e-2!! Abandon this event! ")
+                continue
             task_id, res, rt, Hit, ht = result0
             # print(np.shape(Hit))
             # print(Hit)
